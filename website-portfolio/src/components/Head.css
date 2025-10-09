@@ -1,0 +1,19 @@
+.head-container {
+  @apply sticky top-0 z-20 flex w-full items-center justify-between gap-3 border-b border-slate-900 bg-black px-3 py-1.5;
+}
+
+.head-search {
+  @apply flex flex-1 items-center gap-2 text-sm text-slate-400;
+}
+
+.head-searchPrompt {
+  @apply font-mono text-base text-emerald-400;
+}
+
+.head-searchInput {
+  @apply w-full bg-transparent text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-0;
+}
+
+.head-timer {
+  @apply font-mono text-xs font-semibold tracking-wide text-white;
+}

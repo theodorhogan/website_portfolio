@@ -1,0 +1,15 @@
+.models-page {
+  @apply flex h-full w-full items-center justify-center;
+}
+
+.models-page__card {
+  @apply flex w-full max-w-2xl flex-col items-center justify-center gap-4 rounded-3xl border border-amber-500/40 bg-black px-8 py-16 text-center shadow-xl shadow-amber-900/40;
+}
+
+.models-page__title {
+  @apply text-4xl font-bold tracking-tight text-amber-300 sm:text-5xl;
+}
+
+.models-page__subtitle {
+  @apply max-w-xl text-base text-slate-300 sm:text-lg;
+}

@@ -1,0 +1,31 @@
+.pdf-reader {
+  @apply fixed left-0 top-0 z-30 w-[min(80vw,900px)] rounded-xl border border-slate-800 bg-slate-950/95 shadow-2xl shadow-black/50 backdrop-blur;
+  transition: box-shadow 150ms ease, transform 80ms ease;
+}
+
+.pdf-reader:focus-within,
+.pdf-reader:hover {
+  @apply shadow-[0_24px_60px_rgba(15,23,42,0.55)];
+}
+
+.pdf-reader__titleBar {
+  @apply flex cursor-move items-center justify-between border-b border-slate-800 bg-black px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-300;
+}
+
+.pdf-reader__title {
+  @apply select-none;
+}
+
+.pdf-reader__close {
+  @apply inline-flex h-6 w-6 items-center justify-center rounded-md border border-transparent text-slate-300 transition-colors hover:border-slate-700 hover:bg-slate-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500;
+}
+
+.pdf-reader__body {
+  @apply h-[70vh] min-h-[360px] w-full overflow-hidden bg-slate-900;
+}
+
+.pdf-reader__frame {
+  @apply h-full w-full border-0;
+  background-color: #0f172a;
+}
+

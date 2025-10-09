@@ -1,0 +1,15 @@
+.beta-page {
+  @apply flex h-full w-full items-center justify-center;
+}
+
+.beta-page__card {
+  @apply flex w-full max-w-2xl flex-col items-center justify-center gap-4 rounded-3xl border border-fuchsia-500/40 bg-black px-8 py-16 text-center shadow-xl shadow-fuchsia-900/40;
+}
+
+.beta-page__title {
+  @apply text-4xl font-bold tracking-tight text-fuchsia-300 sm:text-5xl;
+}
+
+.beta-page__subtitle {
+  @apply max-w-xl text-base text-slate-300 sm:text-lg;
+}
