@@ -1,0 +1,39 @@
+.blog-window {
+  @apply flex w-full max-w-2xl flex-col overflow-hidden rounded-lg border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
+}
+
+.blog-window__header {
+  @apply flex items-center justify-between gap-3 border-b border-slate-800/80 bg-[#1f2530] px-4 py-3;
+}
+
+.blog-window__titleGroup {
+  @apply flex items-center gap-2;
+}
+
+.blog-window__titleBadge {
+  @apply rounded-sm bg-emerald-500/20 px-2 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-200;
+}
+
+.blog-window__titleText {
+  @apply font-mono text-xs text-slate-200;
+}
+
+.blog-window__selectGroup {
+  @apply relative;
+}
+
+.blog-window__select {
+  @apply rounded-md border border-slate-800 bg-[#1b202a] px-2 py-1 text-xs font-semibold uppercase tracking-wide text-slate-200 shadow-inner focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500;
+}
+
+.blog-window__body {
+  @apply max-h-[28rem] overflow-y-auto px-5 py-4 text-sm leading-relaxed text-slate-200;
+}
+
+.blog-window__content {
+  @apply whitespace-pre-wrap break-words font-mono text-[0.7rem] leading-6 text-slate-200;
+}
+
+.blog-window__empty {
+  @apply text-xs text-slate-400;
+}
