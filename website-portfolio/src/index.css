@@ -12,9 +12,12 @@
 }
 
 html,
-body,
+body {
+  @apply h-full overflow-hidden;
+}
+
 #root {
-  height: 100%;
+  @apply h-full overflow-hidden;
 }
 
 body {

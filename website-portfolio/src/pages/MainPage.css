@@ -1,15 +1,11 @@
 .main-page {
-  @apply flex h-full w-full items-center justify-center;
+  @apply flex flex-1 w-full items-start justify-center overflow-hidden;
 }
 
-.main-page__card {
-  @apply flex w-full max-w-2xl flex-col items-center justify-center gap-4 border border-emerald-500/40 bg-black px-8 py-16 text-center shadow-xl;
+.main-page__stack {
+  @apply flex h-full w-full max-w-5xl flex-col items-center gap-4 overflow-hidden px-4;
 }
 
-.main-page__title {
-  @apply text-4xl font-bold tracking-tight text-emerald-300 sm:text-5xl;
-}
-
-.main-page__subtitle {
-  @apply max-w-xl text-base text-slate-300 sm:text-lg;
+.main-page__stack > * {
+  @apply w-full;
 }

@@ -24,6 +24,7 @@
 
 .spx-chart__subtitle {
   @apply font-sans text-[0.65rem] uppercase tracking-wide text-slate-400;
+  white-space: nowrap;
 }
 
 .spx-chart__body {

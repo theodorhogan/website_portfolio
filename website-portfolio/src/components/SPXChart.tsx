@@ -4,24 +4,19 @@ import type { CandlestickData, IChartApi, ISeriesApi } from "lightweight-charts"
 import "./SPXChart.css";
 import spxCsv from "../data/spx/spx-daily.csv?raw";
 
-type Candle = CandlestickData & {
-  volume: number;
-};
-
-function parseCsv(raw: string): Candle[] {
+function parseCsv(raw: string): CandlestickData[] {
   return raw
     .trim()
     .split(/\r?\n/)
     .slice(1)
     .map((line) => line.split(","))
-    .filter((parts) => parts.length >= 6)
-    .map(([date, open, high, low, close, volume]) => ({
+    .filter((parts) => parts.length >= 5)
+    .map(([date, open, high, low, close]) => ({
       time: date as CandlestickData["time"],
       open: Number(open),
       high: Number(high),
       low: Number(low),
       close: Number(close),
-      volume: Number(volume),
     }))
     .filter(
       (entry) =>
@@ -123,16 +118,14 @@ export function SPXChart() {
       <div className="spx-chart__header">
         <div className="spx-chart__titleGroup">
           <span className="spx-chart__titleBadge">SPX</span>
-          <div className="spx-chart__titleMeta">
-            <span className="spx-chart__title">S&amp;P 500 Index</span>
-            {LATEST_CANDLE ? (
-              <span className="spx-chart__subtitle">
-                Daily close {numberFormatter.format(LATEST_CANDLE.close)} |{" "}
-                {dateFormatter.format(new Date(`${LATEST_CANDLE.time}T00:00:00Z`))}
-              </span>
-            ) : null}
-          </div>
+          <span className="spx-chart__title">S&amp;P 500 Index</span>
         </div>
+        {LATEST_CANDLE ? (
+          <span className="spx-chart__subtitle">
+            Daily close {numberFormatter.format(LATEST_CANDLE.close)} |{" "}
+            {dateFormatter.format(new Date(`${LATEST_CANDLE.time}T00:00:00Z`))}
+          </span>
+        ) : null}
       </div>
       <div className="spx-chart__body">
         <div ref={chartContainerRef} className="spx-chart__canvas" />
