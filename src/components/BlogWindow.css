@@ -1,6 +1,8 @@
 .blog-window {
-  @apply mt-4 flex h-full max-h-full w-full max-w-2xl flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
-  height: calc(100% - 22rem);
+  @apply flex w-full max-w-2xl flex-none flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
+  height: 22rem;
+  max-height: 22rem;
+  min-height: 22rem;
 }
 
 .blog-window__header {
@@ -56,6 +58,40 @@
   @apply whitespace-pre-wrap break-words font-mono text-[0.7rem] leading-6 text-slate-200;
 }
 
+.blog-window__change {
+  @apply inline-flex items-center justify-center rounded-md border px-1.5 py-0.5 text-[0.65rem] font-semibold tracking-tight;
+  line-height: 1.1;
+  min-width: 3ch;
+}
+
+.blog-window__change--positive {
+  @apply border-emerald-500/70 bg-emerald-500/15 text-emerald-200;
+}
+
+.blog-window__change--negative {
+  @apply border-rose-500/70 bg-rose-500/15 text-rose-200;
+}
+
+.blog-window__change--neutral {
+  @apply border-sky-500/70 bg-sky-500/15 text-sky-200;
+}
+
+.blog-window__change--actual {
+  @apply border-orange-500/70 bg-orange-500/15 text-orange-200;
+}
+
+.blog-window__change--expected {
+  @apply border-yellow-400/70 bg-yellow-400/15 text-yellow-100;
+}
+
 .blog-window__empty {
   @apply text-xs text-slate-400;
+}
+
+@media (max-width: 1024px) {
+  .blog-window {
+    height: auto;
+    max-height: none;
+    min-height: 18rem;
+  }
 }

@@ -1,0 +1,17 @@
+.main-page {
+  @apply flex h-full min-h-0 w-full flex-1 items-start justify-center overflow-hidden py-4;
+}
+
+.main-page__stack {
+  @apply flex h-full min-h-0 w-full max-w-5xl flex-col items-center gap-4 overflow-hidden px-5;
+}
+
+.main-page__stack > * {
+  @apply w-full;
+}
+
+@media (max-width: 1024px) {
+  .main-page__stack {
+    @apply px-4;
+  }
+}

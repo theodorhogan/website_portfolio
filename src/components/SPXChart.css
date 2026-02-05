@@ -1,5 +1,5 @@
 .spx-chart {
-  @apply flex h-[18rem] w-full max-w-2xl flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
+  @apply mb-4 flex h-[16rem] w-full max-w-2xl flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
 }
 
 .spx-chart__header {

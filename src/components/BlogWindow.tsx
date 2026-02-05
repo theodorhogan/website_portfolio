@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 import "./BlogWindow.css";
 
@@ -60,6 +61,107 @@ const NEWSLETTERS: NewsletterEntry[] = Object.entries(newsletterModules)
   .filter((entry): entry is NewsletterEntry => entry !== null)
   .sort((a, b) => b.sortDate - a.sortDate);
 
+const HIGHLIGHT_TOKEN =
+  /\[\[(?<actual>[^\]]+)\]\]|\[\((?<expected>[^)]+)\)\]|\[(?<sign>[+-])?(?<value>\d+(?:\.\d+)?)%\]/g;
+
+function renderContentWithChangeBadges(content: string) {
+  const lines = content.split(/\r?\n/);
+  const nodes: ReactNode[] = [];
+
+  lines.forEach((line, lineIndex) => {
+    const lineElements: ReactNode[] = [];
+    let cursor = 0;
+
+    for (const match of line.matchAll(HIGHLIGHT_TOKEN)) {
+      const start = match.index ?? 0;
+
+      if (start > cursor) {
+        const textSegment = line.slice(cursor, start);
+
+        if (textSegment) {
+          lineElements.push(
+            <span
+              key={`line-${lineIndex}-text-${lineElements.length}`}
+            >
+              {textSegment}
+            </span>
+          );
+        }
+      }
+
+      const actual = match.groups?.actual;
+      const expected = match.groups?.expected;
+      const sign = match.groups?.sign ?? null;
+      const value = match.groups?.value ?? "";
+
+      let displayValue = "";
+      let variant = "blog-window__change--neutral";
+
+      if (actual) {
+        displayValue = actual.trim();
+        variant = "blog-window__change--actual";
+      } else if (expected) {
+        displayValue = expected.trim();
+        variant = "blog-window__change--expected";
+      } else {
+        variant =
+          sign === "-"
+            ? "blog-window__change--negative"
+            : sign === "+"
+              ? "blog-window__change--positive"
+              : "blog-window__change--neutral";
+        displayValue = `${sign ?? ""}${value}%`;
+      }
+
+      if (!displayValue) {
+        cursor = start + match[0].length;
+        continue;
+      }
+
+      lineElements.push(
+        <span
+          key={`line-${lineIndex}-badge-${lineElements.length}`}
+          className={`blog-window__change ${variant}`}
+        >
+          {displayValue}
+        </span>
+      );
+
+      cursor = start + match[0].length;
+    }
+
+    if (cursor < line.length) {
+      const textSegment = line.slice(cursor);
+
+      if (textSegment) {
+        lineElements.push(
+          <span
+            key={`line-${lineIndex}-text-${lineElements.length}`}
+          >
+            {textSegment}
+          </span>
+        );
+      }
+    }
+
+    if (lineElements.length === 0) {
+      lineElements.push(
+        <span key={`line-${lineIndex}-empty`}>{"\u00A0"}</span>
+      );
+    }
+
+    nodes.push(
+      <span key={`line-${lineIndex}`}>{lineElements}</span>
+    );
+
+    if (lineIndex < lines.length - 1) {
+      nodes.push(<br key={`line-break-${lineIndex}`} />);
+    }
+  });
+
+  return nodes;
+}
+
 export function BlogWindow() {
   const newsletters = useMemo(() => NEWSLETTERS, []);
 
@@ -114,7 +216,9 @@ export function BlogWindow() {
         role="article"
         aria-label={selected.fullLabel}
       >
-        <pre className="blog-window__content">{selected.content}</pre>
+        <div className="blog-window__content">
+          {renderContentWithChangeBadges(selected.content)}
+        </div>
       </div>
     </div>
   );

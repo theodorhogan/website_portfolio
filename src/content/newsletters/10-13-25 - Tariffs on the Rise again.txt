@@ -1,0 +1,31 @@
+Markets Sink on US–China Tensions; Tech and Energy Lead Declines
+
+US equities finished the week sharply lower, with Friday’s selloff the worst since early April as renewed US–China tensions hit risk appetite. A Truth Social post from President Trump threatened a “massive increase” in tariffs and other countermeasures, sending big tech, energy, semis, managed care, banks, asset managers, and airlines broadly lower. Heavily shorted and retail-favorite stocks also fell. Defensives like utilities, exchanges, staples retailers, grocers, dollar stores, telecom, and waste outperformed.
+ 
+Rates and commodities moved in risk-off fashion. The curve flattened with long-end yields lower, the Dollar Index eased, gold rebounded, and WTI crude slid back below $60 to its weakest level since May. Bitcoin futures also declined.
+ 
+Macro/data: October University of Michigan Consumer Sentiment printed [[55.0]] (vs [(54.0)] consensus). One‑year inflation expectations ticked down to [4.60%], five‑year stayed at [3.70%]. The BLS said it will publish September CPI on 25‑Oct ahead of the late‑October FOMC. The federal government shutdown entered day 10 with little sign of resolution.
+ 
+Fed: Governor Waller reiterated a bias toward sequential 25 bp cuts later this year while cautioning against over‑easing, as officials weigh a weaker labor market against still‑firm growth. A busy Fedspeak slate and the kickoff to Q3 earnings arrive next week.
+ 
+Corporate highlights: Chinese regulators opened a probe into Qualcomm’s Autotalks deal and reports pointed to tighter checks on Nvidia’s China‑specific chips. LEVI beat Q3 but guided Q4 below Street. APLD jumped on stronger HPC hosting momentum. VG plunged after an arbitration ruling favored BP in an LNG dispute.
+ 
+Key Numbers
+• Indices (Month/Quarter‑to‑Date): Dow [-1.98%], S&P 500 [-2.03%], Nasdaq [-2.01%], Russell 2000 [-1.72%]
+• Year‑to‑Date: Dow [+6.90%], S&P 500 [+11.41%], Nasdaq [+14.98%], Russell 2000 [+7.37%]
+• Rates: 2‑Year Yield [3.53%], 10‑Year Yield [4.06%], 30‑Year Yield [4.64%]
+• Dollar Index (DXY): 98.93 (weekly change [-0.61%])
+• FX: EUR/USD [+0.41%] to 1.1612; GBP/USD [+0.35%] to 1.3351; USD/JPY [-0.94%] to 151.64; EUR/JPY [-0.53%] to 176.09
+• Commodities: WTI Crude [-4.36%] to $58.83; Gold [+1.38%] to $4,027.50; Bitcoin futures [-3.60%]
+• Treasuries: Long end ~[-0.09%] in yield terms (flattening)
+• Breadth: NYSE -6.01:1; Nasdaq -5.20:1
+• Volume: NYSE 13,450M; Nasdaq 24,976M
+
+Notable Movers
+• Gainers: ORBS [+16.60%] (AI authentication pilot), APLD [+16.10%] (strong HPC hosting; leasing trajectory), ESTC [+6.10%] (raised FY26 guide; buyback), LEN [+1.20%] (exchange offer for MRP stake)
+• Decliners: VG [-24.90%] (arbitration ruling), LEVI [-12.60%] (Q4 guide below Street), RCAT [-10.60%] (short report), DOCS [-9.60%] (downgrade/ads risk), MOS [-9.20%] (soft volumes), IONQ [-8.80%] (equity offering), ALGN [-4.60%] (downgrade), HUM [-3.60%] (STARs details), MRP [-3.60%] (LEN exchange offer)
+
+Energy & Sectors
+• Sector leaders (relative): Consumer Staples [+0.25%], Utilities [-0.44%], Real Estate [-1.12%], Healthcare [-1.49%], Materials [-1.82%], Financials [-2.16%], Industrials [-2.22%], Communication Services [-2.31%]
+• Laggards (relative): Technology [-3.97%], Consumer Discretionary [-3.29%], Energy [-2.80%]
+
