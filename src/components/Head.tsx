@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import "./Head.css";
+import { useNewsletterContext } from "../state/NewsletterContext";
 
 type IndicatorState = "red" | "blue" | "green";
 
@@ -137,8 +138,16 @@ function formatDateWithWeek(date: Date) {
   return `${day}-${month}-${year} (wk ${week})`;
 }
 
+function formatDateShort(date: Date) {
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = monthFormatter.format(date).toUpperCase();
+  const year = String(date.getFullYear()).slice(-2);
+  return `${day}-${month}-${year}`;
+}
+
 export function Head() {
   const [now, setNow] = useState(() => new Date());
+  const { selected } = useNewsletterContext();
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -152,6 +161,11 @@ export function Head() {
     () => computeMarketStatus(now),
     [now]
   );
+
+  const activeWeekLabel = useMemo(() => {
+    if (!selected) return "[Active -- --- --]";
+    return `[Active ${formatDateShort(new Date(selected.sortDate))}]`;
+  }, [selected]);
 
   const indicatorTitle = useMemo(() => {
     if (indicatorState === "green") {
@@ -182,6 +196,9 @@ export function Head() {
           className="head-searchInput"
           aria-label="Search"
         />
+      </div>
+      <div className="head-activeWeek" aria-label="Active newsletter week">
+        {activeWeekLabel}
       </div>
       <div className="head-clock" title={tooltipTitle}>
         <span className="head-date" aria-label={`Date ${formatDateWithWeek(now)}`}>

@@ -7,11 +7,15 @@
 }
 
 .head-searchPrompt {
-  @apply font-mono text-base text-emerald-400;
+  @apply font-mono text-base text-[#45d975];
 }
 
 .head-searchInput {
   @apply w-full bg-transparent text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-0;
+}
+
+.head-activeWeek {
+  @apply hidden whitespace-nowrap rounded border border-slate-800 bg-[#0f1219] px-2 py-[0.35rem] font-mono text-[0.65rem] font-semibold uppercase tracking-wide text-slate-300 md:inline-flex;
 }
 
 .head-timer {

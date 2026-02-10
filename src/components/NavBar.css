@@ -19,5 +19,5 @@
 }
 
 .navbar-link--active {
-  @apply border-emerald-600 bg-emerald-600 text-white;
+  @apply border-[#45d975] bg-[#45d975] text-slate-950;
 }

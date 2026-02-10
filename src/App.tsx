@@ -6,24 +6,27 @@ import { BetaPage } from "./pages/BetaPage";
 import { DurationPage } from "./pages/DurationPage";
 import { MainPage } from "./pages/MainPage";
 import { ModelsPage } from "./pages/ModelsPage";
+import { NewsletterProvider } from "./state/NewsletterContext";
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="app-shell">
-        <Head />
-        <main className="app-main">
-          <div className="app-content">
-            <Routes>
-              <Route path="/" element={<MainPage />} />
-              <Route path="/duration" element={<DurationPage />} />
-              <Route path="/beta" element={<BetaPage />} />
-              <Route path="/models" element={<ModelsPage />} />
-            </Routes>
-          </div>
-        </main>
-        <NavBar />
-      </div>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <NewsletterProvider>
+        <div className="app-shell">
+          <Head />
+          <main className="app-main">
+            <div className="app-content">
+              <Routes>
+                <Route path="/" element={<MainPage />} />
+                <Route path="/duration" element={<DurationPage />} />
+                <Route path="/beta" element={<BetaPage />} />
+                <Route path="/models" element={<ModelsPage />} />
+              </Routes>
+            </div>
+          </main>
+          <NavBar />
+        </div>
+      </NewsletterProvider>
     </BrowserRouter>
   );
 }

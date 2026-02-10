@@ -1,5 +1,4 @@
 import { BlogWindow } from "../components/BlogWindow";
-import { SPXChart } from "../components/SPXChart";
 import "./MainPage.css";
 
 export function MainPage() {
@@ -7,7 +6,6 @@ export function MainPage() {
     <section className="main-page">
       <div className="main-page__stack">
         <BlogWindow />
-        <SPXChart />
       </div>
     </section>
   );
