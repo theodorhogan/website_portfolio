@@ -125,4 +125,22 @@
     max-height: none;
     min-height: 18rem;
   }
+
+  .industry-overview__body {
+    overflow-x: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .industry-overview__table {
+    width: max-content;
+    min-width: 46rem;
+    font-size: 0.62rem;
+  }
+
+  .industry-overview__table th,
+  .industry-overview__table td {
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+  }
 }

@@ -128,4 +128,22 @@
     max-height: none;
     min-height: 18rem;
   }
+
+  .major-indexes__body {
+    overflow-x: auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .major-indexes__table {
+    width: max-content;
+    min-width: 40rem;
+    font-size: 0.64rem;
+  }
+
+  .major-indexes__table th,
+  .major-indexes__table td {
+    padding-left: 0.45rem;
+    padding-right: 0.45rem;
+  }
 }
