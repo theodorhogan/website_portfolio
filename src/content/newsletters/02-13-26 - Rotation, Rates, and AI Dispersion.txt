@@ -1,0 +1,17 @@
+US Weekly Recap - Friday, February 13, 2026
+
+US equities finished lower again as rotation continued under the surface. Weekly index moves were Dow [-1.23%], S&P 500 [-1.39%], Nasdaq [-2.10%], and Russell 2000 [-0.89%]. The equal-weight S&P 500 (RSP) outperformed by roughly [+1.70%], signaling continued broadening away from the largest mega-cap names.
+
+Big tech remained a drag, with AAPL [-8.00%] and GOOGL [-5.30%] among key laggards. At the same time, selected cyclical and housing-related names outperformed, including homebuilders (XHB [+3.50%]). In semis/software, leadership became more selective rather than uniform.
+
+Rates moved higher on a bear-steepening tone. The 2Y Treasury yield rose to [3.41%] and the 10Y moved to [4.05%]. The dollar index eased [-0.80%], while gold gained [+1.30%], silver gained [+1.40%], bitcoin futures fell [-2.00%], and WTI crude slipped [-1.00%].
+
+Macro data kept the "not too hot, not too cold" debate alive. January nonfarm payrolls printed [[130K]] versus [(70K)] consensus. Unemployment was [[4.30%]]. January core CPI came in at [[0.30%]] m/m versus [(0.30%)] expected. December control-group retail sales printed [[-0.10%]] m/m.
+
+Corporate tape was mixed with wide dispersion. DDD rallied [+12.10%] and NET rallied [+13.10%] on strong momentum. In M&A, RIG rose [+21.30%] while VAL jumped [+53.80%] on deal news. Healthcare volatility remained elevated with HIMS down [-29.20%] while NVO gained [+4.10%].
+
+S&P 500 Sector Performance (week)
+- Outperformers: Utilities [+7.13%], Real Estate [+3.87%], Materials [+3.66%], Energy [+1.68%], Industrials [+0.58%]
+- Underperformers: Financials [-4.83%], Communication Services [-3.53%], Consumer Discretionary [-2.10%], Technology [-1.98%]
+
+Positioning into next week remains balanced between softer-growth hedges and selective risk-taking in cyclicals. The key debate is whether broadening can continue if long-end yields stay firm.
