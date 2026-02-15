@@ -1,0 +1,231 @@
+﻿46023,US Bill 1 Month,US1M,rate,3.5878,0
+46023,US Bill 2 Month,US2M,rate,3.5977,0
+46023,US Bill 3 Month,US3M,rate,3.6315,0
+46023,US Bill 4 Month,US4M,rate,3.6098,0
+46023,US Bill 6 Month,US6M,rate,3.6069,0
+46023,US Bill 1 Year,US1Y,rate,3.35,0
+46023,US Note 2 Year,US2Y,yield,3.4751,0
+46023,US Note 3 Year,US3Y,yield,3.5403,0
+46023,US Note 5 Year,US5Y,yield,3.727,0
+46023,US Note 7 Year,US7Y,yield,3.9394,0
+46023,US Note 10 Year,US10Y,yield,4.1685,0
+46023,US Note 20 Year,US20Y,yield,4.7941,0
+46023,US Note 30 Year,US30Y,yield,4.8441,0
+46023,ICE BofA Global Corporate,IG,spread,79,0
+46023,High Quality,AA,spread,49,0
+46023,Low Investment Grade,BBB,spread,101,0
+46023,ICE BofA US High Yield,HY,spread,281,0
+46023,Speculative,BB,spread,169,0
+46023,Distressed,CCC,spread,885,0
+46023,ZQ Future 1,Jan ZQ26,future,96.37,1
+46023,ZQ Future 2,Feb ZQ26,future,96.405,2
+46023,ZQ Future 3,Mar ZQ26,future,96.44,3
+46023,ZQ Future 4,Apr ZQ26,future,96.505,4
+46023,ZQ Future 5,May ZQ26,future,96.56,5
+46023,ZQ Future 6,Jun ZQ26,future,96.625,6
+46023,ZQ Future 7,Jul ZQ26,future,96.71,7
+46023,ZQ Future 8,Aug ZQ26,future,96.78,8
+46023,ZQ Future 9,Sep ZQ26,future,96.82,9
+46023,ZQ Future 10,Oct ZQ26,future,96.87,10
+46023,ZQ Future 11,Nov ZQ26,future,96.91,11
+46023,ZQ Future 12,Dec ZQ26,future,96.94,12
+46023,DE 10 Year Bund,DE10Y,yield,2.855,0
+46023,UK 10 Year Gilt,UK10Y,yield,4.473,0
+46024,US Bill 1 Month,US1M,rate,3.5787,0
+46024,US Bill 2 Month,US2M,rate,3.609,0
+46024,US Bill 3 Month,US3M,rate,3.615,0
+46024,US Bill 4 Month,US4M,rate,3.6265,0
+46024,US Bill 6 Month,US6M,rate,3.6059,0
+46024,US Bill 1 Year,US1Y,rate,3.335,0
+46024,US Note 2 Year,US2Y,yield,3.4754,0
+46024,US Note 3 Year,US3Y,yield,3.5474,0
+46024,US Note 5 Year,US5Y,yield,3.7405,0
+46024,US Note 7 Year,US7Y,yield,3.9562,0
+46024,US Note 10 Year,US10Y,yield,4.1907,0
+46024,US Note 20 Year,US20Y,yield,4.8172,0
+46024,US Note 30 Year,US30Y,yield,4.8712,0
+46024,ICE BofA Global Corporate,IG,spread,80,0
+46024,High Quality,AA,spread,49,0
+46024,Low Investment Grade,BBB,spread,101,0
+46024,ICE BofA US High Yield,HY,spread,283,0
+46024,Speculative,BB,spread,171,0
+46024,Distressed,CCC,spread,888,0
+46024,ZQ Future 1,Jan ZQ26,future,96.3675,1
+46024,ZQ Future 2,Feb ZQ26,future,96.405,2
+46024,ZQ Future 3,Mar ZQ26,future,96.445,3
+46024,ZQ Future 4,Apr ZQ26,future,96.51,4
+46024,ZQ Future 5,May ZQ26,future,96.56,5
+46024,ZQ Future 6,Jun ZQ26,future,96.62,6
+46024,ZQ Future 7,Jul ZQ26,future,96.705,7
+46024,ZQ Future 8,Aug ZQ26,future,96.775,8
+46024,ZQ Future 9,Sep ZQ26,future,96.815,9
+46024,ZQ Future 10,Oct ZQ26,future,96.865,10
+46024,ZQ Future 11,Nov ZQ26,future,96.905,11
+46024,ZQ Future 12,Dec ZQ26,future,96.93,12
+46024,DE 10 Year Bund,DE10Y,yield,2.887,0
+46024,UK 10 Year Gilt,UK10Y,yield,4.517,0
+46031,US Bill 1 Month,US1M,rate,3.5991,0
+46031,US Bill 2 Month,US2M,rate,3.6039,0
+46031,US Bill 3 Month,US3M,rate,3.5944,0
+46031,US Bill 4 Month,US4M,rate,3.6161,0
+46031,US Bill 6 Month,US6M,rate,3.5901,0
+46031,US Bill 1 Year,US1Y,rate,3.38,0
+46031,US Note 2 Year,US2Y,yield,3.531,0
+46031,US Note 3 Year,US3Y,yield,3.5873,0
+46031,US Note 5 Year,US5Y,yield,3.7491,0
+46031,US Note 7 Year,US7Y,yield,3.9492,0
+46031,US Note 10 Year,US10Y,yield,4.1653,0
+46031,US Note 20 Year,US20Y,yield,4.7637,0
+46031,US Note 30 Year,US30Y,yield,4.8161,0
+46031,ICE BofA Global Corporate,IG,spread,78,0
+46031,High Quality,AA,spread,48,0
+46031,Low Investment Grade,BBB,spread,99,0
+46031,ICE BofA US High Yield,HY,spread,274,0
+46031,Speculative,BB,spread,165,0
+46031,Distressed,CCC,spread,865,0
+46031,ZQ Future 1,Jan ZQ26,future,96.36,1
+46031,ZQ Future 2,Feb ZQ26,future,96.37,2
+46031,ZQ Future 3,Mar ZQ26,future,96.395,3
+46031,ZQ Future 4,Apr ZQ26,future,96.435,4
+46031,ZQ Future 5,May ZQ26,future,96.48,5
+46031,ZQ Future 6,Jun ZQ26,future,96.535,6
+46031,ZQ Future 7,Jul ZQ26,future,96.615,7
+46031,ZQ Future 8,Aug ZQ26,future,96.685,8
+46031,ZQ Future 9,Sep ZQ26,future,96.725,9
+46031,ZQ Future 10,Oct ZQ26,future,96.78,10
+46031,ZQ Future 11,Nov ZQ26,future,96.82,11
+46031,ZQ Future 12,Dec ZQ26,future,96.855,12
+46031,DE 10 Year Bund,DE10Y,yield,2.866,0
+46031,UK 10 Year Gilt,UK10Y,yield,4.399,0
+46038,US Bill 1 Month,US1M,rate,3.6552,0
+46038,US Bill 2 Month,US2M,rate,3.6552,0
+46038,US Bill 3 Month,US3M,rate,3.6404,0
+46038,US Bill 4 Month,US4M,rate,3.6628,0
+46038,US Bill 6 Month,US6M,rate,3.6212,0
+46038,US Bill 1 Year,US1Y,rate,3.42,0
+46038,US Note 2 Year,US2Y,yield,3.5966,0
+46038,US Note 3 Year,US3Y,yield,3.6642,0
+46038,US Note 5 Year,US5Y,yield,3.8227,0
+46038,US Note 7 Year,US7Y,yield,4.0177,0
+46038,US Note 10 Year,US10Y,yield,4.2264,0
+46038,US Note 20 Year,US20Y,yield,4.7905,0
+46038,US Note 30 Year,US30Y,yield,4.836,0
+46038,ICE BofA Global Corporate,IG,spread,76,0
+46038,High Quality,AA,spread,46,0
+46038,Low Investment Grade,BBB,spread,96,0
+46038,ICE BofA US High Yield,HY,spread,265,0
+46038,Speculative,BB,spread,158,0
+46038,Distressed,CCC,spread,852,0
+46038,ZQ Future 1,Jan ZQ26,future,96.36,1
+46038,ZQ Future 2,Feb ZQ26,future,96.37,2
+46038,ZQ Future 3,Mar ZQ26,future,96.39,3
+46038,ZQ Future 4,Apr ZQ26,future,96.415,4
+46038,ZQ Future 5,May ZQ26,future,96.455,5
+46038,ZQ Future 6,Jun ZQ26,future,96.5,6
+46038,ZQ Future 7,Jul ZQ26,future,96.56,7
+46038,ZQ Future 8,Aug ZQ26,future,96.62,8
+46038,ZQ Future 9,Sep ZQ26,future,96.665,9
+46038,ZQ Future 10,Oct ZQ26,future,96.72,10
+46038,ZQ Future 11,Nov ZQ26,future,96.76,11
+46038,ZQ Future 12,Dec ZQ26,future,96.795,12
+46038,DE 10 Year Bund,DE10Y,yield,2.834,0
+46038,UK 10 Year Gilt,UK10Y,yield,4.385,0
+46045,US Bill 1 Month,US1M,rate,3.6755,0
+46045,US Bill 2 Month,US2M,rate,3.6808,0
+46045,US Bill 3 Month,US3M,rate,3.6666,0
+46045,US Bill 4 Month,US4M,rate,3.6628,0
+46045,US Bill 6 Month,US6M,rate,3.6321,0
+46045,US Bill 1 Year,US1Y,rate,3.39,0
+46045,US Note 2 Year,US2Y,yield,3.5961,0
+46045,US Note 3 Year,US3Y,yield,3.6663,0
+46045,US Note 5 Year,US5Y,yield,3.8307,0
+46045,US Note 7 Year,US7Y,yield,4.0265,0
+46045,US Note 10 Year,US10Y,yield,4.2311,0
+46045,US Note 20 Year,US20Y,yield,4.7937,0
+46045,US Note 30 Year,US30Y,yield,4.8294,0
+46045,ICE BofA Global Corporate,IG,spread,74,0
+46045,High Quality,AA,spread,45,0
+46045,Low Investment Grade,BBB,spread,94,0
+46045,ICE BofA US High Yield,HY,spread,268,0
+46045,Speculative,BB,spread,161,0
+46045,Distressed,CCC,spread,849,0
+46045,ZQ Future 1,Jan ZQ26,future,96.36,1
+46045,ZQ Future 2,Feb ZQ26,future,96.37,2
+46045,ZQ Future 3,Mar ZQ26,future,96.385,3
+46045,ZQ Future 4,Apr ZQ26,future,96.4,4
+46045,ZQ Future 5,May ZQ26,future,96.44,5
+46045,ZQ Future 6,Jun ZQ26,future,96.49,6
+46045,ZQ Future 7,Jul ZQ26,future,96.555,7
+46045,ZQ Future 8,Aug ZQ26,future,96.615,8
+46045,ZQ Future 9,Sep ZQ26,future,96.655,9
+46045,ZQ Future 10,Oct ZQ26,future,96.71,10
+46045,ZQ Future 11,Nov ZQ26,future,96.75,11
+46045,ZQ Future 12,Dec ZQ26,future,96.785,12
+46045,DE 10 Year Bund,DE10Y,yield,2.895,0
+46045,UK 10 Year Gilt,UK10Y,yield,4.497,0
+46052,US Bill 1 Month,US1M,rate,3.6806,0
+46052,US Bill 2 Month,US2M,rate,3.6757,0
+46052,US Bill 3 Month,US3M,rate,3.6562,0
+46052,US Bill 4 Month,US4M,rate,3.6732,0
+46052,US Bill 6 Month,US6M,rate,3.6321,0
+46052,US Bill 1 Year,US1Y,rate,3.35,0
+46052,US Note 2 Year,US2Y,yield,3.5326,0
+46052,US Note 3 Year,US3Y,yield,3.6022,0
+46052,US Note 5 Year,US5Y,yield,3.8063,0
+46052,US Note 7 Year,US7Y,yield,4.0278,0
+46052,US Note 10 Year,US10Y,yield,4.2559,0
+46052,US Note 20 Year,US20Y,yield,4.8389,0
+46052,US Note 30 Year,US30Y,yield,4.8885,0
+46052,ICE BofA Global Corporate,IG,spread,74,0
+46052,High Quality,AA,spread,45,0
+46052,Low Investment Grade,BBB,spread,94,0
+46052,ICE BofA US High Yield,HY,spread,280,0
+46052,Speculative,BB,spread,171,0
+46052,Distressed,CCC,spread,855,0
+46052,ZQ Future 1,Jan ZQ26,future,96.36,1
+46052,ZQ Future 2,Feb ZQ26,future,96.365,2
+46052,ZQ Future 3,Mar ZQ26,future,96.38,3
+46052,ZQ Future 4,Apr ZQ26,future,96.4,4
+46052,ZQ Future 5,May ZQ26,future,96.445,5
+46052,ZQ Future 6,Jun ZQ26,future,96.505,6
+46052,ZQ Future 7,Jul ZQ26,future,96.585,7
+46052,ZQ Future 8,Aug ZQ26,future,96.67,8
+46052,ZQ Future 9,Sep ZQ26,future,96.72,9
+46052,ZQ Future 10,Oct ZQ26,future,96.785,10
+46052,ZQ Future 11,Nov ZQ26,future,96.84,11
+46052,ZQ Future 12,Dec ZQ26,future,96.88,12
+46052,DE 10 Year Bund,DE10Y,yield,2.846,0
+46052,UK 10 Year Gilt,UK10Y,yield,4.507,0
+46059,US Bill 1 Month,US1M,rate,3.6755,0
+46059,US Bill 2 Month,US2M,rate,3.6859,0
+46059,US Bill 3 Month,US3M,rate,3.6717,0
+46059,US Bill 4 Month,US4M,rate,3.6784,0
+46059,US Bill 6 Month,US6M,rate,3.6164,0
+46059,US Bill 1 Year,US1Y,rate,3.315,0
+46059,US Note 2 Year,US2Y,yield,3.4955,0
+46059,US Note 3 Year,US3Y,yield,3.563,0
+46059,US Note 5 Year,US5Y,yield,3.7537,0
+46059,US Note 7 Year,US7Y,yield,3.9701,0
+46059,US Note 10 Year,US10Y,yield,4.203,0
+46059,US Note 20 Year,US20Y,yield,4.7914,0
+46059,US Note 30 Year,US30Y,yield,4.85,0
+46059,ICE BofA Global Corporate,IG,spread,75,0
+46059,High Quality,AA,spread,48,0
+46059,Low Investment Grade,BBB,spread,96,0
+46059,ICE BofA US High Yield,HY,spread,287,0
+46059,Speculative,BB,spread,171,0
+46059,Distressed,CCC,spread,892,0
+46059,ZQ Future 1,Feb ZQ26,future,96.3625,1
+46059,ZQ Future 2,Mar ZQ26,future,96.385,2
+46059,ZQ Future 3,Apr ZQ26,future,96.41,3
+46059,ZQ Future 4,May ZQ26,future,96.455,4
+46059,ZQ Future 5,Jun ZQ26,future,96.52,5
+46059,ZQ Future 6,Jul ZQ26,future,96.605,6
+46059,ZQ Future 7,Aug ZQ26,future,96.69,7
+46059,ZQ Future 8,Sep ZQ26,future,96.74,8
+46059,ZQ Future 9,Oct ZQ26,future,96.81,9
+46059,ZQ Future 10,Nov ZQ26,future,96.86,10
+46059,ZQ Future 11,Dec ZQ26,future,96.9,11
+46059,ZQ Future 12,Jan ZQ27,future,96.915,12
+46059,DE 10 Year Bund,DE10Y,yield,2.841,0
+46059,UK 10 Year Gilt,UK10Y,yield,4.528,0
