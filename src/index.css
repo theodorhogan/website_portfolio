@@ -27,3 +27,14 @@ body {
 a {
   @apply text-emerald-400 transition-colors hover:text-emerald-300;
 }
+
+@media (max-width: 1024px) {
+  html,
+  body {
+    @apply h-auto min-h-full overflow-x-hidden overflow-y-auto;
+  }
+
+  #root {
+    @apply h-auto min-h-full overflow-visible;
+  }
+}

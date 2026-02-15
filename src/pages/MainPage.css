@@ -34,8 +34,12 @@
 }
 
 @media (max-width: 1024px) {
+  .main-page {
+    @apply h-auto min-h-0 overflow-visible pb-2;
+  }
+
   .main-page__stack {
-    @apply grid-cols-1 px-4;
+    @apply h-auto grid-cols-1 overflow-visible px-3;
   }
 
   .main-page__panel--left,
