@@ -3,15 +3,43 @@
 }
 
 .main-page__stack {
-  @apply flex h-full min-h-0 w-full max-w-5xl flex-col items-center gap-4 overflow-hidden px-5;
+  @apply grid h-full min-h-0 w-full max-w-6xl grid-cols-[minmax(0,4fr)_minmax(0,3fr)] items-start gap-4 overflow-hidden px-5;
 }
 
-.main-page__stack > * {
+.main-page__panel > * {
   @apply w-full;
+}
+
+.main-page__panel--left,
+.main-page__panel--right {
+  @apply flex h-full min-h-0 flex-col gap-4 overflow-y-auto pr-1;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(51, 65, 85, 0.7) #12161d;
+}
+
+.main-page__panel--left::-webkit-scrollbar,
+.main-page__panel--right::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main-page__panel--left::-webkit-scrollbar-track,
+.main-page__panel--right::-webkit-scrollbar-track {
+  background: #12161d;
+}
+
+.main-page__panel--left::-webkit-scrollbar-thumb,
+.main-page__panel--right::-webkit-scrollbar-thumb {
+  background-color: rgba(51, 65, 85, 0.7);
+  border-radius: 999px;
 }
 
 @media (max-width: 1024px) {
   .main-page__stack {
-    @apply px-4;
+    @apply grid-cols-1 px-4;
+  }
+
+  .main-page__panel--left,
+  .main-page__panel--right {
+    @apply h-auto overflow-visible pr-0;
   }
 }

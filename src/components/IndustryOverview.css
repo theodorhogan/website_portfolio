@@ -1,0 +1,128 @@
+.industry-overview {
+  @apply flex w-full flex-none flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
+  height: 22rem;
+  max-height: 22rem;
+  min-height: 22rem;
+}
+
+.industry-overview__header {
+  @apply flex items-center justify-start border-b border-slate-800/80 bg-[#1f2530] px-2.5 py-1.5;
+}
+
+.industry-overview__titleBadge {
+  @apply rounded-sm bg-emerald-500/20 px-2 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-200;
+}
+
+.industry-overview__body {
+  @apply flex-1 overflow-auto p-2;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(51, 65, 85, 0.7) #12161d;
+}
+
+.industry-overview__body::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.industry-overview__body::-webkit-scrollbar-track {
+  background: #12161d;
+}
+
+.industry-overview__body::-webkit-scrollbar-thumb {
+  background-color: rgba(51, 65, 85, 0.7);
+  border-radius: 999px;
+}
+
+.industry-overview__table {
+  @apply w-full border-collapse font-mono text-[0.66rem] uppercase text-slate-200;
+  table-layout: fixed;
+}
+
+.industry-overview__colIndustry {
+  width: 24%;
+}
+
+.industry-overview__colPrice {
+  width: 11%;
+}
+
+.industry-overview__colChange {
+  width: 12%;
+}
+
+.industry-overview__colLastWeek {
+  width: 15%;
+}
+
+.industry-overview__table th,
+.industry-overview__table td {
+  @apply px-2 py-[0.3rem];
+  white-space: nowrap;
+}
+
+.industry-overview__headIndustry {
+  @apply text-left font-semibold tracking-wide text-slate-400;
+}
+
+.industry-overview__headSpacer {
+  @apply text-left text-transparent;
+}
+
+.industry-overview__headRegion {
+  @apply text-center font-semibold tracking-wide text-slate-300;
+}
+
+.industry-overview__headRegionUs {
+  border-right: none !important;
+}
+
+.industry-overview__headRegionDivider {
+  border-left: 2px solid rgba(148, 163, 184, 0.65) !important;
+}
+
+.industry-overview__headNumber {
+  @apply text-center font-semibold tracking-normal text-slate-400;
+}
+
+.industry-overview__industry {
+  @apply text-left text-slate-100;
+  letter-spacing: 0.01em;
+}
+
+.industry-overview__number {
+  @apply text-right text-slate-100;
+  font-variant-numeric: tabular-nums;
+}
+
+.industry-overview__change {
+  @apply text-right font-semibold;
+  font-variant-numeric: tabular-nums;
+}
+
+.industry-overview__change--positive {
+  color: #45d975;
+}
+
+.industry-overview__change--negative {
+  color: #f43f5e;
+}
+
+.industry-overview__change--neutral {
+  @apply text-slate-200;
+}
+
+.industry-overview__cellBeforeDivider {
+  border-right: none !important;
+}
+
+.industry-overview__cellDivider {
+  border-left: 2px solid rgba(148, 163, 184, 0.65) !important;
+}
+
+@media (max-width: 1024px) {
+  .industry-overview {
+    height: auto;
+    max-height: none;
+    min-height: 18rem;
+  }
+}

@@ -1,0 +1,131 @@
+.major-indexes {
+  @apply flex w-full flex-none flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
+  height: 22rem;
+  max-height: 22rem;
+  min-height: 22rem;
+}
+
+.major-indexes__header {
+  @apply flex items-center justify-start border-b border-slate-800/80 bg-[#1f2530] px-2.5 py-1.5;
+}
+
+.major-indexes__titleBadge {
+  @apply rounded-sm bg-emerald-500/20 px-2 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-200;
+}
+
+.major-indexes__body {
+  @apply flex-1 overflow-auto p-2;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(51, 65, 85, 0.7) #12161d;
+}
+
+.major-indexes__body::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.major-indexes__body::-webkit-scrollbar-track {
+  background: #12161d;
+}
+
+.major-indexes__body::-webkit-scrollbar-thumb {
+  background-color: rgba(51, 65, 85, 0.7);
+  border-radius: 999px;
+}
+
+.major-indexes__table {
+  @apply w-full border-collapse font-mono text-[0.68rem] uppercase text-slate-200;
+  table-layout: fixed;
+}
+
+.major-indexes__colTicker {
+  width: 18%;
+}
+
+.major-indexes__colPrice {
+  width: 20%;
+}
+
+.major-indexes__colChange {
+  width: 20%;
+}
+
+.major-indexes__colLastWeek {
+  width: 22%;
+}
+
+.major-indexes__colHigh {
+  width: 20%;
+}
+
+.major-indexes__table th {
+  @apply border-b border-slate-600/80 px-2 py-1 text-left font-semibold tracking-wide text-slate-400;
+  white-space: nowrap;
+  border-right: 1px solid rgba(100, 116, 139, 0.45);
+}
+
+.major-indexes__table td {
+  @apply border-b border-slate-700/60 px-2 py-[0.28rem];
+  white-space: nowrap;
+  border-right: 1px solid rgba(100, 116, 139, 0.35);
+}
+
+.major-indexes__table th:last-child,
+.major-indexes__table td:last-child {
+  border-right: none;
+}
+
+.major-indexes__table tr:last-child td {
+  border-bottom: none;
+}
+
+.major-indexes__table tbody tr:nth-child(odd) td {
+  background-color: #1b2330;
+}
+
+.major-indexes__table tbody tr:nth-child(even) td {
+  background-color: #151c27;
+}
+
+.major-indexes__ticker {
+  @apply text-slate-100;
+  letter-spacing: 0.02em;
+}
+
+.major-indexes__number {
+  @apply text-right text-slate-100;
+  font-variant-numeric: tabular-nums;
+}
+
+.major-indexes__headTicker {
+  @apply text-left;
+}
+
+.major-indexes__headNumber {
+  @apply text-right;
+}
+
+.major-indexes__change {
+  @apply text-right font-semibold;
+  font-variant-numeric: tabular-nums;
+}
+
+.major-indexes__change--positive {
+  color: #45d975;
+}
+
+.major-indexes__change--negative {
+  color: #f43f5e;
+}
+
+.major-indexes__change--neutral {
+  @apply text-slate-200;
+}
+
+@media (max-width: 1024px) {
+  .major-indexes {
+    height: auto;
+    max-height: none;
+    min-height: 18rem;
+  }
+}
