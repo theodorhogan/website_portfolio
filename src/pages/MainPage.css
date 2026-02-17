@@ -1,9 +1,10 @@
 .main-page {
-  @apply flex h-full min-h-0 w-full flex-1 items-start justify-center overflow-hidden py-4;
+  @apply flex h-full min-h-0 w-full flex-1 items-stretch justify-center overflow-hidden;
+  padding: 0.75rem 0.5rem 2.65rem;
 }
 
 .main-page__stack {
-  @apply flex h-full min-h-0 w-full max-w-5xl items-start justify-center overflow-hidden px-5;
+  @apply flex h-full min-h-0 w-full max-w-6xl items-stretch justify-center overflow-hidden px-5;
 }
 
 .main-page__panel > * {
@@ -11,47 +12,27 @@
 }
 
 .main-page__panel {
-  @apply flex h-full min-h-0 w-full flex-col gap-4 overflow-y-auto pr-1;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(51, 65, 85, 0.7) #12161d;
+  @apply flex h-full min-h-0 w-full flex-col overflow-hidden;
 }
 
-.main-page__panel::-webkit-scrollbar {
-  width: 8px;
-}
-
-.main-page__panel::-webkit-scrollbar-track {
-  background: #12161d;
-}
-
-.main-page__panel::-webkit-scrollbar-thumb {
-  background-color: rgba(51, 65, 85, 0.7);
-  border-radius: 999px;
+.main-page .blog-window {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  flex: 1 1 auto;
 }
 
 @media (min-width: 1025px) {
-  .main-page {
-    padding-top: 0.75rem;
-    padding-bottom: 3.5rem; /* Keep panel clear of fixed navbar */
-  }
-
   .main-page__panel {
     overflow: hidden;
-    padding-right: 0;
-  }
-
-  .main-page .blog-window {
-    width: 100%;
-    max-width: none;
-    height: 100%;
-    min-height: 0;
-    max-height: none;
   }
 }
 
 @media (max-width: 1024px) {
   .main-page {
-    @apply h-auto min-h-0 overflow-visible pb-2;
+    @apply h-auto min-h-0 overflow-visible px-0 pb-2;
   }
 
   .main-page__stack {
@@ -60,5 +41,12 @@
 
   .main-page__panel {
     @apply h-auto overflow-visible pr-0;
+  }
+
+  .main-page .blog-window {
+    height: auto;
+    min-height: 18rem;
+    max-height: none;
+    flex: 0 0 auto;
   }
 }

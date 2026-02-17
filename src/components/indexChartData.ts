@@ -25,6 +25,11 @@ type IndexChartDataset = {
 const DAY_MS = 24 * 60 * 60 * 1000;
 const YEAR_WINDOW_MS = 365 * DAY_MS;
 
+function normalizeToUtcDay(timeMs: number) {
+  const date = new Date(timeMs);
+  return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+}
+
 function parseUsDateToUtcMs(value: string) {
   const trimmed = value.trim();
   const match = trimmed.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
@@ -108,6 +113,13 @@ function parseForwardPeData(rawCsv: string) {
   } as const;
 }
 
+function buildForwardPeLookup(data: Record<IndexKey, ForwardPePoint[]>) {
+  return {
+    SPX: new Map(data.SPX.map((point) => [point.timeMs, point.value])),
+    STOXX600: new Map(data.STOXX600.map((point) => [point.timeMs, point.value])),
+  } as const;
+}
+
 function resolveEndpointIndex(points: ClosePoint[], activeTimeMs: number) {
   for (let i = points.length - 1; i >= 0; i -= 1) {
     if (points[i].timeMs <= activeTimeMs) {
@@ -118,18 +130,17 @@ function resolveEndpointIndex(points: ClosePoint[], activeTimeMs: number) {
   return points.length > 0 ? 0 : -1;
 }
 
-function resolvePeIndex(points: ForwardPePoint[], asOfTimeMs: number) {
-  for (let i = points.length - 1; i >= 0; i -= 1) {
-    if (points[i].timeMs <= asOfTimeMs) {
-      return i;
-    }
-  }
-
-  return points.length > 0 ? 0 : -1;
+function getExactForwardPe(
+  peLookup: ReadonlyMap<number, number>,
+  targetTimeMs: number,
+) {
+  const normalizedTarget = normalizeToUtcDay(targetTimeMs);
+  return peLookup.get(normalizedTarget) ?? null;
 }
 
 const INDEX_CLOSES = parseIndexData(indexDataCsv);
 const INDEX_FORWARD_PE = parseForwardPeData(peDataCsv);
+const INDEX_FORWARD_PE_LOOKUP = buildForwardPeLookup(INDEX_FORWARD_PE);
 
 export function getIndexChartDataset(index: IndexKey, activeTimeMs: number): IndexChartDataset {
   const points = INDEX_CLOSES[index];
@@ -177,10 +188,9 @@ export function getIndexChartDataset(index: IndexKey, activeTimeMs: number): Ind
     });
   }
 
-  const peSeries = INDEX_FORWARD_PE[index];
-  const peIndex = resolvePeIndex(peSeries, endpoint.timeMs);
-  const currentPe = peIndex >= 0 ? peSeries[peIndex]?.value ?? null : null;
-  const lastWeekPe = peIndex > 0 ? peSeries[peIndex - 1]?.value ?? null : null;
+  const peLookup = INDEX_FORWARD_PE_LOOKUP[index];
+  const currentPe = getExactForwardPe(peLookup, activeTimeMs);
+  const lastWeekPe = getExactForwardPe(peLookup, activeTimeMs - 7 * DAY_MS);
 
   return {
     candles,
