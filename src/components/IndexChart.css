@@ -1,0 +1,68 @@
+.index-chart {
+  @apply flex w-full flex-none flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
+  height: 22rem;
+  max-height: 22rem;
+  min-height: 22rem;
+}
+
+.index-chart__header {
+  @apply flex items-start justify-between gap-3 border-b border-slate-800/80 bg-[#1f2530] px-2.5 py-1.5;
+}
+
+.index-chart__titleGroup {
+  @apply flex items-center gap-2;
+}
+
+.index-chart__titleBadge {
+  @apply rounded-sm bg-emerald-500/20 px-2 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-200;
+}
+
+.index-chart__title {
+  @apply font-mono text-xs text-slate-100;
+}
+
+.index-chart__metaGroup {
+  @apply flex flex-col items-end gap-0.5;
+}
+
+.index-chart__meta {
+  @apply text-right font-mono text-[0.62rem] font-semibold uppercase tracking-wide text-slate-300;
+}
+
+.index-chart__subtitle {
+  @apply text-right font-mono text-[0.6rem] uppercase tracking-wide text-slate-400;
+}
+
+.index-chart__body {
+  @apply flex flex-1 bg-[#181d25];
+}
+
+.index-chart__canvas {
+  @apply h-full w-full;
+}
+
+.index-chart__canvas .tv-lightweight-charts-logo,
+.index-chart__canvas .tv-lightweight-charts-logo__link {
+  display: none !important;
+}
+
+@media (max-width: 1024px) {
+  .index-chart {
+    height: auto;
+    max-height: none;
+    min-height: 18rem;
+  }
+
+  .index-chart__header {
+    @apply flex-col items-start;
+  }
+
+  .index-chart__metaGroup {
+    @apply w-full items-start;
+  }
+
+  .index-chart__meta,
+  .index-chart__subtitle {
+    @apply text-left;
+  }
+}

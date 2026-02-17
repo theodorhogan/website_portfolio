@@ -10,6 +10,12 @@
   @apply mx-auto flex h-full w-full max-w-6xl flex-1 flex-col overflow-hidden px-6;
 }
 
+.app-content--wide {
+  max-width: none;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
 @media (max-width: 1024px) {
   .app-shell {
     @apply h-auto min-h-screen overflow-visible;
@@ -21,5 +27,11 @@
 
   .app-content {
     @apply h-auto overflow-visible px-2 pb-16;
+  }
+
+  .app-content--wide {
+    max-width: 100%;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 }

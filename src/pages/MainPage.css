@@ -3,34 +3,50 @@
 }
 
 .main-page__stack {
-  @apply grid h-full min-h-0 w-full max-w-6xl grid-cols-[minmax(0,4fr)_minmax(0,3fr)] items-start gap-4 overflow-hidden px-5;
+  @apply flex h-full min-h-0 w-full max-w-5xl items-start justify-center overflow-hidden px-5;
 }
 
 .main-page__panel > * {
   @apply w-full;
 }
 
-.main-page__panel--left,
-.main-page__panel--right {
-  @apply flex h-full min-h-0 flex-col gap-4 overflow-y-auto pr-1;
+.main-page__panel {
+  @apply flex h-full min-h-0 w-full flex-col gap-4 overflow-y-auto pr-1;
   scrollbar-width: thin;
   scrollbar-color: rgba(51, 65, 85, 0.7) #12161d;
 }
 
-.main-page__panel--left::-webkit-scrollbar,
-.main-page__panel--right::-webkit-scrollbar {
+.main-page__panel::-webkit-scrollbar {
   width: 8px;
 }
 
-.main-page__panel--left::-webkit-scrollbar-track,
-.main-page__panel--right::-webkit-scrollbar-track {
+.main-page__panel::-webkit-scrollbar-track {
   background: #12161d;
 }
 
-.main-page__panel--left::-webkit-scrollbar-thumb,
-.main-page__panel--right::-webkit-scrollbar-thumb {
+.main-page__panel::-webkit-scrollbar-thumb {
   background-color: rgba(51, 65, 85, 0.7);
   border-radius: 999px;
+}
+
+@media (min-width: 1025px) {
+  .main-page {
+    padding-top: 0.75rem;
+    padding-bottom: 3.5rem; /* Keep panel clear of fixed navbar */
+  }
+
+  .main-page__panel {
+    overflow: hidden;
+    padding-right: 0;
+  }
+
+  .main-page .blog-window {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    min-height: 0;
+    max-height: none;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -39,11 +55,10 @@
   }
 
   .main-page__stack {
-    @apply h-auto grid-cols-1 overflow-visible px-3;
+    @apply h-auto overflow-visible px-3;
   }
 
-  .main-page__panel--left,
-  .main-page__panel--right {
+  .main-page__panel {
     @apply h-auto overflow-visible pr-0;
   }
 }
