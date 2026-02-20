@@ -39,11 +39,17 @@
 }
 
 .yield-curve__svg {
-  @apply h-full w-full;
+  @apply block h-full w-full;
+  overflow: visible;
 }
 
 .yield-curve__gridLine {
   stroke: rgba(148, 163, 184, 0.18);
+  stroke-width: 1;
+}
+
+.yield-curve__axisLine {
+  stroke: rgba(148, 163, 184, 0.28);
   stroke-width: 1;
 }
 
@@ -64,11 +70,19 @@
 
 .yield-curve__xTick,
 .yield-curve__yTick {
-  fill: #94a3b8;
+  fill: #a8b4c8;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 10px;
   letter-spacing: 0.03em;
   text-transform: uppercase;
+}
+
+.yield-curve__xTick {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.yield-curve__yTick {
+  font-size: 9px;
 }
 
 .yield-curve__empty {

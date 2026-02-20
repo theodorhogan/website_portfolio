@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import "./BlogWindow.css";
-import { useNewsletterContext } from "../state/NewsletterContext";
+import { useNewsletterContext } from "../state/useNewsletterContext";
 
 const HIGHLIGHT_TOKEN =
   /\[\[(?<actual>[^\]]+)\]\]|\[\((?<expected>[^)]+)\)\]|\[(?<sign>[+-])?(?<value>\d+(?:\.\d+)?)%\]/g;

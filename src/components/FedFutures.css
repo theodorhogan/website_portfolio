@@ -1,0 +1,76 @@
+.fed-futures {
+  @apply flex w-full min-w-0 flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
+}
+
+.fed-futures__header {
+  @apply flex items-center justify-between gap-3 border-b border-slate-800/80 bg-[#1f2530] px-2.5 py-1.5;
+}
+
+.fed-futures__titleBadge {
+  @apply rounded-sm bg-emerald-500/20 px-2 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-200;
+}
+
+.fed-futures__date {
+  @apply font-mono text-[0.62rem] uppercase tracking-wide text-slate-300;
+}
+
+.fed-futures__body {
+  @apply flex flex-1 items-stretch px-2 py-2;
+}
+
+.fed-futures__svg {
+  @apply block h-full w-full;
+  overflow: visible;
+}
+
+.fed-futures__gridLine {
+  stroke: rgba(148, 163, 184, 0.18);
+  stroke-width: 1;
+}
+
+.fed-futures__axisLine {
+  stroke: rgba(148, 163, 184, 0.28);
+  stroke-width: 1;
+}
+
+.fed-futures__path {
+  fill: none;
+  stroke: #38bdf8;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fed-futures__point {
+  fill: #38bdf8;
+  stroke: rgba(56, 189, 248, 0.4);
+  stroke-width: 1;
+}
+
+.fed-futures__leftTick,
+.fed-futures__rightTick,
+.fed-futures__xTick {
+  fill: #94a3b8;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  letter-spacing: 0.02em;
+}
+
+.fed-futures__leftTick,
+.fed-futures__rightTick {
+  font-size: 9px;
+}
+
+.fed-futures__xTick {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.fed-futures__empty {
+  @apply m-auto font-mono text-xs text-slate-400;
+}
+
+@media (max-width: 1024px) {
+  .fed-futures__header {
+    @apply flex-col items-start;
+  }
+}

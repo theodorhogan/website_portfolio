@@ -1,12 +1,18 @@
+import { Suspense, lazy } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import { Head } from "./components/Head";
 import { NavBar } from "./components/NavBar";
-import { BetaPage } from "./pages/BetaPage";
-import { DurationPage } from "./pages/DurationPage";
-import { MainPage } from "./pages/MainPage";
-import { ModelsPage } from "./pages/ModelsPage";
 import { NewsletterProvider } from "./state/NewsletterContext";
+
+const MainPage = lazy(() => import("./pages/MainPage").then((module) => ({ default: module.MainPage })));
+const DurationPage = lazy(() =>
+  import("./pages/DurationPage").then((module) => ({ default: module.DurationPage })),
+);
+const BetaPage = lazy(() => import("./pages/BetaPage").then((module) => ({ default: module.BetaPage })));
+const ModelsPage = lazy(() =>
+  import("./pages/ModelsPage").then((module) => ({ default: module.ModelsPage })),
+);
 
 function AppContent() {
   const location = useLocation();
@@ -14,12 +20,14 @@ function AppContent() {
 
   return (
     <div className={`app-content${isWideRoute ? " app-content--wide" : ""}`}>
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/duration" element={<DurationPage />} />
-        <Route path="/beta" element={<BetaPage />} />
-        <Route path="/models" element={<ModelsPage />} />
-      </Routes>
+      <Suspense fallback={<div className="app-content__loading">Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/duration" element={<DurationPage />} />
+          <Route path="/beta" element={<BetaPage />} />
+          <Route path="/models" element={<ModelsPage />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }

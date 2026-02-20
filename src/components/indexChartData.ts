@@ -1,6 +1,7 @@
 import type { BusinessDay, CandlestickData } from "lightweight-charts";
 import indexDataCsv from "../content/pricedatabase/indexdata.csv?raw";
 import peDataCsv from "../content/pricedatabase/pricetoearnings.csv?raw";
+import { parseCsvLine, parseUsDateToUtcTime } from "../data/marketData";
 
 export type IndexKey = "SPX" | "STOXX600";
 
@@ -30,22 +31,6 @@ function normalizeToUtcDay(timeMs: number) {
   return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
 }
 
-function parseUsDateToUtcMs(value: string) {
-  const trimmed = value.trim();
-  const match = trimmed.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-  if (!match) return null;
-
-  const month = Number(match[1]);
-  const day = Number(match[2]);
-  const year = Number(match[3]);
-
-  if (!Number.isInteger(month) || !Number.isInteger(day) || !Number.isInteger(year)) {
-    return null;
-  }
-
-  return Date.UTC(year, month - 1, day);
-}
-
 function toBusinessDay(timeMs: number): BusinessDay {
   const date = new Date(timeMs);
   return {
@@ -60,15 +45,15 @@ function parseIndexData(rawCsv: string) {
   const stoxx: ClosePoint[] = [];
 
   for (const line of rawCsv.trim().split(/\r?\n/)) {
-    const [spxDateRaw, spxPriceRaw, stoxxDateRaw, stoxxPriceRaw] = line.split(",");
+    const [spxDateRaw, spxPriceRaw, stoxxDateRaw, stoxxPriceRaw] = parseCsvLine(line);
 
-    const spxTime = spxDateRaw ? parseUsDateToUtcMs(spxDateRaw) : null;
+    const spxTime = spxDateRaw ? parseUsDateToUtcTime(spxDateRaw) : null;
     const spxClose = spxPriceRaw ? Number(spxPriceRaw) : NaN;
     if (spxTime !== null && Number.isFinite(spxClose)) {
       spx.push({ timeMs: spxTime, close: spxClose });
     }
 
-    const stoxxTime = stoxxDateRaw ? parseUsDateToUtcMs(stoxxDateRaw) : null;
+    const stoxxTime = stoxxDateRaw ? parseUsDateToUtcTime(stoxxDateRaw) : null;
     const stoxxClose = stoxxPriceRaw ? Number(stoxxPriceRaw) : NaN;
     if (stoxxTime !== null && Number.isFinite(stoxxClose)) {
       stoxx.push({ timeMs: stoxxTime, close: stoxxClose });
@@ -92,9 +77,9 @@ function parseForwardPeData(rawCsv: string) {
   peMap.set("STOXX600", []);
 
   for (const line of rawCsv.trim().split(/\r?\n/)) {
-    const [dateRaw, tickerRaw, valueRaw] = line.split(",");
+    const [dateRaw, tickerRaw, valueRaw] = parseCsvLine(line);
     const ticker = tickerRaw?.trim().toUpperCase();
-    const timeMs = dateRaw ? parseUsDateToUtcMs(dateRaw) : null;
+    const timeMs = dateRaw ? parseUsDateToUtcTime(dateRaw) : null;
     const value = valueRaw ? Number(valueRaw) : NaN;
 
     if (!ticker || timeMs === null || !Number.isFinite(value)) {

@@ -1,14 +1,13 @@
 import { useMemo } from "react";
-import equityDataCsv from "../content/pricedatabase/equitydata.csv?raw";
-import { useNewsletterContext } from "../state/NewsletterContext";
+import {
+  DAY_MS,
+  computePercentChange,
+  getAlignedPoint,
+  getIndustrySeries,
+  type PricePoint,
+} from "../data/marketData";
+import { useNewsletterContext } from "../state/useNewsletterContext";
 import "./IndustryOverview.css";
-
-type PricePoint = {
-  time: number;
-  price: number;
-};
-
-type RegionKey = "us" | "eu";
 
 type IndustryRow = {
   id: number;
@@ -25,8 +24,13 @@ type IndustryRow = {
   euLastWeekChangeClassName: string;
 };
 
-const EXCEL_EPOCH_UTC = Date.UTC(1899, 11, 30);
-const DAY_MS = 24 * 60 * 60 * 1000;
+type RegionMetrics = {
+  priceText: string;
+  weekChangeText: string;
+  weekChangeClassName: string;
+  lastWeekChangeText: string;
+  lastWeekChangeClassName: string;
+};
 
 const INDUSTRIES = [
   { id: 1, label: "Information Tech" },
@@ -42,49 +46,12 @@ const INDUSTRIES = [
   { id: 11, label: "Real Estate" },
 ] as const;
 
+const INDUSTRY_SERIES = getIndustrySeries();
+
 const priceFormatter = new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 });
-
-function toExcelUtcTime(serial: number) {
-  return EXCEL_EPOCH_UTC + Math.round(serial) * DAY_MS;
-}
-
-function getIsoWeekKeyFromTime(time: number) {
-  const date = new Date(time);
-  const target = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
-  const dayNumber = target.getUTCDay() || 7;
-  target.setUTCDate(target.getUTCDate() + 4 - dayNumber);
-  const yearStart = new Date(Date.UTC(target.getUTCFullYear(), 0, 1));
-  const weekNumber = Math.ceil(((target.getTime() - yearStart.getTime()) / DAY_MS + 1) / 7);
-  return `${target.getUTCFullYear()}-${weekNumber}`;
-}
-
-function classifyRegion(ticker: string): RegionKey | null {
-  const upper = ticker.trim().toUpperCase();
-  if (upper.startsWith("XL")) return "us";
-  if (upper.startsWith("EX")) return "eu";
-  return null;
-}
-
-function getActiveIndex(series: PricePoint[], activeTime: number) {
-  const activeWeekKey = getIsoWeekKeyFromTime(activeTime);
-
-  for (let i = series.length - 1; i >= 0; i -= 1) {
-    if (getIsoWeekKeyFromTime(series[i].time) === activeWeekKey) {
-      return i;
-    }
-  }
-
-  for (let i = series.length - 1; i >= 0; i -= 1) {
-    if (series[i].time <= activeTime) {
-      return i;
-    }
-  }
-
-  return -1;
-}
 
 function getChangeClassName(change: number | null) {
   if (change === null || Math.abs(change) < 0.00005) {
@@ -111,62 +78,12 @@ function formatPrice(price: number | null) {
   return priceFormatter.format(price);
 }
 
-function parseIndustrySeries(rawCsv: string) {
-  const buckets = new Map<number, Map<RegionKey, Map<number, number>>>();
+function computeRegionMetrics(series: PricePoint[], activeTime: number): RegionMetrics {
+  const current = getAlignedPoint(series, activeTime);
+  const lastWeek = getAlignedPoint(series, activeTime - 7 * DAY_MS);
+  const twoWeeks = getAlignedPoint(series, activeTime - 14 * DAY_MS);
 
-  for (const line of rawCsv.trim().split(/\r?\n/)) {
-    const parts = line.split(",");
-    if (parts.length < 6) continue;
-
-    const excelDate = Number(parts[0]);
-    const ticker = (parts[2] ?? "").trim();
-    const category = (parts[3] ?? "").trim().toLowerCase();
-    const price = Number(parts[4]);
-    const industryTag = Number(parts[5]);
-    const region = classifyRegion(ticker);
-
-    if (
-      category !== "einx" ||
-      !region ||
-      !Number.isFinite(excelDate) ||
-      !Number.isFinite(price) ||
-      !Number.isInteger(industryTag) ||
-      industryTag < 1 ||
-      industryTag > 11
-    ) {
-      continue;
-    }
-
-    const time = toExcelUtcTime(excelDate);
-    const byRegion = buckets.get(industryTag) ?? new Map<RegionKey, Map<number, number>>();
-    const seriesMap = byRegion.get(region) ?? new Map<number, number>();
-    seriesMap.set(time, price);
-    byRegion.set(region, seriesMap);
-    buckets.set(industryTag, byRegion);
-  }
-
-  const seriesByIndustry = new Map<number, Record<RegionKey, PricePoint[]>>();
-
-  for (const industry of INDUSTRIES) {
-    const byRegion = buckets.get(industry.id);
-    const usSeries = [...(byRegion?.get("us")?.entries() ?? [])]
-      .sort((a, b) => a[0] - b[0])
-      .map(([time, price]) => ({ time, price }));
-    const euSeries = [...(byRegion?.get("eu")?.entries() ?? [])]
-      .sort((a, b) => a[0] - b[0])
-      .map(([time, price]) => ({ time, price }));
-
-    seriesByIndustry.set(industry.id, { us: usSeries, eu: euSeries });
-  }
-
-  return seriesByIndustry;
-}
-
-const INDUSTRY_SERIES = parseIndustrySeries(equityDataCsv);
-
-function computeRegionMetrics(series: PricePoint[], activeTime: number) {
-  const activeIndex = getActiveIndex(series, activeTime);
-  if (activeIndex < 0) {
+  if (!current) {
     return {
       priceText: "--",
       weekChangeText: "--",
@@ -176,16 +93,11 @@ function computeRegionMetrics(series: PricePoint[], activeTime: number) {
     };
   }
 
-  const current = series[activeIndex];
-  const previous = series[activeIndex - 1] ?? null;
-  const twoBack = series[activeIndex - 2] ?? null;
-
-  const weekChange = previous && previous.price !== 0 ? current.price / previous.price - 1 : null;
-  const lastWeekChange =
-    previous && twoBack && twoBack.price !== 0 ? previous.price / twoBack.price - 1 : null;
+  const weekChange = computePercentChange(current.value, lastWeek?.value ?? null);
+  const lastWeekChange = computePercentChange(lastWeek?.value ?? null, twoWeeks?.value ?? null);
 
   return {
-    priceText: formatPrice(current.price),
+    priceText: formatPrice(current.value),
     weekChangeText: formatPercent(weekChange, false),
     weekChangeClassName: getChangeClassName(weekChange),
     lastWeekChangeText: formatPercent(lastWeekChange, true),

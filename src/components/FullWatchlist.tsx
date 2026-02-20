@@ -1,12 +1,14 @@
 import { useMemo } from "react";
-import equityDataCsv from "../content/pricedatabase/equitydata.csv?raw";
-import { useNewsletterContext } from "../state/NewsletterContext";
+import {
+  DAY_MS,
+  computePercentChange,
+  computeRollingHigh,
+  getAlignedPoint,
+  getWatchlistStoxSeries,
+  resolveAlignedTime,
+} from "../data/marketData";
+import { useNewsletterContext } from "../state/useNewsletterContext";
 import "./MajorIndexes.css";
-
-type PricePoint = {
-  time: number;
-  price: number;
-};
 
 type FullWatchlistRow = {
   ticker: string;
@@ -18,46 +20,13 @@ type FullWatchlistRow = {
   high52WeekText: string;
 };
 
-const EXCEL_EPOCH_UTC = Date.UTC(1899, 11, 30);
-const DAY_MS = 24 * 60 * 60 * 1000;
 const TRAILING_52_WEEK_MS = 364 * DAY_MS;
+const STOX_DATA = getWatchlistStoxSeries();
 
 const priceFormatter = new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 });
-
-function toExcelUtcTime(serial: number) {
-  return EXCEL_EPOCH_UTC + Math.round(serial) * DAY_MS;
-}
-
-function getIsoWeekKeyFromTime(time: number) {
-  const date = new Date(time);
-  const target = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
-  const dayNumber = target.getUTCDay() || 7;
-  target.setUTCDate(target.getUTCDate() + 4 - dayNumber);
-  const yearStart = new Date(Date.UTC(target.getUTCFullYear(), 0, 1));
-  const weekNumber = Math.ceil(((target.getTime() - yearStart.getTime()) / DAY_MS + 1) / 7);
-  return `${target.getUTCFullYear()}-${weekNumber}`;
-}
-
-function getActiveIndex(series: PricePoint[], activeTime: number) {
-  const activeWeekKey = getIsoWeekKeyFromTime(activeTime);
-
-  for (let i = series.length - 1; i >= 0; i -= 1) {
-    if (getIsoWeekKeyFromTime(series[i].time) === activeWeekKey) {
-      return i;
-    }
-  }
-
-  for (let i = series.length - 1; i >= 0; i -= 1) {
-    if (series[i].time <= activeTime) {
-      return i;
-    }
-  }
-
-  return -1;
-}
 
 function getChangeClassName(change: number | null) {
   if (change === null || Math.abs(change) < 0.00005) {
@@ -80,82 +49,9 @@ function formatPercent(change: number | null, bracketed: boolean) {
 }
 
 function formatPrice(price: number | null) {
-  if (price === null) {
-    return "--";
-  }
+  if (price === null) return "--";
   return priceFormatter.format(price);
 }
-
-function parseStoxSeries(rawCsv: string) {
-  const seriesMaps = new Map<string, Map<number, number>>();
-  const tickersByTime = new Map<number, string[]>();
-
-  for (const line of rawCsv.trim().split(/\r?\n/)) {
-    const parts = line.split(",");
-    if (parts.length < 5) continue;
-
-    const excelDate = Number(parts[0]);
-    const ticker = (parts[2] ?? "").trim().toUpperCase();
-    const tag = (parts[3] ?? "").trim().toLowerCase();
-    const price = Number(parts[4]);
-
-    if (tag !== "stox" || !ticker || !Number.isFinite(excelDate) || !Number.isFinite(price)) {
-      continue;
-    }
-
-    const time = toExcelUtcTime(excelDate);
-
-    const tickerMap = seriesMaps.get(ticker) ?? new Map<number, number>();
-    tickerMap.set(time, price);
-    seriesMaps.set(ticker, tickerMap);
-
-    const tickersAtTime = tickersByTime.get(time) ?? [];
-    if (!tickersAtTime.includes(ticker)) {
-      tickersAtTime.push(ticker);
-    }
-    tickersByTime.set(time, tickersAtTime);
-  }
-
-  const seriesByTicker = new Map<string, PricePoint[]>();
-  for (const [ticker, tickerMap] of seriesMaps.entries()) {
-    const sorted = [...tickerMap.entries()]
-      .sort((a, b) => a[0] - b[0])
-      .map(([time, price]) => ({ time, price }));
-    seriesByTicker.set(ticker, sorted);
-  }
-
-  const sortedTimes = [...tickersByTime.keys()].sort((a, b) => a - b);
-
-  return { seriesByTicker, tickersByTime, sortedTimes };
-}
-
-function resolveSnapshotTime(sortedTimes: number[], activeTime: number) {
-  const activeWeekKey = getIsoWeekKeyFromTime(activeTime);
-  let sameWeekTime: number | null = null;
-
-  for (const time of sortedTimes) {
-    if (getIsoWeekKeyFromTime(time) === activeWeekKey) {
-      sameWeekTime = time;
-    }
-  }
-
-  if (sameWeekTime !== null) {
-    return sameWeekTime;
-  }
-
-  let lastBeforeOrOn: number | null = null;
-  for (const time of sortedTimes) {
-    if (time <= activeTime) {
-      lastBeforeOrOn = time;
-    } else {
-      break;
-    }
-  }
-
-  return lastBeforeOrOn;
-}
-
-const STOX_DATA = parseStoxSeries(equityDataCsv);
 
 export function FullWatchlist() {
   const { selected } = useNewsletterContext();
@@ -166,7 +62,7 @@ export function FullWatchlist() {
       return [];
     }
 
-    const snapshotTime = resolveSnapshotTime(STOX_DATA.sortedTimes, activeTime);
+    const snapshotTime = resolveAlignedTime(STOX_DATA.sortedTimes, activeTime);
     if (snapshotTime === null) {
       return [];
     }
@@ -175,9 +71,12 @@ export function FullWatchlist() {
 
     return activeTickers.map((ticker) => {
       const series = STOX_DATA.seriesByTicker.get(ticker) ?? [];
-      const activeIndex = getActiveIndex(series, snapshotTime);
 
-      if (activeIndex < 0) {
+      const current = getAlignedPoint(series, snapshotTime);
+      const lastWeek = getAlignedPoint(series, snapshotTime - 7 * DAY_MS);
+      const twoWeeks = getAlignedPoint(series, snapshotTime - 14 * DAY_MS);
+
+      if (!current) {
         return {
           ticker,
           priceText: "--",
@@ -189,25 +88,13 @@ export function FullWatchlist() {
         };
       }
 
-      const current = series[activeIndex];
-      const previous = series[activeIndex - 1] ?? null;
-      const twoBack = series[activeIndex - 2] ?? null;
-
-      const weekChange =
-        previous && previous.price !== 0 ? current.price / previous.price - 1 : null;
-      const lastWeekChange =
-        previous && twoBack && twoBack.price !== 0 ? previous.price / twoBack.price - 1 : null;
-
-      const windowStart = current.time - TRAILING_52_WEEK_MS;
-      const trailingWindow = series.filter(
-        (point, index) => index <= activeIndex && point.time >= windowStart,
-      );
-      const highWindow = trailingWindow.length > 0 ? trailingWindow : series.slice(0, activeIndex + 1);
-      const high52Week = Math.max(...highWindow.map((point) => point.price));
+      const weekChange = computePercentChange(current.value, lastWeek?.value ?? null);
+      const lastWeekChange = computePercentChange(lastWeek?.value ?? null, twoWeeks?.value ?? null);
+      const high52Week = computeRollingHigh(series, current.time, TRAILING_52_WEEK_MS);
 
       return {
         ticker,
-        priceText: formatPrice(current.price),
+        priceText: formatPrice(current.value),
         weekChangeText: formatPercent(weekChange, false),
         weekChangeClassName: getChangeClassName(weekChange),
         lastWeekChangeText: formatPercent(lastWeekChange, true),

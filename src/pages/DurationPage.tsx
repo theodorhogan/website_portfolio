@@ -1,3 +1,4 @@
+import { FedFutures } from "../components/FedFutures";
 import { RatesAndYield } from "../components/RatesAndYield";
 import { YieldCurveGraph } from "../components/YieldCurveGraph";
 import "./DurationPage.css";
@@ -10,8 +11,13 @@ export function DurationPage() {
           <div className="duration-page__ratesSlot">
             <RatesAndYield />
           </div>
-          <div className="duration-page__curveSlot">
-            <YieldCurveGraph />
+          <div className="duration-page__chartsRow">
+            <div className="duration-page__curveSlot">
+              <YieldCurveGraph />
+            </div>
+            <div className="duration-page__curveSlot">
+              <FedFutures />
+            </div>
           </div>
         </div>
       </div>

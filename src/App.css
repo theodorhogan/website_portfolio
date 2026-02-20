@@ -16,6 +16,10 @@
   padding-right: 0.75rem;
 }
 
+.app-content__loading {
+  @apply flex h-full w-full items-center justify-center font-mono text-sm tracking-wide text-slate-400;
+}
+
 @media (max-width: 1024px) {
   .app-shell {
     @apply h-auto min-h-screen overflow-visible;

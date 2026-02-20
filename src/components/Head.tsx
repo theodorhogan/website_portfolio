@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import "./Head.css";
-import { useNewsletterContext } from "../state/NewsletterContext";
+import { useNewsletterContext } from "../state/useNewsletterContext";
 
 type IndicatorState = "red" | "blue" | "green";
 

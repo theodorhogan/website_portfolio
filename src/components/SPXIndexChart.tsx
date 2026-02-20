@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from "react";
 import { CrosshairMode, createChart, type IChartApi, type ISeriesApi, type Time } from "lightweight-charts";
-import { useNewsletterContext } from "../state/NewsletterContext";
+import { useNewsletterContext } from "../state/useNewsletterContext";
 import {
   formatChartPrice,
   formatChartSubtitleDate,
