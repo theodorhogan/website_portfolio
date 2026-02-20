@@ -10,10 +10,10 @@ import { NewsletterProvider } from "./state/NewsletterContext";
 
 function AppContent() {
   const location = useLocation();
-  const isBetaRoute = location.pathname === "/beta";
+  const isWideRoute = location.pathname === "/beta" || location.pathname === "/duration";
 
   return (
-    <div className={`app-content${isBetaRoute ? " app-content--wide" : ""}`}>
+    <div className={`app-content${isWideRoute ? " app-content--wide" : ""}`}>
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/duration" element={<DurationPage />} />

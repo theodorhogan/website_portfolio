@@ -1,15 +1,66 @@
 .duration-page {
-  @apply flex h-full w-full items-center justify-center;
+  @apply flex h-full min-h-0 w-full flex-1 items-start justify-start overflow-hidden py-4 pl-1;
 }
 
-.duration-page__card {
-  @apply flex w-full max-w-2xl flex-col items-center justify-center gap-4 rounded-3xl border border-sky-500/40 bg-black px-8 py-16 text-center shadow-xl shadow-sky-900/40;
+.duration-page__layout {
+  @apply flex h-auto min-h-0 w-full items-start justify-start overflow-hidden pr-2;
+  width: 100%;
 }
 
-.duration-page__title {
-  @apply text-4xl font-bold tracking-tight text-sky-300 sm:text-5xl;
+.duration-page__topLeft {
+  @apply flex min-h-0 w-full min-w-0 flex-col items-start justify-start gap-4 overflow-hidden;
 }
 
-.duration-page__subtitle {
-  @apply max-w-xl text-base text-slate-300 sm:text-lg;
+.duration-page__curveSlot,
+.duration-page__ratesSlot {
+  @apply min-h-0 min-w-0;
+}
+
+.duration-page__curveSlot .yield-curve {
+  width: 100%;
+  max-width: 38rem;
+  height: 25rem;
+  aspect-ratio: 4 / 3.5;
+}
+
+.duration-page__ratesSlot .rates-yield {
+  width: 100%;
+  height: auto;
+  max-height: none;
+}
+
+@media (max-width: 1280px) {
+  .duration-page__layout {
+    @apply h-auto overflow-visible px-0 pr-0;
+  }
+
+  .duration-page__topLeft {
+    @apply justify-start overflow-visible;
+  }
+
+  .duration-page__curveSlot .yield-curve {
+    width: min(100%, 34rem);
+    height: auto;
+    max-height: none;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .duration-page {
+    @apply h-auto min-h-0 overflow-visible pb-2;
+  }
+
+  .duration-page__layout {
+    @apply h-auto overflow-visible;
+  }
+
+  .duration-page__curveSlot .yield-curve {
+    width: min(100%, 29rem);
+    aspect-ratio: 1 / 1;
+  }
+
+  .duration-page__ratesSlot .rates-yield {
+    width: 100%;
+  }
 }
