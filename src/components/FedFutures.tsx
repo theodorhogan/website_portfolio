@@ -24,7 +24,8 @@ type FedFuturesChartData =
       hasData: true;
       activeLabel: string;
       path: string;
-      points: Array<{ x: number; y: number; ticker: string }>;
+      points: Array<{ x: number; y: number; ticker: string; impliedRate: number }>;
+      connectors: Array<{ key: string; x1: number; x2: number; y: number; label: string }>;
       yTicks: Array<{ value: number; y: number }>;
       xTicks: Array<{ key: string; x: number; label: string }>;
       plotLeft: number;
@@ -92,7 +93,16 @@ export function FedFutures() {
       };
     }
 
-    const domain = getPaddedDomain(priceValues);
+    const domain = getPaddedDomain(priceValues, 0.1, 0.18);
+    const firstPrice = orderedContracts.find((contract) => contract !== null)?.price ?? null;
+    const lastPrice = [...orderedContracts].reverse().find((contract) => contract !== null)?.price ?? null;
+    if (firstPrice !== null && lastPrice !== null) {
+      const rawMax = Math.max(...priceValues);
+      const rawMin = Math.min(...priceValues);
+      const spread = Math.max(rawMax - rawMin, 0.1);
+      domain.max = Math.max(rawMax, lastPrice) + spread * 0.02;
+      domain.min = Math.min(rawMin, firstPrice) - spread * 0.02;
+    }
     const plotLeft = DURATION_CHART_MARGIN_DUAL_AXIS.left;
     const plotRight = DURATION_CHART_WIDTH - DURATION_CHART_MARGIN_DUAL_AXIS.right;
     const plotTop = DURATION_CHART_MARGIN_DUAL_AXIS.top;
@@ -115,22 +125,44 @@ export function FedFutures() {
               x: xForIndex(index),
               y: yForValue(contract.price),
               ticker: contract.ticker,
+              impliedRate: 100 - contract.price,
             }
           : null,
       )
-      .filter((point): point is { x: number; y: number; ticker: string } => point !== null);
+      .filter((point): point is { x: number; y: number; ticker: string; impliedRate: number } => point !== null);
 
-    const xTicks = orderedContracts.map((contract, index) => ({
-      key: `x-${index + 1}`,
-      x: xForIndex(index),
-      label: formatTickerLabel(contract?.ticker ?? `ZQ${index + 1}`),
-    }));
+    const connectors = points
+      .map((point, index) => {
+        if (index >= points.length - 1) return null;
+        const calloutX = xForIndex(index + 1);
+        return {
+          key: `connector-${index}`,
+          x1: point.x,
+          x2: calloutX,
+          y: point.y,
+          label: `${formatTickerLabel(point.ticker)} ${point.impliedRate.toFixed(2)}`,
+        };
+      })
+      .filter((item): item is { key: string; x1: number; x2: number; y: number; label: string } => item !== null);
+
+    const xTicks = orderedContracts
+      .map((contract, index) =>
+        index % 3 === 0
+          ? {
+              key: `x-${index + 1}`,
+              x: xForIndex(index),
+              label: formatTickerLabel(contract?.ticker ?? `ZQ${index + 1}`),
+            }
+          : null,
+      )
+      .filter((tick): tick is { key: string; x: number; label: string } => tick !== null);
 
     return {
       hasData: true,
       activeLabel: formatDate(snapshot.time),
       path,
       points,
+      connectors,
       yTicks,
       xTicks,
       plotLeft,
@@ -175,6 +207,20 @@ export function FedFutures() {
                 })),
               },
             ]}
+            overlay={chartData.connectors.map((connector) => (
+              <g key={connector.key}>
+                <line
+                  x1={connector.x1}
+                  x2={connector.x2}
+                  y1={connector.y}
+                  y2={connector.y}
+                  className="fed-futures__connectorLine"
+                />
+                <text x={connector.x2 + 4} y={connector.y + 3} className="fed-futures__connectorLabel">
+                  {connector.label}
+                </text>
+              </g>
+            ))}
             gridLineClassName="fed-futures__gridLine"
             axisLineClassName="fed-futures__axisLine"
             leftTickClassName="fed-futures__leftTick"

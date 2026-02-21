@@ -29,6 +29,19 @@ type YieldCurveChartData =
       previousLabel: string;
       activePath: string;
       previousPath: string;
+      activePoints: Array<{ x: number; y: number }>;
+      previousPoints: Array<{ x: number; y: number }>;
+      slopeGuides: Array<{
+        key: string;
+        x1: number;
+        y1: number;
+        x2: number;
+        y2: number;
+        labelX: number;
+        labelY: number;
+        label: string;
+        tone: "positive" | "negative" | "neutral";
+      }>;
       yTicks: Array<{ value: number; y: number }>;
       xTicks: Array<{ key: string; x: number; label: string }>;
       plotLeft: number;
@@ -53,6 +66,9 @@ const INSTRUMENT_LABELS: Record<TreasuryInstrumentKey, string> = {
 };
 
 const RATE_SERIES = getTreasurySeries();
+const IDX_3M = TREASURY_INSTRUMENT_ORDER.indexOf("US3M");
+const IDX_2Y = TREASURY_INSTRUMENT_ORDER.indexOf("US2Y");
+const IDX_10Y = TREASURY_INSTRUMENT_ORDER.indexOf("US10Y");
 
 function formatDate(time: number | null) {
   if (time === null) return "--";
@@ -70,6 +86,17 @@ function resolveLabelTime(targetTime: number) {
     if (index >= 0) return series[index].time;
   }
   return null;
+}
+
+function getSlopeTone(value: number) {
+  if (Math.abs(value) < 0.00005) return "neutral" as const;
+  return value > 0 ? "positive" : "negative";
+}
+
+function formatSlopeLabel(shortLabel: string, slope: number) {
+  const bps = Math.round(slope * 100);
+  const sign = bps > 0 ? "+" : "";
+  return `${shortLabel}/10Y ${sign}${bps}bp`;
 }
 
 export function YieldCurveGraph() {
@@ -125,6 +152,62 @@ export function YieldCurveGraph() {
 
     const activePath = buildLinePath(activeValues, xForIndex, yForValue);
     const previousPath = buildLinePath(previousValues, xForIndex, yForValue);
+    const activePoints = activeValues
+      .map((value, index) => (value === null ? null : { x: xForIndex(index), y: yForValue(value) }))
+      .filter((point): point is { x: number; y: number } => point !== null);
+
+    const slopeGuides: Array<{
+      key: string;
+      x1: number;
+      y1: number;
+      x2: number;
+      y2: number;
+      labelX: number;
+      labelY: number;
+      label: string;
+      tone: "positive" | "negative" | "neutral";
+    }> = [];
+    const tenYearValue = activeValues[IDX_10Y];
+    const tenYearPoint = tenYearValue === null ? null : { x: xForIndex(IDX_10Y), y: yForValue(tenYearValue) };
+
+    if (tenYearPoint && tenYearValue !== null) {
+      const threeMonthValue = activeValues[IDX_3M];
+      if (threeMonthValue !== null) {
+        const slope = tenYearValue - threeMonthValue;
+        const fromPoint = { x: xForIndex(IDX_3M), y: yForValue(threeMonthValue) };
+        slopeGuides.push({
+          key: "3m10y",
+          x1: fromPoint.x,
+          y1: fromPoint.y,
+          x2: tenYearPoint.x,
+          y2: tenYearPoint.y,
+          labelX: (fromPoint.x + tenYearPoint.x) / 2,
+          labelY: Math.min(fromPoint.y, tenYearPoint.y) - 10,
+          label: formatSlopeLabel("3M", slope),
+          tone: getSlopeTone(slope),
+        });
+      }
+
+      const twoYearValue = activeValues[IDX_2Y];
+      if (twoYearValue !== null) {
+        const slope = tenYearValue - twoYearValue;
+        const fromPoint = { x: xForIndex(IDX_2Y), y: yForValue(twoYearValue) };
+        slopeGuides.push({
+          key: "2y10y",
+          x1: fromPoint.x,
+          y1: fromPoint.y,
+          x2: tenYearPoint.x,
+          y2: tenYearPoint.y,
+          labelX: (fromPoint.x + tenYearPoint.x) / 2,
+          labelY: Math.max(fromPoint.y, tenYearPoint.y) + 14,
+          label: formatSlopeLabel("2Y", slope),
+          tone: getSlopeTone(slope),
+        });
+      }
+    }
+    const previousPoints = previousValues
+      .map((value, index) => (value === null ? null : { x: xForIndex(index), y: yForValue(value) }))
+      .filter((point): point is { x: number; y: number } => point !== null);
 
     const yTicks = buildYTicks(domain.min, domain.max, plotTop, plotHeight, 5);
     const xTicks = TREASURY_INSTRUMENT_ORDER.map((ticker, index) => ({
@@ -139,6 +222,9 @@ export function YieldCurveGraph() {
       previousLabel: formatDate(previousLabelTime ?? previousTime),
       activePath,
       previousPath,
+      activePoints,
+      previousPoints,
+      slopeGuides,
       yTicks,
       xTicks,
       plotLeft,
@@ -183,13 +269,74 @@ export function YieldCurveGraph() {
                 key: "previous",
                 path: chartData.previousPath,
                 pathClassName: "yield-curve__path yield-curve__path--previous",
+                points: chartData.previousPoints.map((point, index) => ({
+                  x: point.x,
+                  y: point.y,
+                  r: 2.2,
+                  className: "yield-curve__point yield-curve__point--previous",
+                  key: `previous-${index}`,
+                })),
               },
               {
                 key: "active",
                 path: chartData.activePath,
                 pathClassName: "yield-curve__path yield-curve__path--active",
+                points: chartData.activePoints.map((point, index) => ({
+                  x: point.x,
+                  y: point.y,
+                  r: 2.8,
+                  className: "yield-curve__point yield-curve__point--active",
+                  key: `active-${index}`,
+                })),
               },
             ]}
+            overlay={chartData.slopeGuides.map((guide) => (
+              <g key={guide.key}>
+                {guide.key === "3m10y" ? (
+                  <>
+                    <line
+                      x1={guide.x1}
+                      y1={guide.y2}
+                      x2={guide.x2}
+                      y2={guide.y2}
+                      className={`yield-curve__slopeGuideLine yield-curve__slopeGuideLine--${guide.tone}`}
+                    />
+                    <line
+                      x1={guide.x1}
+                      y1={guide.y1}
+                      x2={guide.x1}
+                      y2={guide.y2}
+                      className={`yield-curve__slopeGuideLine yield-curve__slopeGuideLine--${guide.tone}`}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <line
+                      x1={guide.x1}
+                      y1={guide.y1}
+                      x2={guide.x2}
+                      y2={guide.y1}
+                      className={`yield-curve__slopeGuideLine yield-curve__slopeGuideLine--${guide.tone}`}
+                    />
+                    <line
+                      x1={guide.x2}
+                      y1={guide.y1}
+                      x2={guide.x2}
+                      y2={guide.y2}
+                      className={`yield-curve__slopeGuideLine yield-curve__slopeGuideLine--${guide.tone}`}
+                    />
+                  </>
+                )}
+                <text
+                  x={guide.labelX}
+                  y={guide.labelY}
+                  textAnchor="middle"
+                  className={`yield-curve__slopeLabel yield-curve__slopeLabel--${guide.tone}`}
+                >
+                  {guide.label}
+                </text>
+              </g>
+            ))}
             gridLineClassName="yield-curve__gridLine"
             axisLineClassName="yield-curve__axisLine"
             leftTickClassName="yield-curve__yTick"

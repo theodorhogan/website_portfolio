@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 type CurvePlotPoint = {
   x: number;
   y: number;
@@ -42,6 +44,7 @@ type CurvePlotProps = {
   leftTickClassName: string;
   rightTickClassName?: string;
   xTickClassName: string;
+  overlay?: ReactNode;
 };
 
 export function CurvePlot({
@@ -60,6 +63,7 @@ export function CurvePlot({
   leftTickClassName,
   rightTickClassName,
   xTickClassName,
+  overlay,
 }: CurvePlotProps) {
   return (
     <svg
@@ -107,6 +111,8 @@ export function CurvePlot({
           ))}
         </g>
       ))}
+
+      {overlay}
 
       {xTicks.map((tick) => (
         <text key={tick.key} x={tick.x} y={height - 12} textAnchor="middle" className={xTickClassName}>

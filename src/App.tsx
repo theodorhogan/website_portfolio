@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import { Head } from "./components/Head";
@@ -13,6 +13,21 @@ const BetaPage = lazy(() => import("./pages/BetaPage").then((module) => ({ defau
 const ModelsPage = lazy(() =>
   import("./pages/ModelsPage").then((module) => ({ default: module.ModelsPage })),
 );
+
+function isEditableTarget(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) return false;
+  const tag = target.tagName.toLowerCase();
+  return tag === "input" || tag === "textarea" || tag === "select" || target.isContentEditable;
+}
+
+function getInitialGridEnabled() {
+  if (typeof window === "undefined") return false;
+
+  const gridParam = new URLSearchParams(window.location.search).get("grid");
+  if (gridParam === "1") return true;
+  if (gridParam === "0") return false;
+  return false;
+}
 
 function AppContent() {
   const location = useLocation();
@@ -33,6 +48,20 @@ function AppContent() {
 }
 
 function App() {
+  const [isGridEnabled, setIsGridEnabled] = useState(getInitialGridEnabled);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key.toLowerCase() !== "g") return;
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
+      if (isEditableTarget(event.target)) return;
+      setIsGridEnabled((prev) => !prev);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <NewsletterProvider>
@@ -42,6 +71,7 @@ function App() {
             <AppContent />
           </main>
           <NavBar />
+          {isGridEnabled ? <div className="layout-grid-overlay" aria-hidden="true" /> : null}
         </div>
       </NewsletterProvider>
     </BrowserRouter>

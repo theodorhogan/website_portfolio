@@ -1,11 +1,11 @@
 .yield-curve {
-  @apply flex w-full min-w-0 flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
+  @apply flex w-full min-w-0 flex-col overflow-hidden border border-sky-900/60 bg-[#08121c] text-slate-100 shadow-xl;
   height: auto;
   min-height: 0;
 }
 
 .yield-curve__header {
-  @apply flex items-center justify-between gap-3 border-b border-slate-800/80 bg-[#1f2530] px-2.5 py-1.5;
+  @apply flex items-center justify-between gap-3 border-b border-sky-900/60 bg-[#0e1a2a] px-2.5 py-1.5;
 }
 
 .yield-curve__titleBadge {
@@ -30,8 +30,8 @@
 }
 
 .yield-curve__legendDot--previous {
-  background-color: #f43f5e;
-  box-shadow: 0 0 6px rgba(244, 63, 94, 0.45);
+  background-color: #f97316;
+  box-shadow: 0 0 6px rgba(249, 115, 22, 0.45);
 }
 
 .yield-curve__body {
@@ -44,18 +44,18 @@
 }
 
 .yield-curve__gridLine {
-  stroke: rgba(148, 163, 184, 0.18);
+  stroke: rgba(56, 189, 248, 0.18);
   stroke-width: 1;
 }
 
 .yield-curve__axisLine {
-  stroke: rgba(148, 163, 184, 0.28);
+  stroke: rgba(56, 189, 248, 0.35);
   stroke-width: 1;
 }
 
 .yield-curve__path {
   fill: none;
-  stroke-width: 2.2;
+  stroke-width: 2.8;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -65,7 +65,58 @@
 }
 
 .yield-curve__path--previous {
-  stroke: #f43f5e;
+  stroke: #f97316;
+  stroke-dasharray: 5 5;
+}
+
+.yield-curve__point {
+  stroke-width: 1;
+}
+
+.yield-curve__point--active {
+  fill: #38bdf8;
+  stroke: rgba(56, 189, 248, 0.55);
+}
+
+.yield-curve__point--previous {
+  fill: #f97316;
+  stroke: rgba(249, 115, 22, 0.45);
+}
+
+.yield-curve__slopeGuideLine {
+  stroke-width: 1.5;
+  stroke-dasharray: 4 5;
+  opacity: 0.95;
+}
+
+.yield-curve__slopeGuideLine--positive {
+  stroke: #34d399;
+}
+
+.yield-curve__slopeGuideLine--negative {
+  stroke: #fb7185;
+}
+
+.yield-curve__slopeGuideLine--neutral {
+  stroke: #94a3b8;
+}
+
+.yield-curve__slopeLabel {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 8px;
+  letter-spacing: 0.02em;
+}
+
+.yield-curve__slopeLabel--positive {
+  fill: #6ee7b7;
+}
+
+.yield-curve__slopeLabel--negative {
+  fill: #fda4af;
+}
+
+.yield-curve__slopeLabel--neutral {
+  fill: #cbd5e1;
 }
 
 .yield-curve__xTick,
