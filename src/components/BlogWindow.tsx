@@ -3,7 +3,7 @@ import "./BlogWindow.css";
 import { useNewsletterContext } from "../state/useNewsletterContext";
 
 const HIGHLIGHT_TOKEN =
-  /\[\[(?<actual>[^\]]+)\]\]|\[\((?<expected>[^)]+)\)\]|\[(?<sign>[+-])?(?<value>\d+(?:\.\d+)?)%\]/g;
+  /\[\[(?<actual>[^\]]+)\]\]|\[\((?<expected>[^)]+)\)\]|\[(?<change>[+-]?\d+(?:\.\d+)?)%\]/g;
 
 function renderContentWithChangeBadges(content: string) {
   const lines = content.split(/\r?\n/);
@@ -32,8 +32,7 @@ function renderContentWithChangeBadges(content: string) {
 
       const actual = match.groups?.actual;
       const expected = match.groups?.expected;
-      const sign = match.groups?.sign ?? null;
-      const value = match.groups?.value ?? "";
+      const changeRaw = match.groups?.change;
 
       let displayValue = "";
       let variant = "blog-window__change--neutral";
@@ -45,13 +44,14 @@ function renderContentWithChangeBadges(content: string) {
         displayValue = expected.trim();
         variant = "blog-window__change--expected";
       } else {
+        const changeValue = Number(changeRaw ?? "0");
         variant =
-          sign === "-"
+          changeValue < 0
             ? "blog-window__change--negative"
-            : sign === "+"
+            : changeValue > 0
               ? "blog-window__change--positive"
               : "blog-window__change--neutral";
-        displayValue = `${sign ?? ""}${value}%`;
+        displayValue = `${changeRaw ?? "0"}%`;
       }
 
       if (!displayValue) {

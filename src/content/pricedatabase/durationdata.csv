@@ -256,18 +256,18 @@
 46073,ICE BofA US High Yield,HY,spread,286,0
 46073,Speculative,BB,spread,170,0
 46073,Distressed,CCC,spread,887,0
-46073,ZQ Future 1,Feb ZQ26,future,96.36,1
-46073,ZQ Future 2,Mar ZQ26,future,96.365,2
-46073,ZQ Future 3,Apr ZQ26,future,96.37,3
-46073,ZQ Future 4,May ZQ26,future,96.405,4
-46073,ZQ Future 5,Jun ZQ26,future,96.45,5
-46073,ZQ Future 6,Jul ZQ26,future,96.52,6
-46073,ZQ Future 7,Aug ZQ26,future,96.605,7
-46073,ZQ Future 8,Sep ZQ26,future,96.665,8
-46073,ZQ Future 9,Oct ZQ26,future,96.75,9
-46073,ZQ Future 10,Nov ZQ26,future,96.825,10
-46073,ZQ Future 11,Dec ZQ26,future,96.89,11
-46073,ZQ Future 12,Jan ZQ27,future,96.92,12
+46073,ZQ Future 1,Feb ZQ26,future,96.36000061,1
+46073,ZQ Future 2,Mar ZQ26,future,96.36499786,2
+46073,ZQ Future 3,Apr ZQ26,future,96.375,3
+46073,ZQ Future 4,May ZQ26,future,96.40499878,4
+46073,ZQ Future 5,Jun ZQ26,future,96.44499969,5
+46073,ZQ Future 6,Jul ZQ26,future,96.51499939,6
+46073,ZQ Future 7,Aug ZQ26,future,96.59999847,7
+46073,ZQ Future 8,Sep ZQ26,future,96.66500092,8
+46073,ZQ Future 9,Oct ZQ26,future,96.74500275,9
+46073,ZQ Future 10,Nov ZQ26,future,96.81999969,10
+46073,ZQ Future 11,Dec ZQ26,future,96.88999939,11
+46073,ZQ Future 12,Jan ZQ27,future,96.91999817,12
 46073,DE 10 Year Bund,DE10Y,yield,2.739,0
 46073,UK 10 Year Gilt,UK10Y,yield,4.354,0
 46073,Effective Rate,EFFR,rate,3.64,0

@@ -1,0 +1,145 @@
+.economic-data {
+  @apply flex h-full min-h-0 w-full min-w-0 flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
+}
+
+.economic-data__header {
+  @apply flex items-center justify-between gap-3 border-b border-slate-800/80 bg-[#1f2530] px-2.5 py-1.5;
+}
+
+.economic-data__titleBadge {
+  @apply rounded-sm bg-emerald-500/20 px-2 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-200;
+}
+
+.economic-data__headerDate {
+  @apply font-mono text-[0.62rem] uppercase tracking-wide text-slate-400;
+}
+
+.economic-data__body {
+  @apply grid min-h-0 flex-1 grid-cols-[8.2rem_1fr] overflow-hidden;
+}
+
+.economic-data__rail {
+  @apply flex min-h-0 flex-col gap-1 overflow-y-auto border-r border-slate-800 bg-[#121722] p-2;
+  scrollbar-width: thin;
+}
+
+.economic-data__railButton {
+  @apply flex flex-col items-start gap-0.5 rounded border border-slate-700 bg-[#0f141d] px-2 py-1.5 font-mono text-[0.66rem] uppercase tracking-wide text-slate-300 transition-colors;
+}
+
+.economic-data__railButton:hover {
+  @apply border-slate-600 text-slate-100;
+}
+
+.economic-data__railButton--upcoming {
+  @apply border-sky-500/70;
+}
+
+.economic-data__railButton.is-selected-upcoming {
+  @apply border-sky-400 bg-sky-500/20 text-sky-100;
+}
+
+.economic-data__railButton.is-selected-past {
+  @apply border-emerald-400 bg-emerald-500/15 text-emerald-100;
+}
+
+.economic-data__railWeekBadge {
+  @apply inline-flex items-center gap-1.5 rounded border px-1.5 py-[0.16rem] text-[0.64rem] font-bold tracking-wider;
+}
+
+.economic-data__railWeekBadge--upcoming {
+  @apply border-sky-500/60 bg-sky-500/10 text-sky-300;
+}
+
+.economic-data__railWeekBadge--upcomingSelected {
+  @apply border-sky-300 bg-sky-500/25 text-sky-100;
+}
+
+.economic-data__railWeekBadge--past {
+  @apply border-slate-600 bg-slate-800/40 text-slate-300;
+}
+
+.economic-data__railWeekBadge--pastSelected {
+  @apply border-emerald-300 bg-emerald-500/25 text-emerald-100;
+}
+
+.economic-data__railWeekBadgeDate {
+  @apply text-[0.52rem] font-semibold tracking-wide text-slate-200;
+}
+
+.economic-data__railYear {
+  @apply text-[0.6rem] font-medium leading-tight text-slate-400;
+}
+
+.economic-data__railRange {
+  @apply text-[0.56rem] tracking-wide text-slate-500;
+}
+
+.economic-data__detail {
+  @apply min-h-0 overflow-y-auto px-2 py-1.5;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(51, 65, 85, 0.7) #12161d;
+}
+
+.economic-data__detail::-webkit-scrollbar {
+  width: 8px;
+}
+
+.economic-data__detail::-webkit-scrollbar-track {
+  background: #12161d;
+}
+
+.economic-data__detail::-webkit-scrollbar-thumb {
+  background-color: rgba(51, 65, 85, 0.7);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.economic-data__content {
+  @apply whitespace-pre-wrap break-words font-mono text-[0.7rem] leading-6 text-slate-200;
+}
+
+.economic-data__line {
+  @apply block;
+}
+
+.economic-data__change {
+  @apply inline-flex items-center justify-center rounded-md border px-1.5 py-0.5 text-[0.64rem] font-semibold tracking-tight;
+  line-height: 1.1;
+  min-width: 3ch;
+}
+
+.economic-data__change--positive {
+  @apply border-emerald-500/70 bg-emerald-500/15 text-emerald-200;
+}
+
+.economic-data__change--negative {
+  @apply border-rose-500/70 bg-rose-500/15 text-rose-200;
+}
+
+.economic-data__change--neutral {
+  @apply border-sky-500/70 bg-sky-500/15 text-sky-200;
+}
+
+.economic-data__change--actual {
+  @apply border-orange-500/70 bg-orange-500/15 text-orange-200;
+}
+
+.economic-data__change--expected {
+  @apply border-yellow-400/70 bg-yellow-400/15 text-yellow-100;
+}
+
+.economic-data__empty {
+  @apply font-mono text-xs leading-5 text-slate-400;
+}
+
+@media (max-width: 900px) {
+  .economic-data__body {
+    grid-template-columns: 1fr;
+  }
+
+  .economic-data__rail {
+    @apply max-h-40 border-b border-r-0;
+  }
+}

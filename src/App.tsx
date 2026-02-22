@@ -31,7 +31,8 @@ function getInitialGridEnabled() {
 
 function AppContent() {
   const location = useLocation();
-  const isWideRoute = location.pathname === "/beta" || location.pathname === "/duration";
+  const isWideRoute =
+    location.pathname === "/" || location.pathname === "/beta" || location.pathname === "/duration";
 
   return (
     <div className={`app-content${isWideRoute ? " app-content--wide" : ""}`}>

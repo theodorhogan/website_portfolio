@@ -1,0 +1,59 @@
+--- 27-FEB-26 ---
+- Tue: ISM Manufacturing [[50.8]] vs street [(50.3)] | surprise [+0.99%]
+- Wed: ADP Employment [[176K]] vs street [(165K)] | surprise [+6.67%]
+- Thu: Initial Claims [[224K]] vs street [(229K)] | surprise [-2.18%]
+- Fri: Payrolls [[192K]] vs street [(185K)] | surprise [+3.78%]
+
+--- 20-FEB-26 ---
+- Mon: Chicago Fed NAI [[0.14]] vs street [(0.10)]  sur [+40.00%]
+- Wed: Core PCE m/m [[0.30%]] vs street [(0.30%)]  surprise [0.00%]
+- Thu: Initial Claims [[229K]] vs street [(225K)]  surprise [+1.78%]
+- Fri: ISM Manufacturing [[50.4]] vs street [(50.1)]  surprise [+0.60%]
+
+--- 13-FEB-26 ---
+- Tue: CPI y/y [[2.90%]] vs street [(2.90%)] | surprise [0.00%]
+- Wed: Retail Sales [[-0.40%]] vs street [(0.10%)] | surprise [-0.50%]
+- Thu: Initial Claims [[221K]] vs street [(225K)] | surprise [-1.78%]
+- Fri: NFP revision [[+18K]] vs prior [(-12K)] | surprise [+250.00%]
+
+--- 06-FEB-26 ---
+- Mon: ISM Services [[52.1]] vs street [(52.5)] | surprise [-0.76%]
+- Tue: JOLTS [[8.71M]] vs street [(8.80M)] | surprise [-1.02%]
+- Wed: Unit Labor Costs [[2.2%]] vs street [(2.0%)] | surprise [+10.00%]
+- Thu: Initial Claims [[226K]] vs street [(228K)] | surprise [-0.88%]
+
+--- 30-JAN-26 ---
+- Tue: GDP q/q saar [[2.10%]] vs street [(2.00%)] | surprise [+5.00%]
+- Wed: PCE y/y [[2.60%]] vs street [(2.60%)] | surprise [0.00%]
+- Thu: Initial Claims [[214K]] vs street [(222K)] | surprise [-3.60%]
+- Fri: Employment Cost Index [[1.0%]] vs street [(0.9%)] | surprise [+11.11%]
+
+--- 23-JAN-26 ---
+- Tue: Housing Starts [[1.42M]] vs street [(1.46M)] | surprise [-2.74%]
+- Wed: Existing Home Sales [[4.05M]] vs street [(4.00M)] | surprise [+1.25%]
+- Thu: Initial Claims [[218K]] vs street [(220K)] | surprise [-0.91%]
+- Fri: Consumer Sentiment [[79.6]] vs street [(78.4)] | surprise [+1.53%]
+
+--- 16-JAN-26 ---
+- Tue: NFIB Small Business [[91.2]] vs street [(91.0)] | surprise [+0.22%]
+- Wed: Industrial Production [[-0.10%]] vs street [(0.20%)] | surprise [-0.30%]
+- Thu: Initial Claims [[230K]] vs street [(228K)] | surprise [+0.88%]
+- Fri: Leading Index [[-0.20%]] vs street [(-0.10%)] | surprise [-0.10%]
+
+--- 09-JAN-26 ---
+- Tue: Trade Balance [[-63.5B]] vs street [(-62.8B)] | surprise [-1.11%]
+- Wed: Wholesale Inventories [[0.3%]] vs street [(0.3%)] | surprise [0.00%]
+- Thu: Initial Claims [[232K]] vs street [(231K)] | surprise [+0.43%]
+- Fri: Payrolls [[184K]] vs street [(180K)] | surprise [+2.22%]
+
+--- 02-JAN-26 ---
+- Tue: Final PMIs [[51.1]] vs street [(51.0)] | surprise [+0.20%]
+- Wed: Factory Orders [[0.1%]] vs street [(0.0%)] | surprise [+0.10%]
+- Thu: Initial Claims [[226K]] vs street [(228K)] | surprise [-0.88%]
+- Fri: Unemployment Rate [[4.10%]] vs street [(4.10%)] | surprise [0.00%]
+
+--- 26-DEC-25 ---
+- Tue: Consumer Confidence [[103.2]] vs street [(102.0)] | surprise [+1.18%]
+- Wed: Pending Home Sales [[-0.8%]] vs street [(-0.6%)] | surprise [-0.20%]
+- Thu: Initial Claims [[229K]] vs street [(230K)] | surprise [-0.43%]
+- Fri: Durable Goods [[-0.2%]] vs street [(0.1%)] | surprise [-0.30%]
