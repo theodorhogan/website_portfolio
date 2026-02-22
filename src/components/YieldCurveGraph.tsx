@@ -95,8 +95,7 @@ function getSlopeTone(value: number) {
 
 function formatSlopeLabel(shortLabel: string, slope: number) {
   const bps = Math.round(slope * 100);
-  const sign = bps > 0 ? "+" : "";
-  return `${shortLabel}/10Y ${sign}${bps}bp`;
+  return `${shortLabel}/10Y ${bps}bp`;
 }
 
 export function YieldCurveGraph() {

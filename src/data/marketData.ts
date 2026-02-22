@@ -50,6 +50,8 @@ export type FedFutureSnapshot = {
   contracts: FedFutureContract[];
 };
 
+export type CreditSpreadKey = "IG" | "AA" | "BBB" | "HY" | "BB" | "CCC";
+
 export const DAY_MS = 24 * 60 * 60 * 1000;
 export const EXCEL_EPOCH_UTC = Date.UTC(1899, 11, 30);
 
@@ -70,6 +72,8 @@ export const TREASURY_INSTRUMENT_ORDER: TreasuryInstrumentKey[] = [
   "US20Y",
   "US30Y",
 ];
+
+export const CREDIT_SPREAD_ORDER: CreditSpreadKey[] = ["IG", "AA", "BBB", "HY", "BB", "CCC"];
 
 export const MAJOR_INDEX_ORDER = [
   "MSCI",
@@ -419,6 +423,56 @@ function parseIndustrySeries(rawCsv: string) {
   return output;
 }
 
+function parseCreditSpreadSeries(rawCsv: string) {
+  const seriesMaps = new Map<CreditSpreadKey, Map<number, number>>();
+  for (const ticker of CREDIT_SPREAD_ORDER) {
+    seriesMaps.set(ticker, new Map<number, number>());
+  }
+
+  for (const line of rawCsv.trim().split(/\r?\n/)) {
+    const parts = parseCsvLine(line);
+    if (parts.length < 5) continue;
+
+    const excelDate = Number(parts[0]);
+    const ticker = (parts[2] ?? "").trim().toUpperCase() as CreditSpreadKey;
+    const category = (parts[3] ?? "").trim().toLowerCase();
+    const value = Number(parts[4]);
+
+    if (category !== "spread" || !seriesMaps.has(ticker) || !Number.isFinite(excelDate) || !Number.isFinite(value)) {
+      continue;
+    }
+
+    seriesMaps.get(ticker)?.set(toExcelUtcTime(excelDate), value);
+  }
+
+  const output = new Map<CreditSpreadKey, PricePoint[]>();
+  for (const ticker of CREDIT_SPREAD_ORDER) {
+    output.set(ticker, dedupeSortSeries(seriesMaps.get(ticker) ?? new Map<number, number>()));
+  }
+  return output;
+}
+
+function parseEffrSeries(rawCsv: string) {
+  const seriesMap = new Map<number, number>();
+
+  for (const line of rawCsv.trim().split(/\r?\n/)) {
+    const parts = parseCsvLine(line);
+    if (parts.length < 5) continue;
+
+    const excelDate = Number(parts[0]);
+    const ticker = (parts[2] ?? "").trim().toUpperCase();
+    const value = Number(parts[4]);
+
+    if (ticker !== "EFFR" || !Number.isFinite(excelDate) || !Number.isFinite(value)) {
+      continue;
+    }
+
+    seriesMap.set(toExcelUtcTime(excelDate), value);
+  }
+
+  return dedupeSortSeries(seriesMap);
+}
+
 // Single initialization point so all components share parsed data in-memory.
 const TREASURY_SERIES = parseTreasurySeries([
   treasuryRates2024Csv,
@@ -426,6 +480,8 @@ const TREASURY_SERIES = parseTreasurySeries([
   treasuryRates2026Csv,
 ]);
 const FED_FUTURES_SNAPSHOTS = parseFedFutures(durationDataCsv);
+const CREDIT_SPREAD_SERIES = parseCreditSpreadSeries(durationDataCsv);
+const EFFR_SERIES = parseEffrSeries(durationDataCsv);
 const MAJOR_INDEX_SERIES = parseMajorIndexSeries(equityDataCsv);
 const WATCHLIST_STOX_SERIES = parseWatchlistStoxSeries(equityDataCsv);
 const INDUSTRY_SERIES = parseIndustrySeries(equityDataCsv);
@@ -436,6 +492,14 @@ export function getTreasurySeries() {
 
 export function getFedFuturesSnapshots() {
   return FED_FUTURES_SNAPSHOTS;
+}
+
+export function getCreditSpreadSeries() {
+  return CREDIT_SPREAD_SERIES;
+}
+
+export function getEffrSeries() {
+  return EFFR_SERIES;
 }
 
 export function getMajorIndexSeries() {

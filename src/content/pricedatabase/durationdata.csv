@@ -249,6 +249,7 @@
 46066,ZQ Future 12,Jan ZQ27,future,97,12
 46066,DE 10 Year Bund,DE10Y,yield,2.753,0
 46066,UK 10 Year Gilt,UK10Y,yield,4.416,0
+46066,Effective Rate,EFFR,rate,3.64,0
 46073,ICE BofA Global Corporate,IG,spread,78,0
 46073,High Quality,AA,spread,48,0
 46073,Low Investment Grade,BBB,spread,99,0
@@ -269,3 +270,4 @@
 46073,ZQ Future 12,Jan ZQ27,future,96.92,12
 46073,DE 10 Year Bund,DE10Y,yield,2.739,0
 46073,UK 10 Year Gilt,UK10Y,yield,4.354,0
+46073,Effective Rate,EFFR,rate,3.64,0

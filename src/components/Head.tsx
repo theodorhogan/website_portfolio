@@ -147,7 +147,11 @@ function formatDateShort(date: Date) {
 
 export function Head() {
   const [now, setNow] = useState(() => new Date());
-  const { selected } = useNewsletterContext();
+  const { newsletters, selectedId, setSelectedId } = useNewsletterContext();
+  const selectedIndex = useMemo(
+    () => newsletters.findIndex((entry) => entry.id === selectedId),
+    [newsletters, selectedId]
+  );
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -163,9 +167,31 @@ export function Head() {
   );
 
   const activeWeekLabel = useMemo(() => {
-    if (!selected) return "[Active -- --- --]";
-    return `[Active ${formatDateShort(new Date(selected.sortDate))}]`;
-  }, [selected]);
+    const selected = selectedIndex >= 0 ? newsletters[selectedIndex] : null;
+    if (!selected) return "ACTIVE -- --- --";
+    return `ACTIVE ${formatDateShort(new Date(selected.sortDate))}`;
+  }, [newsletters, selectedIndex]);
+
+  const hasSelection = selectedIndex >= 0;
+  const hasOlderWeek = hasSelection && selectedIndex < newsletters.length - 1;
+  const hasNewerWeek = hasSelection && selectedIndex > 0;
+  const isLatestSelected = hasSelection && selectedIndex === 0;
+
+  const moveToOlderWeek = () => {
+    if (!hasOlderWeek) return;
+    setSelectedId(newsletters[selectedIndex + 1].id);
+  };
+
+  const moveToNewerWeek = () => {
+    if (!hasNewerWeek) return;
+    setSelectedId(newsletters[selectedIndex - 1].id);
+  };
+
+  const moveToLatestWeek = () => {
+    const latest = newsletters[0];
+    if (!latest) return;
+    setSelectedId(latest.id);
+  };
 
   const indicatorTitle = useMemo(() => {
     if (indicatorState === "green") {
@@ -197,8 +223,35 @@ export function Head() {
           aria-label="Search"
         />
       </div>
-      <div className="head-activeWeek" aria-label="Active newsletter week">
-        {activeWeekLabel}
+      <div className="head-activeWeek" role="group" aria-label="Change active week">
+        <button
+          type="button"
+          className="head-activeWeekButton"
+          onClick={moveToOlderWeek}
+          disabled={!hasOlderWeek}
+          aria-label="Go to older week"
+        >
+          {"<"}
+        </button>
+        <span className="head-activeWeekPrefix">{activeWeekLabel}</span>
+        <button
+          type="button"
+          className="head-activeWeekButton"
+          onClick={moveToNewerWeek}
+          disabled={!hasNewerWeek}
+          aria-label="Go to newer week"
+        >
+          {">"}
+        </button>
+        <button
+          type="button"
+          className="head-activeWeekLatest"
+          onClick={moveToLatestWeek}
+          disabled={!hasSelection || isLatestSelected}
+          aria-label="Jump to latest week"
+        >
+          Latest
+        </button>
       </div>
       <div className="head-clock" title={tooltipTitle}>
         <span className="head-date" aria-label={`Date ${formatDateWithWeek(now)}`}>

@@ -15,7 +15,19 @@
 }
 
 .head-activeWeek {
-  @apply hidden whitespace-nowrap rounded border border-slate-800 bg-[#0f1219] px-2 py-[0.35rem] font-mono text-[0.65rem] font-semibold uppercase tracking-wide text-slate-300 md:inline-flex;
+  @apply inline-flex flex-none items-center gap-1.5 whitespace-nowrap rounded border border-slate-800 bg-[#0f1219] px-2 py-1 font-mono text-[0.62rem] font-semibold uppercase tracking-wide text-slate-300;
+}
+
+.head-activeWeekPrefix {
+  @apply min-w-[9.5rem] text-center text-slate-300;
+}
+
+.head-activeWeekButton {
+  @apply inline-flex h-6 w-6 items-center justify-center rounded border border-slate-700 bg-[#121826] text-[0.72rem] leading-none text-slate-200 transition-colors hover:border-slate-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-45;
+}
+
+.head-activeWeekLatest {
+  @apply inline-flex h-6 items-center justify-center rounded border border-slate-700 bg-[#121826] px-2 text-[0.6rem] font-semibold uppercase tracking-wide text-slate-200 transition-colors hover:border-slate-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-45;
 }
 
 .head-timer {

@@ -26,7 +26,7 @@ type TableRow = {
 
 const MIN_CYCLE_MONTHS = 1;
 const MAX_CYCLE_MONTHS = 36;
-const DEFAULT_CYCLE_MONTHS = 12;
+const DEFAULT_CYCLE_MONTHS = 6;
 const MONTH_LABELS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 const RATE_SERIES = getTreasurySeries();
 
@@ -136,7 +136,7 @@ function getInverseTone(value: number | null): RowTone | undefined {
 }
 
 export function RatesAndYield() {
-  const [cycleMode, setCycleMode] = useState<CycleMode>("high");
+  const [cycleMode, setCycleMode] = useState<CycleMode>("low");
   const [cycleMonthsInput, setCycleMonthsInput] = useState(String(DEFAULT_CYCLE_MONTHS));
   const { selected } = useNewsletterContext();
 

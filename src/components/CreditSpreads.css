@@ -1,0 +1,50 @@
+.credit-spreads {
+  @apply flex w-full min-w-0 flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
+}
+
+.credit-spreads__header {
+  @apply flex items-center justify-between border-b border-slate-800/80 bg-[#1f2530] px-2.5 py-1.5;
+}
+
+.credit-spreads__titleBadge {
+  @apply rounded-sm bg-emerald-500/20 px-2 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-200;
+}
+
+.credit-spreads__body {
+  @apply overflow-hidden;
+}
+
+.credit-spreads__table {
+  @apply w-full border-separate border-spacing-0;
+  table-layout: fixed;
+}
+
+.credit-spreads__head {
+  @apply border-b border-slate-800/70 bg-[#121722] px-2 py-2 text-center font-mono text-[0.62rem] font-semibold uppercase tracking-wide text-slate-400;
+}
+
+.credit-spreads__head--name {
+  @apply text-left;
+}
+
+.credit-spreads__name {
+  @apply border-b border-slate-800/45 bg-[#121722] px-2 py-2 text-left font-mono text-[0.68rem] font-semibold uppercase tracking-wide text-slate-200;
+}
+
+.credit-spreads__value {
+  @apply border-b border-slate-800/45 px-2 py-2 text-center font-mono text-xs;
+}
+
+.credit-spreads__value--positive {
+  color: #45d975;
+  font-weight: 600;
+}
+
+.credit-spreads__value--negative {
+  color: #f43f5e;
+  font-weight: 600;
+}
+
+.credit-spreads__value--neutral {
+  @apply text-slate-200;
+}
