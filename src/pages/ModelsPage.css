@@ -1,15 +1,258 @@
 .models-page {
-  @apply flex h-full w-full items-center justify-center;
+  @apply flex h-full w-full flex-col gap-4 overflow-auto px-4 py-4 text-slate-100;
+  scrollbar-width: thin;
 }
 
-.models-page__card {
-  @apply flex w-full max-w-2xl flex-col items-center justify-center gap-4 rounded-3xl border border-amber-500/40 bg-black px-8 py-16 text-center shadow-xl shadow-amber-900/40;
+.models-page__header {
+  @apply flex flex-col gap-1;
 }
 
 .models-page__title {
-  @apply text-4xl font-bold tracking-tight text-amber-300 sm:text-5xl;
+  @apply font-mono text-base font-semibold uppercase tracking-wide text-slate-100;
 }
 
 .models-page__subtitle {
-  @apply max-w-xl text-base text-slate-300 sm:text-lg;
+  @apply max-w-4xl font-mono text-xs text-slate-400;
+}
+
+.models-page__grid {
+  @apply grid gap-4;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+}
+
+.models-page__variantCard {
+  @apply flex min-w-0 flex-col gap-2 border border-slate-800 bg-[#181d25] p-2 shadow-xl;
+}
+
+.models-page__variantHeader {
+  @apply border-b border-slate-800 pb-1;
+}
+
+.models-page__variantTitle {
+  @apply font-mono text-xs font-semibold uppercase tracking-wide text-emerald-200;
+}
+
+.models-page__previewBox {
+  @apply min-w-0 overflow-hidden border border-slate-800 bg-[#11161f];
+  aspect-ratio: 1 / 2;
+}
+
+.models-page__previewBox > * {
+  @apply h-full overflow-y-auto p-2 font-mono text-[0.64rem] leading-5 text-slate-200;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(51, 65, 85, 0.7) #10151d;
+}
+
+.models-page__previewBox > *::-webkit-scrollbar {
+  width: 7px;
+}
+
+.models-page__previewBox > *::-webkit-scrollbar-track {
+  background: #10151d;
+}
+
+.models-page__previewBox > *::-webkit-scrollbar-thumb {
+  background: rgba(51, 65, 85, 0.8);
+  border-radius: 999px;
+}
+
+.models-page__meta {
+  @apply grid gap-1 border-t border-slate-800 pt-2 text-[0.62rem];
+}
+
+.models-page__meta div {
+  @apply grid grid-cols-[4.8rem_1fr] gap-2;
+}
+
+.models-page__meta dt {
+  @apply font-mono uppercase tracking-wide text-slate-500;
+}
+
+.models-page__meta dd {
+  @apply font-mono text-slate-200;
+}
+
+.models-page__token {
+  @apply inline-flex items-center rounded border px-1 py-[1px] text-[0.58rem] font-semibold;
+}
+
+.models-page__token--positive {
+  @apply border-emerald-500/70 bg-emerald-500/15 text-emerald-200;
+}
+
+.models-page__token--negative {
+  @apply border-rose-500/70 bg-rose-500/15 text-rose-200;
+}
+
+.models-page__token--neutral {
+  @apply border-sky-500/70 bg-sky-500/15 text-sky-200;
+}
+
+.models-page__token--actual {
+  @apply border-orange-500/70 bg-orange-500/15 text-orange-200;
+}
+
+.models-page__token--expected {
+  @apply border-yellow-400/70 bg-yellow-400/15 text-yellow-100;
+}
+
+.models-page__timeline {
+  @apply relative space-y-3;
+}
+
+.models-page__timeline::before {
+  @apply absolute bottom-0 left-[7px] top-0 border-l border-dashed border-slate-700;
+  content: "";
+}
+
+.models-page__timelineEvent {
+  @apply relative pl-5;
+}
+
+.models-page__timelineDot {
+  @apply absolute left-[2px] top-1.5 h-[9px] w-[9px] rounded-full border border-emerald-500/60 bg-emerald-500/40;
+}
+
+.models-page__date {
+  @apply text-[0.57rem] uppercase tracking-wide text-slate-500;
+}
+
+.models-page__eventTitle {
+  @apply text-[0.67rem] font-semibold uppercase tracking-wide text-slate-200;
+}
+
+.models-page__lineList {
+  @apply mt-1 space-y-1 text-slate-300;
+}
+
+.models-page__lineLead {
+  @apply text-slate-100;
+}
+
+.models-page__bucketFeed {
+  @apply space-y-2;
+}
+
+.models-page__bucket {
+  @apply border border-slate-800 bg-[#0f141d] p-2;
+}
+
+.models-page__bucketLine {
+  @apply mt-1 grid grid-cols-[1fr_auto_auto] items-start gap-1;
+}
+
+.models-page__terminalFeed {
+  @apply space-y-1;
+}
+
+.models-page__terminalLine {
+  @apply border-l border-slate-700 pl-2 text-slate-300;
+}
+
+.models-page__terminalLine--title {
+  @apply border-l-2 border-emerald-500/60 text-slate-100;
+}
+
+.models-page__matrix {
+  @apply w-full border-separate border-spacing-0;
+  table-layout: fixed;
+}
+
+.models-page__matrix th,
+.models-page__matrix td {
+  @apply border-b border-slate-800 px-1 py-1 text-center text-[0.58rem];
+}
+
+.models-page__matrix th {
+  @apply sticky top-0 bg-[#0f141d] text-slate-400;
+}
+
+.models-page__signalCards {
+  @apply space-y-2;
+}
+
+.models-page__signalCard {
+  @apply border border-slate-800 bg-[#0f141d] p-2;
+}
+
+.models-page__signalRow {
+  @apply mt-1 flex flex-wrap gap-1;
+}
+
+.models-page__accordion {
+  @apply space-y-2;
+}
+
+.models-page__accordionItem {
+  @apply border border-slate-800 bg-[#0f141d];
+}
+
+.models-page__accordionItem summary {
+  @apply flex cursor-pointer list-none items-center justify-between gap-2 px-2 py-1 text-[0.62rem] font-semibold uppercase tracking-wide text-slate-200;
+}
+
+.models-page__accordionBody {
+  @apply space-y-1 border-t border-slate-800 px-2 py-1 text-slate-300;
+}
+
+.models-page__railDetail {
+  @apply grid h-full min-h-0 grid-cols-[6.2rem_1fr] gap-2;
+}
+
+.models-page__rail {
+  @apply flex min-h-0 flex-col gap-1 overflow-y-auto pr-1;
+}
+
+.models-page__railBtn {
+  @apply flex flex-col gap-0.5 rounded border border-slate-800 bg-[#0f141d] px-1 py-1 text-left text-[0.55rem] uppercase tracking-wide text-slate-300 transition-colors;
+}
+
+.models-page__railBtn--upcoming {
+  @apply border-sky-500/60 bg-sky-500/10;
+}
+
+.models-page__railBtn:hover {
+  @apply border-slate-600;
+}
+
+.models-page__railBtn.is-selected-upcoming {
+  @apply border-sky-400 bg-sky-500/20 text-sky-100;
+}
+
+.models-page__railBtn.is-selected-past {
+  @apply border-emerald-400 bg-emerald-500/15 text-emerald-100;
+}
+
+.models-page__detailPanel {
+  @apply border border-slate-800 bg-[#0f141d] p-2;
+}
+
+.models-page__detailPanel .models-page__lineList {
+  @apply mt-2 space-y-1 text-slate-300;
+}
+
+.models-page__tagBrowser {
+  @apply space-y-2;
+}
+
+.models-page__tagRow {
+  @apply flex flex-wrap gap-1 border border-slate-800 bg-[#0f141d] p-2;
+}
+
+.models-page__tagCard {
+  @apply border border-slate-800 bg-[#0f141d] p-2;
+}
+
+.models-page__tagSummary {
+  @apply mt-1 text-slate-400;
+}
+
+@media (max-width: 900px) {
+  .models-page__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .models-page__previewBox {
+    aspect-ratio: 4 / 5;
+  }
 }
