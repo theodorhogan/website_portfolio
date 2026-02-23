@@ -29,6 +29,28 @@ function formatMonthTick(time: Time) {
   return "";
 }
 
+function candleTimeToUtcMs(time: Time) {
+  if (typeof time === "string") {
+    const date = new Date(`${time}T00:00:00Z`);
+    return Number.isNaN(date.getTime()) ? null : date.getTime();
+  }
+
+  if (typeof time === "object" && "year" in time) {
+    return Date.UTC(time.year, time.month - 1, time.day);
+  }
+
+  return null;
+}
+
+function formatAthDate(timeMs: number | null) {
+  if (timeMs === null) return "-- --- --";
+  const date = new Date(timeMs);
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const month = date.toLocaleString("en-US", { month: "short", timeZone: "UTC" }).toUpperCase();
+  const year = String(date.getUTCFullYear()).slice(-2);
+  return `${day}-${month}-${year}`;
+}
+
 export function STOXXIndexChart() {
   const { selected } = useNewsletterContext();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -37,6 +59,28 @@ export function STOXXIndexChart() {
     const activeTimeMs = selected?.sortDate ?? Date.now();
     return getIndexChartDataset("STOXX600", activeTimeMs);
   }, [selected]);
+
+  const athInfo = useMemo(() => {
+    if (chartData.candles.length === 0 || chartData.latestClose === null || chartData.latestClose <= 0) {
+      return { athPrice: null as number | null, athTimeMs: null as number | null, deltaPct: null as number | null };
+    }
+
+    let athPrice = -Infinity;
+    let athTimeMs: number | null = null;
+    for (const candle of chartData.candles) {
+      if (candle.high > athPrice) {
+        athPrice = candle.high;
+        athTimeMs = candleTimeToUtcMs(candle.time);
+      }
+    }
+
+    if (!Number.isFinite(athPrice) || athPrice <= 0) {
+      return { athPrice: null as number | null, athTimeMs: null as number | null, deltaPct: null as number | null };
+    }
+
+    const deltaPct = (chartData.latestClose / athPrice - 1) * 100;
+    return { athPrice, athTimeMs, deltaPct };
+  }, [chartData.candles, chartData.latestClose]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -85,17 +129,31 @@ export function STOXXIndexChart() {
     series.setData(chartData.candles);
     chart.timeScale().fitContent();
 
-    const resizeObserver = new ResizeObserver((entries) => {
-      if (!chart || entries.length === 0) return;
-      const { width, height } = entries[0].contentRect;
-      chart.applyOptions({ width, height });
+    const applyChartSize = (width: number, height: number) => {
+      if (!chart) return;
+      chart.applyOptions({ width: Math.max(1, width), height: Math.max(1, height) });
       chart.timeScale().fitContent();
-    });
+    };
 
-    resizeObserver.observe(container);
+    let resizeObserver: ResizeObserver | null = null;
+    const onWindowResize = () => applyChartSize(container.clientWidth, container.clientHeight);
+
+    if (typeof ResizeObserver !== "undefined") {
+      resizeObserver = new ResizeObserver((entries) => {
+        if (entries.length === 0) return;
+        const { width, height } = entries[0].contentRect;
+        applyChartSize(width, height);
+      });
+      resizeObserver.observe(container);
+    } else {
+      window.addEventListener("resize", onWindowResize);
+    }
+
+    applyChartSize(container.clientWidth, container.clientHeight);
 
     return () => {
-      resizeObserver.disconnect();
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", onWindowResize);
       chart?.remove();
       chart = null;
     };
@@ -113,6 +171,11 @@ export function STOXXIndexChart() {
             FWD P/E: {formatPe(chartData.currentPe)} [LAST WK FWD P/E: {formatPe(chartData.lastWeekPe)}]
           </span>
           <span className="index-chart__subtitle">
+            ATH({formatAthDate(athInfo.athTimeMs)}) {formatChartPrice(athInfo.athPrice)}{" "}
+            <span className={athInfo.deltaPct !== null && athInfo.deltaPct < 0 ? "index-chart__athDelta--down" : "index-chart__athDelta--flat"}>
+              ({athInfo.deltaPct === null ? "--" : `${athInfo.deltaPct >= 0 ? "+" : ""}${athInfo.deltaPct.toFixed(2)}%`})
+            </span>{" "}
+            |{" "}
             Close {formatChartPrice(chartData.latestClose)} | {formatChartSubtitleDate(chartData.latestTimeMs)}
           </span>
         </div>

@@ -137,7 +137,12 @@
   }
 
   .beta-page__slot--spx .index-chart,
-  .beta-page__slot--stoxx .index-chart,
+  .beta-page__slot--stoxx .index-chart {
+    height: 20rem;
+    max-height: 20rem;
+    min-height: 20rem;
+  }
+
   .beta-page__slot--major .major-indexes,
   .beta-page__slot--industry .industry-overview,
   .beta-page__slot--watchlist .major-indexes {

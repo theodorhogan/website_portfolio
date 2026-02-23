@@ -33,6 +33,14 @@
   @apply text-right font-mono text-[0.6rem] uppercase tracking-wide text-slate-400;
 }
 
+.index-chart__athDelta--down {
+  @apply text-rose-300;
+}
+
+.index-chart__athDelta--flat {
+  @apply text-emerald-300;
+}
+
 .index-chart__body {
   @apply flex flex-1 bg-[#181d25];
 }
@@ -48,8 +56,8 @@
 
 @media (max-width: 1024px) {
   .index-chart {
-    height: auto;
-    max-height: none;
+    height: 20rem;
+    max-height: 20rem;
     min-height: 18rem;
   }
 
