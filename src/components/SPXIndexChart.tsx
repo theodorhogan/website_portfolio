@@ -171,7 +171,7 @@ export function SPXIndexChart() {
             FWD P/E: {formatPe(chartData.currentPe)} [LAST WK FWD P/E: {formatPe(chartData.lastWeekPe)}]
           </span>
           <span className="index-chart__subtitle">
-            ATH({formatAthDate(athInfo.athTimeMs)}) {formatChartPrice(athInfo.athPrice)}{" "}
+            ATH({formatAthDate(athInfo.athTimeMs)}): {formatChartPrice(athInfo.athPrice)}{" "}
             <span className={athInfo.deltaPct !== null && athInfo.deltaPct < 0 ? "index-chart__athDelta--down" : "index-chart__athDelta--flat"}>
               ({athInfo.deltaPct === null ? "--" : `${athInfo.deltaPct >= 0 ? "+" : ""}${athInfo.deltaPct.toFixed(2)}%`})
             </span>{" "}
