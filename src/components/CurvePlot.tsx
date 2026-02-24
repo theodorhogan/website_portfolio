@@ -115,7 +115,7 @@ export function CurvePlot({
       {overlay}
 
       {xTicks.map((tick) => (
-        <text key={tick.key} x={tick.x} y={height - 12} textAnchor="middle" className={xTickClassName}>
+        <text key={tick.key} x={tick.x} y={plotBottom + 20} textAnchor="middle" className={xTickClassName}>
           {tick.label}
         </text>
       ))}

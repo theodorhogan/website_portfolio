@@ -1,8 +1,5 @@
 .major-indexes {
-  @apply flex w-full flex-none flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
-  height: 22rem;
-  max-height: 22rem;
-  min-height: 22rem;
+  @apply flex w-full flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
 }
 
 .major-indexes__header {
@@ -124,8 +121,6 @@
 
 @media (max-width: 1024px) {
   .major-indexes {
-    height: auto;
-    max-height: none;
     min-height: 18rem;
   }
 

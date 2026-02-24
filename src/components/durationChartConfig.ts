@@ -1,5 +1,5 @@
 export const DURATION_CHART_WIDTH = 520;
-export const DURATION_CHART_HEIGHT = 380;
+export const DURATION_CHART_HEIGHT = 477;
 export const DURATION_CHART_MARGIN = {
   top: 12,
   right: 48,

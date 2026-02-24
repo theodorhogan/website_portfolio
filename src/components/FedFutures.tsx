@@ -96,12 +96,10 @@ export function FedFutures() {
     const domain = getPaddedDomain(priceValues, 0.1, 0.18);
     const firstPrice = orderedContracts.find((contract) => contract !== null)?.price ?? null;
     const lastPrice = [...orderedContracts].reverse().find((contract) => contract !== null)?.price ?? null;
-    if (firstPrice !== null && lastPrice !== null) {
-      const rawMax = Math.max(...priceValues);
-      const rawMin = Math.min(...priceValues);
-      const spread = Math.max(rawMax - rawMin, 0.1);
-      domain.max = Math.max(rawMax, lastPrice) + spread * 0.02;
-      domain.min = Math.min(rawMin, firstPrice) - spread * 0.02;
+    // Anchor domain exactly: first contract sits on the x-axis, 12th contract on the top grid line
+    if (firstPrice !== null && lastPrice !== null && lastPrice > firstPrice) {
+      domain.min = firstPrice;
+      domain.max = lastPrice;
     }
     const plotLeft = DURATION_CHART_MARGIN_DUAL_AXIS.left;
     const plotRight = DURATION_CHART_WIDTH - DURATION_CHART_MARGIN_DUAL_AXIS.right;
@@ -133,7 +131,7 @@ export function FedFutures() {
 
     const connectors = points
       .map((point, index) => {
-        if (index >= points.length - 1) return null;
+        if (index === 0 || index >= points.length - 1) return null;
         const calloutX = xForIndex(index + 1);
         return {
           key: `connector-${index}`,

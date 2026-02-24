@@ -25,6 +25,7 @@
 
 .quartly-cuts__head--label {
   @apply text-left;
+  width: 4rem;
 }
 
 .quartly-cuts__label {

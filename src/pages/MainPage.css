@@ -1,10 +1,10 @@
 .main-page {
-  @apply flex h-full min-h-0 w-full flex-1 items-stretch justify-center overflow-hidden;
+  @apply flex w-full justify-center;
   padding: 0.75rem 0.5rem 2.65rem;
 }
 
 .main-page__stack {
-  @apply flex h-full min-h-0 w-full max-w-none items-stretch justify-center overflow-hidden px-5;
+  @apply flex w-full max-w-none justify-center px-5;
 }
 
 .main-page__panel > * {
@@ -12,19 +12,21 @@
 }
 
 .main-page__panel {
-  @apply grid h-full min-h-0 w-full justify-center gap-3 overflow-hidden;
+  @apply grid w-full justify-center gap-3;
   --main-blog-width: clamp(32rem, 50vw, 48rem);
   --main-side-width: clamp(18rem, 24vw, 30rem);
   grid-template-columns: var(--main-side-width) var(--main-blog-width) var(--main-side-width);
 }
 
 .main-page__blogSlot {
-  @apply h-full min-h-0 w-full;
+  @apply w-full;
   grid-column: 2;
+  /* Defined height so BlogWindow (height:100%) has something to fill */
+  height: clamp(36rem, 60vh, 52rem);
 }
 
 .main-page__economicSlot {
-  @apply w-full min-h-0 self-end;
+  @apply w-full self-end;
   grid-column: 1;
   width: min(100%, 30rem);
   aspect-ratio: 1 / 2;
@@ -32,69 +34,40 @@
 }
 
 .main-page__spacer {
-  @apply min-h-0 w-full;
+  @apply w-full;
   grid-column: 3;
-}
-
-.main-page .blog-window {
-  width: 100%;
-  max-width: none;
-  height: 100%;
-  min-height: 0;
-  max-height: none;
-  flex: 0 0 auto;
-}
-
-.main-page .economic-data {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-}
-
-@media (min-width: 1025px) {
-  .main-page__panel {
-    overflow: hidden;
-  }
 }
 
 @media (max-width: 1024px) {
   .main-page {
-    @apply h-auto min-h-0 overflow-visible px-0 pb-2;
+    @apply px-0 pb-2;
   }
 
   .main-page__stack {
-    @apply h-auto overflow-visible px-3;
+    @apply px-3;
   }
 
   .main-page__panel {
-    @apply flex h-auto flex-col overflow-visible pr-0;
+    @apply flex flex-col;
     max-width: none;
     gap: 0.75rem;
     grid-template-columns: none;
   }
 
-  .main-page__blogSlot,
-  .main-page__economicSlot,
-  .main-page__spacer {
-    @apply h-auto;
-    min-height: 0;
+  .main-page__blogSlot {
+    height: auto;
+    min-height: 18rem;
   }
 
   .main-page__economicSlot {
     @apply max-w-none;
+    width: 100%;
     aspect-ratio: auto;
     min-height: 18rem;
   }
 
   .main-page__spacer {
     display: none;
-  }
-
-  .main-page .blog-window {
-    height: auto;
-    min-height: 18rem;
-    max-height: none;
-    flex: 0 0 auto;
   }
 
   .main-page .economic-data {

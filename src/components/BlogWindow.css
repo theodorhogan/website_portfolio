@@ -1,8 +1,6 @@
 .blog-window {
-  @apply flex w-full max-w-2xl flex-none flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
-  height: 22rem;
-  max-height: 22rem;
-  min-height: 22rem;
+  @apply flex w-full flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
+  height: 100%;
 }
 
 .blog-window__header {
@@ -91,7 +89,7 @@
 @media (max-width: 1024px) {
   .blog-window {
     height: auto;
-    max-height: none;
     min-height: 18rem;
   }
 }
+

@@ -14,6 +14,21 @@
   max-width: none;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
+  overflow-y: auto;
+  /* Page scrollbar: hidden until hover */
+  scrollbar-color: transparent transparent;
+}
+
+.app-content--wide:hover {
+  scrollbar-color: rgba(51, 65, 85, 0.55) transparent;
+}
+
+.app-content--wide::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.app-content--wide:hover::-webkit-scrollbar-thumb {
+  background: rgba(51, 65, 85, 0.55);
 }
 
 .app-content__loading {

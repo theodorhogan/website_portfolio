@@ -1,8 +1,6 @@
 .index-chart {
-  @apply flex w-full flex-none flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
-  height: 22rem;
-  max-height: 22rem;
-  min-height: 22rem;
+  @apply flex w-full flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
+  height: 100%;
 }
 
 .index-chart__header {
@@ -56,8 +54,7 @@
 
 @media (max-width: 1024px) {
   .index-chart {
-    height: 20rem;
-    max-height: 20rem;
+    height: auto;
     min-height: 18rem;
   }
 

@@ -1,83 +1,52 @@
 .beta-page {
-  @apply flex h-full min-h-0 w-full flex-1 items-start justify-center overflow-hidden py-4;
+  @apply flex w-full items-start justify-center py-4;
 }
 
 .beta-page__layout {
-  @apply grid h-full min-h-0 w-full grid-cols-[minmax(0,1.78fr)_minmax(0,1.36fr)_minmax(0,1.06fr)] gap-4 overflow-hidden px-3 pr-4;
+  @apply grid w-full grid-cols-[minmax(0,1.78fr)_minmax(0,1.36fr)_minmax(0,1.06fr)] gap-4 px-3 pr-4;
   width: min(96vw, 100rem);
 }
 
 .beta-page__column {
   min-width: 0;
-  min-height: 0;
 }
 
 .beta-page__column--left {
-  @apply grid h-full min-h-0 content-start gap-4 overflow-hidden;
+  @apply grid content-start gap-4;
   grid-template-rows: auto auto;
 }
 
 .beta-page__column--middle {
-  @apply grid h-full min-h-0 content-start gap-4 overflow-hidden;
+  @apply grid content-start gap-4;
   grid-template-rows: auto auto;
 }
 
 .beta-page__column--right {
-  @apply flex h-full min-h-0 flex-col overflow-hidden;
+  @apply flex flex-col;
 }
 
 .beta-page__slot {
   min-width: 0;
-  min-height: 0;
 }
 
 .beta-page__slot > * {
   @apply w-full;
 }
 
+/* Chart slots: aspect-ratio drives height — component fills 100% */
 .beta-page__slot--spx,
 .beta-page__slot--stoxx {
   aspect-ratio: 5 / 3;
 }
 
-.beta-page__slot--spx .index-chart,
-.beta-page__slot--stoxx .index-chart {
-  @apply h-full min-h-0;
-  max-height: none;
-}
-
-/* Keep major compact so industry can use the remaining vertical space without dead area. */
-.beta-page__slot--major .major-indexes {
-  height: auto;
-  min-height: 0;
-  max-height: none;
-}
-
-.beta-page__slot--industry .industry-overview {
-  height: auto;
-  min-height: 0;
-  max-height: none;
-}
-
-.beta-page__slot--watchlist .major-indexes {
-  @apply h-full min-h-0;
-  max-height: none;
-}
-
-.beta-page__slot--watchlist .major-indexes__body {
-  overflow-y: auto;
-  overflow-x: hidden;
+/* Watchlist: show all rows, page scrolls to accommodate */
+.beta-page__slot--watchlist {
+  min-height: 20rem;
 }
 
 @media (max-width: 1280px) {
   .beta-page__layout {
-    @apply h-auto grid-cols-[minmax(0,1fr)_minmax(0,1fr)] overflow-visible px-4 pr-4;
-  }
-
-  .beta-page__column--left,
-  .beta-page__column--middle,
-  .beta-page__column--right {
-    @apply h-auto overflow-visible;
+    @apply grid-cols-[minmax(0,1fr)_minmax(0,1fr)] px-4 pr-4;
   }
 
   .beta-page__column--left {
@@ -95,35 +64,25 @@
     grid-row: 3 / 4;
   }
 
-  .beta-page__slot--spx .index-chart,
-  .beta-page__slot--stoxx .index-chart,
-  .beta-page__slot--major .major-indexes,
-  .beta-page__slot--industry .industry-overview,
-  .beta-page__slot--watchlist .major-indexes {
-    height: 22rem;
-    min-height: 22rem;
-    max-height: 22rem;
-  }
-
   .beta-page__slot--spx,
   .beta-page__slot--stoxx {
     aspect-ratio: auto;
+    height: 22rem;
   }
 }
 
 @media (max-width: 1024px) {
   .beta-page {
-    @apply h-auto min-h-0 overflow-visible pb-2;
+    @apply pb-2;
   }
 
   .beta-page__layout {
-    @apply h-auto grid-cols-1 overflow-visible px-3 pr-3;
+    @apply grid-cols-1 px-3 pr-3;
   }
 
   .beta-page__column--left,
   .beta-page__column--middle,
   .beta-page__column--right {
-    @apply grid-cols-1 h-auto overflow-visible;
     grid-column: auto;
     grid-row: auto;
   }
@@ -136,23 +95,9 @@
     grid-template-rows: none;
   }
 
-  .beta-page__slot--spx .index-chart,
-  .beta-page__slot--stoxx .index-chart {
-    height: 20rem;
-    max-height: 20rem;
-    min-height: 20rem;
-  }
-
-  .beta-page__slot--major .major-indexes,
-  .beta-page__slot--industry .industry-overview,
-  .beta-page__slot--watchlist .major-indexes {
-    height: auto;
-    max-height: none;
-    min-height: 18rem;
-  }
-
   .beta-page__slot--spx,
   .beta-page__slot--stoxx {
     aspect-ratio: auto;
+    height: 20rem;
   }
 }
