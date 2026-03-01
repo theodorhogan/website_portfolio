@@ -30,6 +30,10 @@ function shiftDaysUtc(date: Date, days: number) {
   return shifted;
 }
 
+function getWeekFridayUtc(date: Date) {
+  return shiftDaysUtc(startOfWeekUtc(date), 4);
+}
+
 function getIsoWeek(date: Date) {
   const target = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
   const dayNumber = target.getUTCDay() || 7; // Monday=1 ... Sunday=7
@@ -131,23 +135,16 @@ function renderContentWithChangeBadges(content: string) {
   return nodes;
 }
 
-function findAnchorIndex(activeSortDate: number) {
-  const index = ECONOMIC_WEEKS.findIndex((entry) => entry.sortDate <= activeSortDate);
-  if (index >= 0) return index;
-  return ECONOMIC_WEEKS.length - 1;
-}
-
 function buildRailItems(activeSortDate: number): RailItem[] {
-  if (ECONOMIC_WEEKS.length === 0) return [];
+  const entriesByWeekFriday = new Map<number, EconomicWeekEntry>();
+  for (const entry of ECONOMIC_WEEKS) {
+    const key = getWeekFridayUtc(new Date(entry.sortDate)).getTime();
+    entriesByWeekFriday.set(key, entry);
+  }
 
-  const anchorIndex = findAnchorIndex(activeSortDate);
-  const anchorEntry = ECONOMIC_WEEKS[anchorIndex];
-  const anchorDate = new Date(anchorEntry.sortDate);
-  const nextWeekDate = shiftDaysUtc(anchorDate, 7);
-
-  const nextWeekStartMs = startOfWeekUtc(nextWeekDate).getTime();
-  const upcomingEntry =
-    ECONOMIC_WEEKS.find((entry) => startOfWeekUtc(new Date(entry.sortDate)).getTime() === nextWeekStartMs) ?? null;
+  const activeWeekFriday = getWeekFridayUtc(new Date(activeSortDate));
+  const nextWeekDate = shiftDaysUtc(activeWeekFriday, 7);
+  const upcomingEntry = entriesByWeekFriday.get(nextWeekDate.getTime()) ?? null;
 
   const upcomingItem: RailItem = {
     id: "upcoming",
@@ -160,16 +157,17 @@ function buildRailItems(activeSortDate: number): RailItem[] {
     entry: upcomingEntry,
   };
 
-  const pastItems = ECONOMIC_WEEKS.slice(anchorIndex, anchorIndex + 5).map((entry) => {
-    const entryDate = new Date(entry.sortDate);
+  const pastItems = Array.from({ length: 5 }, (_, index) => {
+    const weekDate = shiftDaysUtc(activeWeekFriday, -7 * index);
+    const entry = entriesByWeekFriday.get(weekDate.getTime()) ?? null;
     return {
-      id: entry.id,
+      id: `past-${weekDate.getTime()}`,
       kind: "past" as const,
-      weekNumber: getIsoWeek(entryDate),
-      year: entryDate.getUTCFullYear(),
-      dayMonthLabel: formatDayMonthFromHeaderDate(entry.dateLabel),
-      rangeLabel: formatWeekRangeFromDate(entryDate),
-      headerDate: entry.dateLabel,
+      weekNumber: getIsoWeek(weekDate),
+      year: weekDate.getUTCFullYear(),
+      dayMonthLabel: formatDayMonthFromHeaderDate(formatHeaderDateFromDate(weekDate)),
+      rangeLabel: formatWeekRangeFromDate(weekDate),
+      headerDate: formatHeaderDateFromDate(weekDate),
       entry,
     };
   });
@@ -190,7 +188,11 @@ export function EconomicData() {
     setSelectedItemId(activeWeekItemId);
   }, [activeWeekItemId]);
 
-  const selectedItem = railItems.find((item) => item.id === selectedItemId) ?? railItems.find((item) => item.kind === "past") ?? railItems[0] ?? null;
+  const selectedItem =
+    railItems.find((item) => item.id === selectedItemId) ??
+    railItems.find((item) => item.kind === "past") ??
+    railItems[0] ??
+    null;
 
   return (
     <div className="economic-data">
@@ -250,8 +252,8 @@ export function EconomicData() {
             <div className="economic-data__content">{renderContentWithChangeBadges(selectedItem.entry.content)}</div>
           ) : (
             <p className="economic-data__empty">
-              No data block found for {selectedItem?.rangeLabel ?? "the selected week"} in
-              `src/content/newsletters/economic-data.txt`.
+              No economic calendar data for {selectedItem?.rangeLabel ?? "the selected week"} in
+              `src/content/econcalendar/`.
             </p>
           )}
         </section>

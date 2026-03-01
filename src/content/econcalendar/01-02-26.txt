@@ -1,0 +1,4 @@
+- Tue: Final PMIs [[51.1]] vs street [(51.0)] | surprise [+0.20%]
+- Wed: Factory Orders [[0.1%]] vs street [(0.0%)] | surprise [+0.10%]
+- Thu: Initial Claims [[226K]] vs street [(228K)] | surprise [-0.88%]
+- Fri: Unemployment Rate [[4.10%]] vs street [(4.10%)] | surprise [0.00%]

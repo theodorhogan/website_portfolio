@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls /c/Users/theod/OneDrive/Documents/GitHub/personal-projects/website_portfolio/src/components/*.css)",
+      "Bash(npm run check)"
+    ]
+  }
+}

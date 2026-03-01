@@ -1,0 +1,4 @@
+- Mon: Chicago Fed NAI [[0.14]] vs street [(0.10)]  sur [+40.00%]
+- Wed: Core PCE m/m [[0.30%]] vs street [(0.30%)]  surprise [0.00%]
+- Thu: Initial Claims [[229K]] vs street [(225K)]  surprise [+1.78%]
+- Fri: ISM Manufacturing [[50.4]] vs street [(50.1)]  surprise [+0.60%]

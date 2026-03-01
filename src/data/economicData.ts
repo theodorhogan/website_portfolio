@@ -1,78 +1,46 @@
-import economicDataRaw from "../content/newsletters/economic-data.txt?raw";
-
 export type EconomicWeekEntry = {
   id: string;
   sortDate: number;
   dateLabel: string;
   content: string;
+  fileName: string;
 };
 
-const HEADER_PATTERN = /^---\s*(\d{2})-([A-Z]{3})-(\d{2})\s*---$/i;
+const MONTH_LABELS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
-const MONTH_INDEX: Record<string, number> = {
-  JAN: 0,
-  FEB: 1,
-  MAR: 2,
-  APR: 3,
-  MAY: 4,
-  JUN: 5,
-  JUL: 6,
-  AUG: 7,
-  SEP: 8,
-  OCT: 9,
-  NOV: 10,
-  DEC: 11,
-};
+function formatDateLabel(day: number, month: number, year2: number) {
+  const dayLabel = String(day).padStart(2, "0");
+  return `${dayLabel}-${MONTH_LABELS[month]}-${String(year2).padStart(2, "0")}`;
+}
 
-function parseHeaderDate(headerLine: string) {
-  const match = headerLine.match(HEADER_PATTERN);
+function parseEconomicWeekPath(path: string, rawContent: string): EconomicWeekEntry | null {
+  const fileName = path.split("/").at(-1)?.replace(".txt", "") ?? "";
+  const match = fileName.match(/^(\d{2})-(\d{2})-(\d{2})(?:\s*-\s*.+)?$/);
   if (!match) return null;
 
-  const [, dayRaw, monthRaw, yearRaw] = match;
-  const day = Number(dayRaw);
-  const month = MONTH_INDEX[monthRaw.toUpperCase()];
-  const year = 2000 + Number(yearRaw);
-  if (month === undefined) return null;
+  const month = Number(match[1]);
+  const day = Number(match[2]);
+  const year2 = Number(match[3]);
+  const year = 2000 + year2;
+  const sortDate = Date.UTC(year, month - 1, day);
+  if (Number.isNaN(sortDate)) return null;
 
-  const utcDate = new Date(Date.UTC(year, month, day));
-  if (Number.isNaN(utcDate.getTime())) return null;
-
-  const dateLabel = `${dayRaw}-${monthRaw.toUpperCase()}-${yearRaw}`;
-  return { sortDate: utcDate.getTime(), id: dateLabel, dateLabel };
-}
-
-function parseEconomicData(raw: string): EconomicWeekEntry[] {
-  const lines = raw.split(/\r?\n/);
-  const entries: EconomicWeekEntry[] = [];
-
-  let currentMeta: { id: string; sortDate: number; dateLabel: string } | null = null;
-  let currentLines: string[] = [];
-
-  const flush = () => {
-    if (!currentMeta) return;
-    entries.push({
-      ...currentMeta,
-      content: currentLines.join("\n").trim(),
-    });
-    currentMeta = null;
-    currentLines = [];
+  return {
+    id: `${match[1]}-${match[2]}-${match[3]}`,
+    sortDate,
+    dateLabel: formatDateLabel(day, month - 1, year2),
+    content: rawContent.trim(),
+    fileName,
   };
-
-  for (const line of lines) {
-    const parsedHeader = parseHeaderDate(line.trim());
-    if (parsedHeader) {
-      flush();
-      currentMeta = parsedHeader;
-      continue;
-    }
-
-    if (!currentMeta) continue;
-    currentLines.push(line);
-  }
-
-  flush();
-
-  return entries.sort((a, b) => b.sortDate - a.sortDate);
 }
 
-export const ECONOMIC_WEEKS = parseEconomicData(economicDataRaw);
+const economicWeekModules = import.meta.glob("../content/econcalendar/*.txt", {
+  eager: true,
+  import: "default",
+  query: "?raw",
+});
+
+export const ECONOMIC_WEEKS: EconomicWeekEntry[] = Object.entries(economicWeekModules)
+  .map(([path, moduleContent]) => parseEconomicWeekPath(path, moduleContent as string))
+  .filter((entry): entry is EconomicWeekEntry => entry !== null)
+  .sort((a, b) => b.sortDate - a.sortDate);
