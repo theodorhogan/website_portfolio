@@ -1,6 +1,6 @@
 - Mon: ISM Manufacturing PMI FEB [(-)] vs street [(50.2)]  (upcoming as of Fri 02-27)
-- Wed: ADP Employment Change FEB [(-)] vs street [(50K)]  (upcoming as of Fri 02-27)
-- Wed: ISM Services PMI FEB [(-)] vs street [(53.5)]  (upcoming as of Fri 02-27)
+- Wed: ADP Employment Change FEB [[63K]] vs street [(50K)]  surprise [+26.00%]
+- Wed: ISM Services PMI FEB [[56.1]] vs street [(53.5)]  surprise [+4.86%]
 - Thu: Initial Claims MAR/01 [(-)] vs street [(230K)]  (upcoming as of Fri 02-27)
 - Fri: Non Farm Payrolls FEB [(-)] vs street [(190K)]  (upcoming as of Fri 02-27)
 - Fri: Unemployment Rate FEB [(-)] vs street [(4.0%)]  (upcoming as of Fri 02-27)
