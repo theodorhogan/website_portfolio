@@ -1,15 +1,71 @@
 .models-page {
-  @apply flex h-full w-full items-center justify-center;
+  @apply flex h-full min-h-0 w-full flex-1 items-stretch justify-center overflow-hidden py-4;
 }
 
-.models-page__card {
-  @apply flex w-full max-w-2xl flex-col items-center justify-center gap-4 rounded-3xl border border-amber-500/40 bg-black px-8 py-16 text-center shadow-xl shadow-amber-900/40;
+.models-page__shell {
+  @apply flex h-full min-h-0 w-full flex-col overflow-hidden border border-slate-800 bg-[#181d25] shadow-xl;
+}
+
+.models-page__header {
+  @apply flex items-center justify-between gap-4 border-b border-slate-800/80 bg-[#1f2530] px-4 py-3;
+}
+
+.models-page__titleGroup {
+  @apply flex items-center gap-3;
+}
+
+.models-page__titleBadge {
+  @apply rounded-sm bg-emerald-500/20 px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-200;
 }
 
 .models-page__title {
-  @apply text-4xl font-bold tracking-tight text-amber-300 sm:text-5xl;
+  @apply m-0 font-mono text-sm uppercase tracking-wide text-slate-100;
 }
 
 .models-page__subtitle {
-  @apply max-w-xl text-base text-slate-300 sm:text-lg;
+  @apply mt-1 font-mono text-[0.68rem] tracking-wide text-slate-400;
+}
+
+.models-page__selectGroup {
+  @apply relative;
+}
+
+.models-page__select {
+  @apply rounded-md border border-slate-800 bg-[#121826] px-3 py-2 font-mono text-xs uppercase tracking-wide text-slate-200 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500;
+  min-width: 16rem;
+}
+
+.models-page__viewer {
+  @apply min-h-0 flex-1 overflow-auto bg-[#11161f];
+}
+
+.models-page__viewerInner {
+  @apply min-h-full;
+}
+
+.models-page__empty {
+  @apply flex h-full min-h-[20rem] items-center justify-center px-6 text-center font-mono text-sm text-slate-400;
+}
+
+@media (max-width: 1024px) {
+  .models-page {
+    @apply h-auto min-h-0 overflow-visible pb-2;
+  }
+
+  .models-page__shell {
+    @apply h-auto min-h-[32rem];
+  }
+
+  .models-page__header {
+    @apply flex-col items-start;
+  }
+
+  .models-page__select {
+    min-width: 100%;
+    width: 100%;
+  }
+
+  .models-page__viewer {
+    @apply overflow-visible;
+  }
 }
