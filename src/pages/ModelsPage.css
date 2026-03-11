@@ -4,6 +4,7 @@
 
 .models-page__shell {
   @apply flex h-full min-h-0 w-full flex-col overflow-hidden border border-slate-800 bg-[#181d25] shadow-xl;
+  max-width: 104rem;
 }
 
 .models-page__header {

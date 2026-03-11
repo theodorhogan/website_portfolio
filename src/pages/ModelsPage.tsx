@@ -12,6 +12,7 @@ export function ModelsPage() {
   }, [selectedId]);
 
   const selectedModel = MODELS.find((entry) => entry.id === selectedId) ?? MODELS[0] ?? null;
+  const SelectedComponent = selectedModel?.Component ?? null;
 
   return (
     <section className="models-page">
@@ -41,9 +42,9 @@ export function ModelsPage() {
         </div>
 
         <div className="models-page__viewer">
-          {selectedModel ? (
+          {SelectedComponent ? (
             <div className="models-page__viewerInner">
-              <selectedModel.Component />
+              <SelectedComponent />
             </div>
           ) : (
             <div className="models-page__empty">
