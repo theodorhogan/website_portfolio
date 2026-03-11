@@ -14,7 +14,7 @@ const F="'JetBrains Mono','Fira Code','Courier New',monospace";
 const prodData = [
   {country:"Saudi Arabia",pre:9.0,cur:7.5,flag:"🇸🇦",dis:false,bp:2.0,hz:89,note:"Pre-emptive cuts Mar 9. Ras Tanura shut. Diverting to Yanbu."},
   {country:"Iraq",pre:4.3,cur:1.3,flag:"🇮🇶",dis:true,bp:0,hz:97,note:"Rumaila & West Qurna 2 shut. Storage maxed. Exports ~0.8M bpd."},
-  {country:"UAE",pre:3.2,cur:2.4,flag:"🇦🇪",dis:false,bp:0.6,hz:66,note:"ADNOC cutting offshore. ADCOP to Fujairah but Fujairah struck 3x."},
+  {country:"UAE",pre:3.2,cur:2.0,flag:"🇦🇪",dis:true,bp:0.6,hz:66,note:"ADNOC Ruwais refinery (922K bpd) shut Mar 10 after drone strike. ADCOP to Fujairah struck 3x. Cutting offshore."},
   {country:"Kuwait",pre:2.57,cur:1.5,flag:"🇰🇼",dis:true,bp:0,hz:100,note:"Force majeure. Zero bypass. Airport fuel tanks hit."},
   {country:"Qatar",pre:1.8,cur:0.3,flag:"🇶🇦",dis:true,bp:0,hz:100,note:"Ras Laffan LNG halted. Force majeure. Won't restart until war ends."},
   {country:"Iran",pre:3.2,cur:2.0,flag:"🇮🇷",dis:false,bp:0.4,hz:80,note:"Tehran oil depots struck. Jask terminal active. Shadow fleet exporting."},
@@ -83,6 +83,18 @@ const dmg = [
    replCost:0.3,estDmgLo:0.01,estDmgHi:0.05,assetVal:"$300M",annRev:"$200M/yr",dailyLoss:"$0.5M",dailyLossNum:0.5,
    phys:"Minor",sev:2,cat:"Kinetic",catColor:C.accent,
    desc:"Drone strike Mar 3.",recovery:"Days-weeks.",strategic:"Ports outside Strait not immune."},
+  {fac:"ADNOC Ruwais Complex",co:"UAE",flag:"🇦🇪",op:"ADNOC",preCap:"922K bpd refining + petrochems",preM:0.92,curM:0,pctOff:100,
+   replCost:15,estDmgLo:0.1,estDmgHi:0.5,assetVal:"$12-18B",annRev:"$20-30B/yr",dailyLoss:"$55-80M",dailyLossNum:65,
+   phys:"Minor (drone strike fire)",sev:4,cat:"Precautionary",catColor:C.blue,
+   desc:"NEW Mar 10: Drone strike caused fire in Ruwais industrial city. ADNOC shut refinery as precaution. Downstream ops (petrochems, fertilizer, industrial gas) continue. Abu Dhabi's central downstream hub.",
+   recovery:"Could restart quickly if security allows — damage appears limited. But persistent drone threat.",
+   strategic:"Ruwais is ADNOC's downstream crown jewel (922K bpd = larger than Ras Tanura). Shutdown removes major refining capacity. Combined with Ras Tanura + BAPCO, ~1.9M bpd refining now offline across Gulf."},
+  {fac:"Strait of Hormuz (MINING)",co:"Iran",flag:"🇮🇷",op:"IRGC Navy",preCap:"20M bpd transit capacity",preM:0,curM:0,pctOff:100,
+   replCost:0,estDmgLo:0,estDmgHi:0,assetVal:"N/A",annRev:"$1.8T/yr transit value",dailyLoss:"$5B+ global",dailyLossNum:0,
+   phys:"CONFIRMED MINING (Mar 10-11)",sev:5,cat:"Escalation",catColor:"#f43f5e",
+   desc:"NEW Mar 10-11: CNN/US intel confirms Iran has begun laying mines in Strait. 'Few dozen' deployed. Iran retains 80-90% of small boats/minelayers. US sank 16 minelayers in response. US has NO dedicated minesweepers in Gulf (last 4 decommissioned Sept 2025).",
+   recovery:"Mine clearance = 2+ months post-ceasefire even with full NATO effort. 1991 Gulf War took 2+ months with 12+ allied MCM vessels. Advanced influence mines ignore minesweeper signatures.",
+   strategic:"WORST-CASE SCENARIO NOW MATERIALIZING. Mining transforms the Strait from a contested waterway to an impassable one. Even after military victory, mines persist. This could extend the closure by months beyond any ceasefire."},
 ];
 
 // ═══════════ ECONOMIC AGGREGATES ═══════════
@@ -130,6 +142,9 @@ const vessels=[
   {d:"Mar 7",v:"PRIMA",t:"Drone",c:true,dm:"Chemical tanker",ca:"Unknown"},
   {d:"Mar 7",v:"Louise P",t:"Drone",c:false,dm:"IRGC claims US tanker",ca:"Unknown"},
   {d:"Mar 7",v:"Mussafah 2",t:"Missile x2",c:true,dm:"Assisting Safeen",ca:"Unknown"},
+  {d:"Mar 11",v:"Cargo ship (unnamed)",t:"Projectile",c:true,dm:"Ablaze in Strait of Hormuz",ca:"Unknown"},
+  {d:"Mar 11",v:"Mayuree Naree",t:"Projectile x2",c:true,dm:"Thai bulk carrier. Fire, engine room damage. IRGC claimed.",ca:"3 missing, 20 evacuated"},
+  {d:"Mar 11",v:"Express Rome",t:"Projectile",c:true,dm:"Liberia-flagged container ship hit off UAE coast. IRGC claimed.",ca:"Unknown"},
 ];
 const infra=[
   {d:"Mar 2",f:"Ras Tanura Refinery",co:"🇸🇦 Saudi Arabia",cap:"550K bpd",st:"Shut",pd:"Minor",det:"Drone debris fire. Precautionary."},
@@ -145,9 +160,15 @@ const infra=[
   {d:"Mar 7-8",f:"Kuwait Airport Fuel",co:"🇰🇼 Kuwait",cap:"Aviation",st:"Damaged",pd:"Moderate",det:"Drone hits on fuel tanks."},
   {d:"Mar 9",f:"Vopak Fujairah",co:"🇦🇪 UAE",cap:"Storage",st:"Struck",pd:"Moderate",det:"Drone strikes on terminal."},
   {d:"Mar 9",f:"Hidd Desalination",co:"🇧🇭 Bahrain",cap:"90M gal/day",st:"Struck",pd:"Moderate",det:"Loitering munitions. Water escalation."},
+  {d:"Mar 10",f:"ADNOC Ruwais Complex",co:"🇦🇪 UAE",cap:"922K bpd refining",st:"Shut",pd:"Minor",det:"Drone strike fire. Precautionary shutdown of refinery. Downstream ops continue."},
+  {d:"Mar 10",f:"Manama residential",co:"🇧🇭 Bahrain",cap:"Civilian",st:"Struck",pd:"Moderate",det:"Iranian attack hit residential building. 1 woman killed, 8 wounded."},
+  {d:"Mar 10-11",f:"Strait minelaying",co:"🇮🇷 Iran (offensive)",cap:"Maritime denial",st:"Active",pd:"N/A",det:"Iran began laying mines. US sank 16 minelayers. 'Few dozen' mines deployed."},
+  {d:"Mar 11",f:"Cargo ship in Strait",co:"International waters",cap:"Cargo vessel",st:"Struck",pd:"Moderate",det:"Cargo ship ablaze after hit by projectile in Strait."},
+  {d:"Mar 11",f:"Mayuree Naree (vessel)",co:"Strait of Hormuz",cap:"Bulk carrier",st:"Struck",pd:"Moderate",det:"Thai-flagged. 2 projectiles. Engine room fire. 3 missing, 20 evacuated. IRGC claimed."},
+  {d:"Mar 11",f:"Express Rome (vessel)",co:"Off UAE coast",cap:"Container ship",st:"Struck",pd:"Unknown",det:"Liberia-flagged. Hit nr Ras al Khaymah. IRGC claimed."},
 ];
-const priceData=[{d:"Feb 27",b:72.87},{d:"Feb 28",b:78},{d:"Mar 1",b:79.3},{d:"Mar 2",b:84},{d:"Mar 3",b:86},{d:"Mar 4",b:83},{d:"Mar 5",b:90},{d:"Mar 6",b:93},{d:"Mar 7",b:95},{d:"Mar 8",b:99},{d:"Mar 9",b:119.46},{d:"Mar 10",b:90.33}];
-const straitData=[{d:"Pre-war",c:85},{d:"Feb 28",c:17},{d:"Mar 1",c:3},{d:"Mar 2",c:0},{d:"Mar 3",c:2},{d:"Mar 4",c:5},{d:"Mar 5",c:4},{d:"Mar 6",c:3},{d:"Mar 7",c:3},{d:"Mar 8",c:2}];
+const priceData=[{d:"Feb 27",b:72.87},{d:"Feb 28",b:78},{d:"Mar 1",b:79.3},{d:"Mar 2",b:84},{d:"Mar 3",b:86},{d:"Mar 4",b:83},{d:"Mar 5",b:90},{d:"Mar 6",b:93},{d:"Mar 7",b:95},{d:"Mar 8",b:99},{d:"Mar 9",b:119.5},{d:"Mar 10",b:87.8},{d:"Mar 11",b:92}];
+const straitData=[{d:"Pre-war",c:85},{d:"Feb 28",c:17},{d:"Mar 1",c:3},{d:"Mar 2",c:0},{d:"Mar 3",c:2},{d:"Mar 4",c:5},{d:"Mar 5",c:4},{d:"Mar 6",c:3},{d:"Mar 7",c:3},{d:"Mar 8",c:2},{d:"Mar 9",c:1},{d:"Mar 10",c:1},{d:"Mar 11",c:1}];
 
 // ═══════════ COMPONENTS ═══════════
 const Bg=({children,bg,color,border})=><span style={{display:"inline-block",padding:"2px 7px",borderRadius:4,fontSize:10,fontWeight:700,background:bg,color,border:`1px solid ${border}`,fontFamily:F,letterSpacing:"0.05em",textTransform:"uppercase",whiteSpace:"nowrap"}}>{children}</span>;
@@ -171,10 +192,10 @@ export default function App(){
       <div style={{background:"linear-gradient(180deg,#1a0505 0%,#0a0e17 100%)",borderBottom:`1px solid ${C.accentDim}`,padding:"20px 28px 14px"}}>
         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:2}}>
           <div style={{width:9,height:9,borderRadius:"50%",background:C.accent,boxShadow:"0 0 12px #ef444488",animation:"pulse 2s infinite"}}/>
-          <span style={{fontSize:10,color:C.accent,fontWeight:700,letterSpacing:"0.15em"}}>LIVE SITREP — DAY 11</span>
+          <span style={{fontSize:10,color:C.accent,fontWeight:700,letterSpacing:"0.15em"}}>LIVE SITREP — DAY 12</span>
         </div>
         <h1 style={{margin:"2px 0",fontSize:22,fontWeight:800,background:"linear-gradient(90deg,#f87171,#fbbf24)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Strait of Hormuz — Hydrocarbon Impact Assessment</h1>
-        <div style={{fontSize:11,color:C.textDim,marginBottom:14}}>28 Feb 2026 (Operation Epic Fury) → 10 Mar 2026, 13:48 CET</div>
+        <div style={{fontSize:11,color:C.textDim,marginBottom:14}}>28 Feb 2026 (Operation Epic Fury) → 11 Mar 2026, 18:40 CET | BREAKING: IEA releases record 400M bbl from reserves; 3 more ships hit today; Russia advising Iran on drone tactics</div>
         <div style={{display:"flex",gap:2,flexWrap:"wrap"}}>{TABS.map(t=><button key={t} onClick={()=>setTab(t)} style={{background:tab===t?C.panel:"transparent",border:tab===t?`1px solid ${C.panelBorder}`:"1px solid transparent",borderBottom:tab===t?`1px solid ${C.bg}`:"none",borderRadius:"6px 6px 0 0",padding:"7px 14px",color:tab===t?C.text:C.textMuted,fontFamily:F,fontSize:11,fontWeight:600,cursor:"pointer",letterSpacing:"0.05em",textTransform:"uppercase"}}>{t}</button>)}</div>
       </div>
 
@@ -186,8 +207,8 @@ export default function App(){
     <SC label="Pre-War Output" value={`${totPre.toFixed(1)}M`} sub="bpd" color={C.textDim} icon="◈"/>
     <SC label="Current Output" value={`${totCur.toFixed(1)}M`} sub="bpd" color={C.warn} icon="▼"/>
     <SC label="Lost" value={`${totLost.toFixed(1)}M`} sub={`bpd (${((totLost/totPre)*100).toFixed(0)}%)`} color={C.accent} icon="✕"/>
-    <SC label="Brent" value="$90.33" sub="Peak $119.46" color={C.highlight} icon="◆"/>
-    <SC label="Vessels Hit" value={vessels.length} sub="7+ killed" color={C.accent} icon="⚠"/>
+    <SC label="Brent" value="~$92" sub="Peak $119.50 | IEA release" color={C.highlight} icon="◆"/>
+    <SC label="Vessels Hit" value="17+" sub="7+ killed, 3+ missing today" color={C.accent} icon="⚠"/>
     <SC label="Strait" value="−97%" sub="2/day vs 85" color={C.accent} icon="◇"/>
   </div>
   <Sec accent={C.warn}>Production by Country (M bpd)</Sec>
@@ -204,8 +225,8 @@ export default function App(){
     <SC label="Replacement Value" value={`$${totRepl.toFixed(0)}B`} sub="total affected assets" color={C.textDim} icon="🏗"/>
     <SC label="Est. Physical Damage" value={`$${totDmgLo.toFixed(1)}-${totDmgHi.toFixed(1)}B`} sub={`midpoint $${totDmgMid.toFixed(1)}B (${dmgPctRepl}% of replacement)`} color={C.accent} icon="💥"/>
     <SC label="Daily Revenue Loss" value={`$${totDailyRev.toFixed(0)}M`} sub="all facilities combined" color={C.warn} icon="📉"/>
-    <SC label="11-Day Cumul. Rev Loss" value={`$${(cum11d/1000).toFixed(1)}B`} sub="already exceeds physical damage" color={C.highlight} icon="💰"/>
-    <SC label="Force Majeures" value="4" sub="QA, KW, BH, IQ" color={C.purple} icon="⚖"/>
+    <SC label="11-Day Cumul. Rev Loss" value={`$${(cum11d/1000).toFixed(1)}B`} sub="and accelerating daily" color={C.highlight} icon="💰"/>
+    <SC label="MINES CONFIRMED" value="Active" sub="Few dozen laid. US sank 16 minelayers." color={"#f43f5e"} icon="💣"/>
   </div>
 
   {/* ── THE BIG COMPARISON: Replacement vs Damage vs Revenue ── */}
@@ -326,8 +347,9 @@ export default function App(){
       {c:C.accent,t:"LNG RESTART — Qatar ($35B asset, $0.5-2B damage est.)",x:"Ras Laffan: damage assessment ongoing but even undamaged, LNG trains need 4-8 weeks restart. CEO: won't restart until war ends. If infrastructure hit: months. Revenue loss ($200M/day) compounds far faster than any repair cost."},
       {c:C.warn,t:"REFINING — Bahrain ($7.3B asset, $1-3B damage est.)",x:"BAPCO took the hardest hit relative to its value — up to 41% damage ratio. Only refinery in country. If bottom-of-barrel units destroyed, 6-12 month rebuild. Bahrain now 100% import-dependent."},
       {c:C.warn,t:"BYPASS — Fujairah ($6.5B asset, $0.3-1B damage est.)",x:"Iran systematically targeting the ADCOP bypass terminus. 3 strikes in 7 days. Even partial degradation eliminates the UAE's workaround for the Strait closure."},
-      {c:C.blue,t:"INSURANCE COLLAPSE (no physical damage needed)",x:"War-risk premiums +1000%. VLCC cost: $625K→$7.5M. Lloyd's cancellation notices. This is the single biggest factor keeping the Strait closed — the blockade is enforced by the insurance market, not just by Iranian missiles."},
-      {c:C.blue,t:"KEY INSIGHT: BLOCKADE > BOMBS",x:`Physical damage is only ${dmgPctRepl}% of replacement value — but revenue loss already matches or exceeds it. After 30 days the revenue gap widens to $${((totDailyRev*30)/1000).toFixed(0)}B. The economic weapon is the Strait closure itself, not the infrastructure strikes.`},
+      {c:C.blue,t:"INSURANCE + IEA 400M BBL RELEASE",x:"IEA announced record 400M bbl strategic release (2x Ukraine). But analysts: '4 days of global production, 16 days of Hormuz volume — if that doesn't sound like much, it isn't' (Macquarie). US $20B DFC reinsurance launched but shipowners say safety is the bottleneck. Gulf exports at <10% of pre-war levels (IEA). Brent rebounded to ~$92 after announcement — market not convinced."},
+      {c:"#f43f5e",t:"⚠ MINES CONFIRMED + RUSSIA ADVISING IRAN",x:"Iran laying mines in Strait (US intel). US sank 16 minelayers but has NO minesweepers in Gulf. NEW: Russia giving Iran specific tactical drone advice (CNN/Western intel) — representing escalated foreign support. IRGC now demands ships get permission to transit. 3 more ships hit today alone (17+ total). Clearance = 2+ months post-ceasefire."},
+      {c:C.warn,t:"NEW: ADNOC RUWAIS SHUT (Mar 10) — $15B+ asset",x:"UAE's central downstream hub (922K bpd refining + petrochems) shut after drone strike. Combined with Ras Tanura (550K) + BAPCO (405K), now ~1.9M bpd of Gulf refining offline. Refinery shutdowns create downstream fuel shortages independent of crude supply."},
     ].map((r,i)=><P key={i} style={{padding:14,borderLeft:`3px solid ${r.c}`}}>
       <div style={{fontWeight:700,color:r.c,fontSize:11,marginBottom:6,textTransform:"uppercase",letterSpacing:"0.04em"}}>{r.t}</div>
       <div style={{fontSize:11,color:C.textDim,lineHeight:1.65}}>{r.x}</div>
@@ -338,13 +360,13 @@ export default function App(){
 {/* ═══ GULF AGGREGATE ═══ */}
 {tab==="Gulf Aggregate"&&<>
   <div style={{display:"flex",gap:10,flexWrap:"wrap",marginTop:20}}>
-    <SC label="Gulf Reserves" value="~800B" sub="bbl" color={C.blue} icon="🛢"/><SC label="Global Share" value="~25%" sub="production" color={C.blue} icon="🌍"/><SC label="Normal Transit" value="~20M" sub="bpd via Strait" color={C.blue} icon="🚢"/><SC label="Refining" value="~5.2M" sub="bpd (1M+ offline)" color={C.warn} icon="🏭"/>
+    <SC label="Gulf Reserves" value="~800B" sub="bbl" color={C.blue} icon="🛢"/><SC label="Global Share" value="~25%" sub="production" color={C.blue} icon="🌍"/><SC label="Normal Transit" value="~20M" sub="bpd via Strait" color={C.blue} icon="🚢"/><SC label="Refining" value="~5.2M" sub="bpd (~1.9M offline)" color={C.accent} icon="🏭"/>
   </div>
   <Sec accent={C.accent}>Aggregate Impact</Sec>
   <P><div style={{display:"flex",gap:24,flexWrap:"wrap"}}>
     <div style={{flex:1,minWidth:240}}><ResponsiveContainer width="100%" height={240}><PieChart><Pie data={[{name:"Producing",value:totCur},{name:"Lost",value:totLost}]} cx="50%" cy="50%" innerRadius={50} outerRadius={85} startAngle={90} endAngle={-270} paddingAngle={3} dataKey="value"><Cell fill={C.safe}/><Cell fill={C.accent}/></Pie><Tooltip content={<Tip/>}/><Legend wrapperStyle={{fontFamily:F,fontSize:11}}/></PieChart></ResponsiveContainer><div style={{textAlign:"center"}}><div style={{fontSize:28,fontWeight:800,color:C.accent}}>{((totLost/totPre)*100).toFixed(0)}%</div><div style={{fontSize:11,color:C.textDim}}>Gulf capacity offline</div></div></div>
     <div style={{flex:1.5,minWidth:320}}><table><tbody>
-      {[["Pre-war",`${totPre.toFixed(1)}M bpd`],["Current",`${totCur.toFixed(1)}M bpd`,C.warn],["Lost",`−${totLost.toFixed(1)}M bpd (${((totLost/totPre)*100).toFixed(0)}%)`,C.accent],[""],["Strait normal","~20M bpd + 20% LNG"],["Strait current","Near zero",C.accent],["Bypass usable","~3.0M of 8.0M",C.warn],["Zero-bypass","IQ, KW, QA, BH",C.accent],[""],["Brent","$72.87→$90.33",C.highlight],["Peak","$119.46 (+64%)",C.accent],["LNG","EU +60%, Asia +40%",C.warn],["Force majeures","QA, KW, BH (+IQ)",C.purple]].map((r,i)=>{if(r.length===1&&r[0]==="")return <tr key={i}><td colSpan={2} style={{height:6}}></td></tr>;return <tr key={i}><td style={{color:C.textMuted,padding:"4px 0"}}>{r[0]}</td><td style={{color:r[2]||C.text,fontWeight:r[2]?700:500,textAlign:"right",padding:"4px 0"}}>{r[1]}</td></tr>})}
+      {[["Pre-war",`${totPre.toFixed(1)}M bpd`],["Current",`${totCur.toFixed(1)}M bpd`,C.warn],["Lost",`−${totLost.toFixed(1)}M bpd (${((totLost/totPre)*100).toFixed(0)}%)`,C.accent],[""],["Strait normal","~20M bpd + 20% LNG"],["Strait current","Near zero",C.accent],["Bypass usable","~3.0M of 8.0M",C.warn],["Zero-bypass","IQ, KW, QA, BH",C.accent],[""],["Brent","$72.87→$92 (+26%)",C.highlight],["Peak","$119.50 (+64%)",C.accent],["LNG","EU +60%, Asia +40%",C.warn],["IEA release","Record 400M bbl announced",C.blue],["Force majeures","QA, KW, BH (+IQ)",C.purple]].map((r,i)=>{if(r.length===1&&r[0]==="")return <tr key={i}><td colSpan={2} style={{height:6}}></td></tr>;return <tr key={i}><td style={{color:C.textMuted,padding:"4px 0"}}>{r[0]}</td><td style={{color:r[2]||C.text,fontWeight:r[2]?700:500,textAlign:"right",padding:"4px 0"}}>{r[1]}</td></tr>})}
     </tbody></table></div>
   </div></P>
   <Sec accent={C.warn}>Hormuz Dependency</Sec>
@@ -382,8 +404,8 @@ export default function App(){
 </>}
 
       <div style={{marginTop:36,paddingTop:14,borderTop:`1px solid ${C.panelBorder}`,fontSize:9,color:C.textMuted,lineHeight:1.5}}>
-        <strong>SOURCES:</strong> Reuters, Bloomberg, CNBC, Al Jazeera, NPR, FT, CNN, ICG, Windward, Critical Threats, Long War Journal, Rapidan, Morgan Stanley, Rystad, JPMorgan, S&P Global, Vantor.
-        <br/><strong>DISCLAIMER:</strong> Estimates as of 10 Mar 2026 13:48 CET. Replacement values are industry benchmarks. Damage estimates are preliminary — based on reported assessments, satellite imagery, and analyst projections. Revenue loss calculations use mid-range daily loss estimates. Not audited figures.
+        <strong>SOURCES:</strong> Reuters, Bloomberg, CNBC, Al Jazeera, NPR, FT, CNN, PBS, CBS, ABC, Axios, CSIS, USNI News, ICG, Windward, IEA, Critical Threats, Long War Journal, Rapidan, Morgan Stanley, Rystad, JPMorgan, Macquarie, S&P Global, EIA (STEO Mar 10), Vantor, DFC, UKMTO.
+        <br/><strong>DISCLAIMER:</strong> Estimates as of 11 Mar 2026 18:40 CET (Day 12). Replacement values are industry benchmarks. Mining/vessel attack info per US intel reporting (CNN, Axios) and UKMTO. IEA release details (pace, allocation) still TBD. Rapidly evolving.
       </div>
       </div>
     </div>
