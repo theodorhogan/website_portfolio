@@ -5,5 +5,5 @@
 - Thu: Housing Starts JAN [(-)] vs street [(1.340M)]  (upcoming as of Fri 03-06)
 - Thu: Initial Jobless Claims MAR/07 [(-)] vs street [(215K)]  (upcoming as of Fri 03-06)
 - Fri: Core PCE Price Index MoM JAN [(-)] vs street [(0.4%)]  (upcoming as of Fri 03-06)
-- Fri: GDP Growth Rate QoQ 2nd Est Q4 [(-)] vs street [(1.4%)]  (upcoming as of Fri 03-06)
-- Fri: Michigan Consumer Sentiment Prel MAR [(-)] vs street [(56.3)]  (upcoming as of Fri 03-06)
+- Fri: GDP Growth Rate QoQ 2nd Est Q4 [[0.7%]] vs street [(1.4%)]  (upcoming as of Fri 03-06)
+- Fri: Michigan Consumer Sentiment Prel MAR [(54)] vs street [(56.3)]  (upcoming as of Fri 03-06)
