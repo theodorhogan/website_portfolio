@@ -1,30 +1,22 @@
-.economic-data {
-  @apply flex h-full min-h-0 w-full min-w-0 flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
-}
-
-.economic-data__header {
-  @apply flex items-center justify-between gap-3 border-b border-slate-800/80 bg-[#1f2530] px-2.5 py-1.5;
-}
-
-.economic-data__titleBadge {
-  @apply rounded-sm bg-emerald-500/20 px-2 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-200;
-}
-
 .economic-data__headerDate {
-  @apply font-mono text-[0.62rem] uppercase tracking-wide text-slate-400;
+  @apply text-[0.54rem] uppercase tracking-[0.14em] text-slate-500;
 }
 
 .economic-data__body {
-  @apply grid min-h-0 flex-1 grid-cols-[8.2rem_1fr] overflow-hidden;
+  @apply grid min-h-0 flex-1 grid-cols-[6.8rem_1fr] overflow-hidden;
 }
 
 .economic-data__rail {
-  @apply flex min-h-0 flex-col gap-1 overflow-y-auto border-r border-slate-800 bg-[#121722] p-2;
+  @apply flex min-h-0 flex-col gap-1 overflow-y-auto border-r p-1.5;
+  border-color: var(--terminal-line);
+  background: rgba(12, 18, 27, 0.88);
   scrollbar-width: thin;
 }
 
 .economic-data__railButton {
-  @apply flex flex-col items-start gap-0.5 rounded border border-slate-700 bg-[#0f141d] px-2 py-1.5 font-mono text-[0.66rem] uppercase tracking-wide text-slate-300 transition-colors;
+  @apply flex flex-col items-start gap-0.5 rounded border px-1.5 py-1 text-[0.58rem] uppercase tracking-[0.14em] text-slate-300 transition-colors;
+  border-color: rgba(54, 69, 92, 0.88);
+  background: rgba(12, 18, 27, 0.92);
 }
 
 .economic-data__railButton:hover {
@@ -44,7 +36,7 @@
 }
 
 .economic-data__railWeekBadge {
-  @apply inline-flex items-center gap-1.5 rounded border px-1.5 py-[0.16rem] text-[0.64rem] font-bold tracking-wider;
+  @apply inline-flex items-center gap-1 rounded-sm border px-1.5 py-[0.12rem] text-[0.56rem] font-bold tracking-[0.14em];
 }
 
 .economic-data__railWeekBadge--upcoming {
@@ -64,30 +56,28 @@
 }
 
 .economic-data__railWeekBadgeDate {
-  @apply text-[0.52rem] font-semibold tracking-wide text-slate-200;
+  @apply text-[0.46rem] font-semibold tracking-[0.1em] text-slate-200;
 }
 
 .economic-data__railYear {
-  @apply text-[0.6rem] font-medium leading-tight text-slate-400;
+  @apply text-[0.5rem] font-medium leading-tight text-slate-500;
 }
 
 .economic-data__railRange {
-  @apply text-[0.56rem] tracking-wide text-slate-500;
+  @apply text-[0.5rem] tracking-[0.1em] text-slate-600;
 }
 
 .economic-data__detail {
-  @apply min-h-0 overflow-y-auto px-2 py-1.5;
+  @apply min-h-0 overflow-y-auto px-2.5 py-1.5;
   scrollbar-width: thin;
-  scrollbar-color: rgba(51, 65, 85, 0.7) #12161d;
+  scrollbar-color: rgba(51, 65, 85, 0.7) transparent;
 }
 
 .economic-data__detail::-webkit-scrollbar {
   width: 8px;
 }
 
-.economic-data__detail::-webkit-scrollbar-track {
-  background: #12161d;
-}
+.economic-data__detail::-webkit-scrollbar-track { background: transparent; }
 
 .economic-data__detail::-webkit-scrollbar-thumb {
   background-color: rgba(51, 65, 85, 0.7);
@@ -97,7 +87,7 @@
 }
 
 .economic-data__content {
-  @apply whitespace-pre-wrap break-words font-mono text-[0.7rem] leading-6 text-slate-200;
+  @apply whitespace-pre-wrap break-words text-[0.64rem] leading-[1.45rem] text-slate-100;
 }
 
 .economic-data__line {
@@ -105,7 +95,7 @@
 }
 
 .economic-data__change {
-  @apply inline-flex items-center justify-center rounded-md border px-1.5 py-0.5 text-[0.64rem] font-semibold tracking-tight;
+  @apply inline-flex items-center justify-center rounded-sm border px-1.5 py-[0.18rem] text-[0.56rem] font-semibold tracking-tight;
   line-height: 1.1;
   min-width: 3ch;
 }

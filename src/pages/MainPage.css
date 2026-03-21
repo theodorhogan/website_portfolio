@@ -1,77 +1,49 @@
 .main-page {
-  @apply flex w-full justify-center;
-  padding: 0.75rem 0.5rem 2.65rem;
+  @apply flex w-full justify-center py-2;
 }
 
-.main-page__stack {
-  @apply flex w-full max-w-none justify-center px-5;
+.main-page__layout {
+  @apply grid w-full items-start gap-3;
+  grid-template-columns: minmax(0, 1.62fr) minmax(22rem, 0.92fr);
 }
 
-.main-page__panel > * {
-  @apply w-full;
-}
-
-.main-page__panel {
-  @apply grid w-full justify-center gap-3;
-  --main-blog-width: clamp(32rem, 50vw, 48rem);
-  --main-side-width: clamp(18rem, 24vw, 30rem);
-  grid-template-columns: var(--main-side-width) var(--main-blog-width) var(--main-side-width);
+.main-page__workspace,
+.main-page__context {
+  min-width: 0;
 }
 
 .main-page__blogSlot {
-  @apply w-full;
-  grid-column: 2;
-  /* Defined height so BlogWindow (height:100%) has something to fill */
-  height: clamp(36rem, 60vh, 52rem);
+  min-height: clamp(33rem, 62vh, 48rem);
 }
 
 .main-page__economicSlot {
-  @apply w-full self-end;
-  grid-column: 1;
-  width: min(100%, 30rem);
-  aspect-ratio: 1 / 2;
-  min-height: min(74vh, 42rem);
+  min-height: clamp(33rem, 62vh, 48rem);
 }
 
-.main-page__spacer {
-  @apply w-full;
-  grid-column: 3;
+.main-page__blogSlot > *,
+.main-page__economicSlot > * {
+  @apply h-full w-full;
 }
 
 @media (max-width: 1024px) {
   .main-page {
-    @apply px-0 pb-2;
+    @apply py-0;
   }
 
-  .main-page__stack {
-    @apply px-3;
+  .main-page__layout {
+    grid-template-columns: 1fr;
   }
 
-  .main-page__panel {
-    @apply flex flex-col;
-    max-width: none;
-    gap: 0.75rem;
-    grid-template-columns: none;
+  .main-page__workspace {
+    @apply order-1;
   }
 
-  .main-page__blogSlot {
-    height: auto;
-    min-height: 18rem;
+  .main-page__context {
+    @apply order-2;
   }
 
+  .main-page__blogSlot,
   .main-page__economicSlot {
-    @apply max-w-none;
-    width: 100%;
-    aspect-ratio: auto;
-    min-height: 18rem;
-  }
-
-  .main-page__spacer {
-    display: none;
-  }
-
-  .main-page .economic-data {
-    height: auto;
-    min-height: 18rem;
+    min-height: 20rem;
   }
 }

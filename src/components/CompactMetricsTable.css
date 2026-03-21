@@ -1,0 +1,83 @@
+.compact-metrics-table {
+  @apply w-full border-collapse;
+  table-layout: fixed;
+}
+
+.compact-metrics-table__head {
+  @apply border-b font-semibold uppercase text-slate-500;
+  padding: calc(var(--terminal-table-pad-y) * 0.95) var(--terminal-table-pad-x);
+  border-color: var(--terminal-table-line-strong);
+  background: var(--terminal-table-head-bg);
+  font-size: var(--terminal-table-head-size);
+  letter-spacing: 0.16em;
+}
+
+.compact-metrics-table__head--rowHeader,
+.compact-metrics-table__head--left {
+  @apply text-left;
+}
+
+.compact-metrics-table__head--center {
+  @apply text-center;
+}
+
+.compact-metrics-table__head--right {
+  @apply text-right;
+}
+
+.compact-metrics-table__name,
+.compact-metrics-table__value {
+  @apply border-b;
+  padding: var(--terminal-table-pad-y) var(--terminal-table-pad-x);
+  border-color: var(--terminal-table-line);
+}
+
+.compact-metrics-table__name {
+  @apply text-left text-slate-100;
+  background: rgba(12, 18, 27, 0.52);
+  font-size: var(--terminal-table-label-size);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.compact-metrics-table__value {
+  color: var(--terminal-copy);
+  font-size: var(--terminal-table-cell-size);
+  font-variant-numeric: tabular-nums;
+}
+
+.compact-metrics-table__value--left {
+  @apply text-left;
+}
+
+.compact-metrics-table__value--center {
+  @apply text-center;
+}
+
+.compact-metrics-table__value--right {
+  @apply text-right;
+}
+
+.compact-metrics-table tbody tr:last-child .compact-metrics-table__name,
+.compact-metrics-table tbody tr:last-child .compact-metrics-table__value {
+  border-bottom: none;
+}
+
+.compact-metrics-table__value--positive {
+  color: var(--terminal-positive);
+  font-weight: 600;
+}
+
+.compact-metrics-table__value--negative {
+  color: var(--terminal-negative);
+  font-weight: 600;
+}
+
+.compact-metrics-table__value--neutral {
+  @apply text-slate-200;
+}
+
+.compact-metrics-table__name--total,
+.compact-metrics-table__value--total {
+  border-top: 1px solid var(--terminal-table-line-strong);
+}

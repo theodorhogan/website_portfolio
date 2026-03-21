@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { ECONOMIC_WEEKS, type EconomicWeekEntry } from "../data/economicData";
 import { useNewsletterContext } from "../state/useNewsletterContext";
+import { PanelShell } from "./PanelShell";
 import "./EconomicData.css";
 
 const HIGHLIGHT_TOKEN =
@@ -195,12 +196,14 @@ export function EconomicData() {
     null;
 
   return (
-    <div className="economic-data">
-      <div className="economic-data__header">
-        <span className="economic-data__titleBadge">Economic Data</span>
-        <span className="economic-data__headerDate">{selectedItem?.headerDate ?? "-- --- --"}</span>
-      </div>
-      <div className="economic-data__body">
+    <PanelShell
+      className="economic-data h-full min-h-0"
+      variant="split"
+      bodyMode="stretch"
+      badge="Economic Data"
+      actions={<span className="economic-data__headerDate">{selectedItem?.headerDate ?? "-- --- --"}</span>}
+      bodyClassName="economic-data__body"
+    >
         <aside className="economic-data__rail" aria-label="Week selector">
           {railItems.map((item) => {
             const isSelected = item.id === selectedItem?.id;
@@ -257,7 +260,6 @@ export function EconomicData() {
             </p>
           )}
         </section>
-      </div>
-    </div>
+    </PanelShell>
   );
 }

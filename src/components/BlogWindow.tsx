@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import "./BlogWindow.css";
 import { useNewsletterContext } from "../state/useNewsletterContext";
+import { PanelShell } from "./PanelShell";
 
 const HIGHLIGHT_TOKEN =
   /\[\[(?<actual>[^\]]+)\]\]|\[\((?<expected>[^)]+)\)\]|\[(?<change>[+-]?\d+(?:\.\d+)?)%\]/g;
@@ -20,13 +21,7 @@ function renderContentWithChangeBadges(content: string) {
         const textSegment = line.slice(cursor, start);
 
         if (textSegment) {
-          lineElements.push(
-            <span
-              key={`line-${lineIndex}-text-${lineElements.length}`}
-            >
-              {textSegment}
-            </span>
-          );
+          lineElements.push(<span key={`line-${lineIndex}-text-${lineElements.length}`}>{textSegment}</span>);
         }
       }
 
@@ -60,12 +55,9 @@ function renderContentWithChangeBadges(content: string) {
       }
 
       lineElements.push(
-        <span
-          key={`line-${lineIndex}-badge-${lineElements.length}`}
-          className={`blog-window__change ${variant}`}
-        >
+        <span key={`line-${lineIndex}-badge-${lineElements.length}`} className={`blog-window__change ${variant}`}>
           {displayValue}
-        </span>
+        </span>,
       );
 
       cursor = start + match[0].length;
@@ -75,25 +67,15 @@ function renderContentWithChangeBadges(content: string) {
       const textSegment = line.slice(cursor);
 
       if (textSegment) {
-        lineElements.push(
-          <span
-            key={`line-${lineIndex}-text-${lineElements.length}`}
-          >
-            {textSegment}
-          </span>
-        );
+        lineElements.push(<span key={`line-${lineIndex}-text-${lineElements.length}`}>{textSegment}</span>);
       }
     }
 
     if (lineElements.length === 0) {
-      lineElements.push(
-        <span key={`line-${lineIndex}-empty`}>{"\u00A0"}</span>
-      );
+      lineElements.push(<span key={`line-${lineIndex}-empty`}>{"\u00A0"}</span>);
     }
 
-    nodes.push(
-      <span key={`line-${lineIndex}`}>{lineElements}</span>
-    );
+    nodes.push(<span key={`line-${lineIndex}`}>{lineElements}</span>);
 
     if (lineIndex < lines.length - 1) {
       nodes.push(<br key={`line-break-${lineIndex}`} />);
@@ -108,36 +90,32 @@ export function BlogWindow() {
 
   if (!selected) {
     return (
-      <div className="blog-window">
-        <div className="blog-window__header">
-          <span className="blog-window__titleText">
-            News – no bulletins found
-          </span>
-        </div>
-        <div className="blog-window__body">
-          <p className="blog-window__empty">
-            Drop weekly `.txt` files into `src/content/newsletters` to populate
-            this window.
-          </p>
-        </div>
-      </div>
+      <PanelShell
+        className="blog-window h-full"
+        variant="standard"
+        bodyMode="scroll"
+        badge="Market Update"
+        title={<span className="blog-window__titleText">News - no bulletins found</span>}
+        bodyClassName="blog-window__body"
+      >
+        <p className="blog-window__empty">
+          Drop weekly `.txt` files into `src/content/newsletters` to populate this window.
+        </p>
+      </PanelShell>
     );
   }
 
   return (
-    <div className="blog-window">
-      <div className="blog-window__header">
-        <div className="blog-window__titleGroup">
-          <span className="blog-window__titleBadge">Market Update</span>
-          <span className="blog-window__titleText">{selected.fileName}</span>
-        </div>
+    <PanelShell
+      className="blog-window h-full"
+      variant="standard"
+      bodyMode="scroll"
+      badge="Market Update"
+      title={<span className="blog-window__titleText">{selected.fileName}</span>}
+      actions={
         <label className="blog-window__selectGroup">
           <span className="sr-only">Select bulletin by date</span>
-          <select
-            className="blog-window__select"
-            value={selected.id}
-            onChange={(event) => setSelectedId(event.target.value)}
-          >
+          <select className="blog-window__select" value={selected.id} onChange={(event) => setSelectedId(event.target.value)}>
             {newsletters.map((entry) => (
               <option key={entry.id} value={entry.id}>
                 {entry.dateLabel}
@@ -145,16 +123,12 @@ export function BlogWindow() {
             ))}
           </select>
         </label>
+      }
+      bodyClassName="blog-window__body"
+    >
+      <div role="article" aria-label={selected.fullLabel}>
+        <div className="blog-window__content">{renderContentWithChangeBadges(selected.content)}</div>
       </div>
-      <div
-        className="blog-window__body"
-        role="article"
-        aria-label={selected.fullLabel}
-      >
-        <div className="blog-window__content">
-          {renderContentWithChangeBadges(selected.content)}
-        </div>
-      </div>
-    </div>
+    </PanelShell>
   );
 }

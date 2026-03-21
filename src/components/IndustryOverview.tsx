@@ -6,6 +6,7 @@ import {
   getIndustrySeries,
   type PricePoint,
 } from "../data/marketData";
+import { PanelShell } from "./PanelShell";
 import { useNewsletterContext } from "../state/useNewsletterContext";
 import "./IndustryOverview.css";
 
@@ -152,11 +153,15 @@ export function IndustryOverview() {
   }, [selected]);
 
   return (
-    <section className="industry-overview">
-      <div className="industry-overview__header">
-        <span className="industry-overview__titleBadge">INDUSTRY</span>
-      </div>
-      <div className="industry-overview__body">
+    <PanelShell
+      className="industry-overview"
+      variant="standard"
+      bodyMode="scroll"
+      badge="INDUSTRY"
+      title="Overview - US vs EU"
+      meta="Sector ETFs - Week on Week"
+      bodyClassName="industry-overview__body"
+    >
         <table className="industry-overview__table" aria-label="Industry overview US versus EU">
           <colgroup>
             <col className="industry-overview__colIndustry" />
@@ -199,7 +204,6 @@ export function IndustryOverview() {
             ))}
           </tbody>
         </table>
-      </div>
-    </section>
+    </PanelShell>
   );
 }

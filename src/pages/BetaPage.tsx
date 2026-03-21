@@ -1,6 +1,7 @@
 import { FullWatchlist } from "../components/FullWatchlist";
 import { IndustryOverview } from "../components/IndustryOverview";
 import { MajorIndexes } from "../components/MajorIndexes";
+import { SectorPerformance } from "../components/SectorPerformance";
 import { SPXIndexChart } from "../components/SPXIndexChart";
 import { STOXXIndexChart } from "../components/STOXXIndexChart";
 import "./BetaPage.css";
@@ -18,14 +19,17 @@ export function BetaPage() {
           </div>
         </div>
         <div className="beta-page__column beta-page__column--middle">
-          <div className="beta-page__slot beta-page__slot--major">
-            <MajorIndexes />
+          <div className="beta-page__slot beta-page__slot--sector">
+            <SectorPerformance />
           </div>
           <div className="beta-page__slot beta-page__slot--industry">
             <IndustryOverview />
           </div>
         </div>
         <div className="beta-page__column beta-page__column--right">
+          <div className="beta-page__slot beta-page__slot--major">
+            <MajorIndexes />
+          </div>
           <div className="beta-page__slot beta-page__slot--watchlist">
             <FullWatchlist />
           </div>

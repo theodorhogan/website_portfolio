@@ -1,23 +1,9 @@
-.yield-curve {
-  @apply flex w-full min-w-0 flex-col overflow-hidden border border-sky-900/60 bg-[#08121c] text-slate-100 shadow-xl;
-  height: auto;
-  min-height: 0;
-}
-
-.yield-curve__header {
-  @apply flex items-center justify-between gap-3 border-b border-sky-900/60 bg-[#0e1a2a] px-2.5 py-1.5;
-}
-
-.yield-curve__titleBadge {
-  @apply rounded-sm bg-emerald-500/20 px-2 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-200;
-}
-
 .yield-curve__legend {
   @apply flex items-center gap-3;
 }
 
 .yield-curve__legendItem {
-  @apply inline-flex items-center gap-1.5 font-mono text-[0.62rem] uppercase tracking-wide text-slate-300;
+  @apply inline-flex items-center gap-1.5 text-[0.54rem] uppercase tracking-[0.14em] text-slate-400;
 }
 
 .yield-curve__legendDot {
@@ -35,7 +21,7 @@
 }
 
 .yield-curve__body {
-  @apply flex flex-1 items-stretch px-2 py-2;
+  @apply flex flex-1 items-stretch px-2.5 py-1.5;
 }
 
 .yield-curve__svg {
@@ -44,12 +30,12 @@
 }
 
 .yield-curve__gridLine {
-  stroke: rgba(56, 189, 248, 0.18);
+  stroke: rgba(76, 200, 243, 0.12);
   stroke-width: 1;
 }
 
 .yield-curve__axisLine {
-  stroke: rgba(56, 189, 248, 0.35);
+  stroke: rgba(76, 200, 243, 0.24);
   stroke-width: 1;
 }
 
@@ -121,19 +107,19 @@
 
 .yield-curve__xTick,
 .yield-curve__yTick {
-  fill: #a8b4c8;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  letter-spacing: 0.03em;
+  fill: #98a6ba;
+  font-family: var(--terminal-font);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .yield-curve__xTick {
-  font-size: 11px;
+  font-size: 8px;
   font-weight: 600;
 }
 
 .yield-curve__yTick {
-  font-size: 9px;
+  font-size: 7px;
 }
 
 .yield-curve__empty {
@@ -141,10 +127,6 @@
 }
 
 @media (max-width: 1024px) {
-  .yield-curve__header {
-    @apply flex-col items-start;
-  }
-
   .yield-curve__legend {
     @apply flex-wrap;
   }

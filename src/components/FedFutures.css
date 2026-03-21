@@ -1,21 +1,9 @@
-.fed-futures {
-  @apply flex w-full min-w-0 flex-col overflow-hidden border border-cyan-900/60 bg-[#081722] text-slate-100 shadow-xl;
-}
-
-.fed-futures__header {
-  @apply flex items-center justify-between gap-3 border-b border-cyan-900/60 bg-[#0f2430] px-2.5 py-1.5;
-}
-
-.fed-futures__titleBadge {
-  @apply rounded-sm bg-emerald-500/20 px-2 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-200;
-}
-
 .fed-futures__date {
-  @apply font-mono text-[0.62rem] uppercase tracking-wide text-slate-300;
+  @apply text-[0.54rem] uppercase tracking-[0.14em] text-slate-400;
 }
 
 .fed-futures__body {
-  @apply flex flex-1 items-stretch px-2 py-2;
+  @apply flex flex-1 items-stretch px-2.5 py-1.5;
 }
 
 .fed-futures__svg {
@@ -24,12 +12,12 @@
 }
 
 .fed-futures__gridLine {
-  stroke: rgba(34, 211, 238, 0.14);
+  stroke: rgba(76, 200, 243, 0.1);
   stroke-width: 1;
 }
 
 .fed-futures__axisLine {
-  stroke: rgba(34, 211, 238, 0.32);
+  stroke: rgba(76, 200, 243, 0.22);
   stroke-width: 1;
 }
 
@@ -50,18 +38,18 @@
 .fed-futures__leftTick,
 .fed-futures__rightTick,
 .fed-futures__xTick {
-  fill: #94a3b8;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  letter-spacing: 0.02em;
+  fill: #98a6ba;
+  font-family: var(--terminal-font);
+  letter-spacing: 0.08em;
 }
 
 .fed-futures__leftTick,
 .fed-futures__rightTick {
-  font-size: 9px;
+  font-size: 7px;
 }
 
 .fed-futures__xTick {
-  font-size: 10px;
+  font-size: 7px;
   font-weight: 600;
 }
 
@@ -73,17 +61,11 @@
 
 .fed-futures__connectorLabel {
   fill: rgba(183, 238, 248, 0.95);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 7.6px;
-  letter-spacing: 0.02em;
+  font-family: var(--terminal-font);
+  font-size: 6px;
+  letter-spacing: 0.06em;
 }
 
 .fed-futures__empty {
   @apply m-auto font-mono text-xs text-slate-400;
-}
-
-@media (max-width: 1024px) {
-  .fed-futures__header {
-    @apply flex-col items-start;
-  }
 }

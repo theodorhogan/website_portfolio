@@ -7,6 +7,7 @@ import {
   getAlignedPoint,
   getMajorIndexSeries,
 } from "../data/marketData";
+import { PanelShell } from "./PanelShell";
 import { useNewsletterContext } from "../state/useNewsletterContext";
 import "./MajorIndexes.css";
 
@@ -106,11 +107,13 @@ export function MajorIndexes() {
   }, [selected]);
 
   return (
-    <section className="major-indexes">
-      <div className="major-indexes__header">
-        <span className="major-indexes__titleBadge">MAJOR INDEXES</span>
-      </div>
-      <div className="major-indexes__body">
+    <PanelShell
+      className="major-indexes"
+      variant="standard"
+      bodyMode="scroll"
+      badge="MAJOR INDEXES"
+      bodyClassName="major-indexes__body"
+    >
         <table className="major-indexes__table" aria-label="Major indexes snapshot">
           <colgroup>
             <col className="major-indexes__colTicker" />
@@ -140,7 +143,6 @@ export function MajorIndexes() {
             ))}
           </tbody>
         </table>
-      </div>
-    </section>
+    </PanelShell>
   );
 }

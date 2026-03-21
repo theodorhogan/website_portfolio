@@ -1,49 +1,101 @@
 .head-container {
-  @apply sticky top-0 z-20 flex w-full items-center justify-between gap-3 border-b border-slate-900 bg-[#12161d] px-3 py-1.5;
+  @apply sticky top-0 z-30 flex w-full items-center justify-between gap-3 border-b px-4 py-2;
+  border-color: var(--terminal-line-strong);
+  background:
+    linear-gradient(180deg, rgba(11, 16, 23, 0.98), rgba(10, 14, 20, 0.96));
+  backdrop-filter: blur(10px);
+}
+
+.head-primary {
+  @apply flex min-w-0 items-center gap-3;
+}
+
+.head-status {
+  @apply ml-auto flex flex-none items-center gap-3;
+}
+
+.head-brand {
+  @apply inline-flex shrink-0 items-center gap-1.5 font-semibold uppercase tracking-[0.24em] text-slate-100;
+  font-size: 0.68rem;
+}
+
+.head-brandMark {
+  color: var(--terminal-accent);
+}
+
+.head-routeNav {
+  @apply hidden items-center gap-1 rounded-md border px-1 py-1 md:flex;
+  border-color: var(--terminal-line);
+  background: rgba(15, 21, 31, 0.88);
+}
+
+.head-routeLink {
+  @apply inline-flex items-center rounded px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.16em] transition-colors;
+}
+
+.head-routeLink--inactive {
+  @apply text-slate-400 hover:text-slate-100;
+}
+
+.head-routeLink--active {
+  color: var(--terminal-accent-soft);
+  background: rgba(69, 217, 117, 0.12);
 }
 
 .head-search {
-  @apply flex flex-1 items-center gap-2 text-sm text-slate-400;
+  @apply hidden min-w-[12rem] items-center gap-2 rounded-md border px-3 py-1.5 text-sm text-slate-400 xl:flex;
+  border-color: var(--terminal-line);
+  background: rgba(14, 19, 28, 0.92);
 }
 
 .head-searchPrompt {
-  @apply font-mono text-base text-[#45d975];
+  @apply font-mono text-base;
+  color: var(--terminal-accent);
 }
 
 .head-searchInput {
-  @apply w-full bg-transparent text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-0;
+  @apply w-full bg-transparent text-[0.72rem] text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-0;
 }
 
 .head-activeWeek {
-  @apply inline-flex flex-none items-center gap-1.5 whitespace-nowrap rounded border border-slate-800 bg-[#0f1219] px-2 py-1 font-mono text-[0.62rem] font-semibold uppercase tracking-wide text-slate-300;
+  @apply inline-flex min-w-0 flex-none items-center gap-1.5 rounded-md border px-2 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-slate-300;
+  border-color: var(--terminal-line);
+  background: rgba(15, 21, 31, 0.88);
 }
 
 .head-activeWeekPrefix {
-  @apply min-w-[9.5rem] text-center text-slate-300;
+  @apply min-w-[10rem] text-center text-slate-100;
+}
+
+.head-activeWeekButton,
+.head-activeWeekLatest {
+  @apply inline-flex items-center justify-center rounded border bg-transparent uppercase transition-colors;
+  border-color: var(--terminal-line);
 }
 
 .head-activeWeekButton {
-  @apply inline-flex h-6 w-6 items-center justify-center rounded border border-slate-700 bg-[#121826] text-[0.72rem] leading-none text-slate-200 transition-colors hover:border-slate-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-45;
+  @apply h-6 w-6 text-[0.72rem] leading-none text-slate-300 hover:text-white disabled:cursor-not-allowed disabled:opacity-45;
 }
 
 .head-activeWeekLatest {
-  @apply inline-flex h-6 items-center justify-center rounded border border-slate-700 bg-[#121826] px-2 text-[0.6rem] font-semibold uppercase tracking-wide text-slate-200 transition-colors hover:border-slate-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-45;
+  @apply h-6 px-2 text-[0.58rem] tracking-[0.16em] text-slate-300 hover:text-white disabled:cursor-not-allowed disabled:opacity-45;
 }
 
 .head-timer {
-  @apply font-mono text-xs font-semibold tracking-wide text-white;
+  @apply font-semibold tracking-[0.14em] text-white;
+  font-size: 0.72rem;
 }
 
 .head-clock {
-  @apply relative flex items-center gap-2 text-white;
+  @apply relative flex flex-none items-center gap-2 text-white;
 }
 
 .head-date {
-  @apply font-mono text-[0.6rem] uppercase tracking-wide text-slate-400;
+  @apply text-[0.62rem] uppercase tracking-[0.14em] text-slate-500;
 }
 
 .head-separator {
-  @apply font-mono text-[0.6rem] text-slate-600;
+  @apply text-[0.62rem] text-slate-700;
 }
 
 .head-indicator {
@@ -66,12 +118,13 @@
 }
 
 .head-indicator--green {
-  @apply bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)];
+  background: var(--terminal-accent);
+  box-shadow: 0 0 8px rgba(69, 217, 117, 0.55);
   animation: head-pulse 2.8s ease-in-out infinite;
 }
 
 .head-indicator--green::after {
-  @apply bg-emerald-400/40;
+  background: rgba(69, 217, 117, 0.35);
   animation: head-pulse 2.8s ease-in-out infinite;
 }
 
@@ -101,7 +154,9 @@
 }
 
 .head-tooltip {
-  @apply pointer-events-none absolute right-0 top-full mt-2 w-36 rounded-md border border-slate-800/70 bg-slate-900/95 p-3 text-xs text-slate-200 opacity-0 shadow-lg transition-all duration-150 ease-out;
+  @apply pointer-events-none absolute right-0 top-full mt-2 w-36 rounded-md border p-3 text-xs text-slate-200 opacity-0 shadow-lg transition-all duration-150 ease-out;
+  border-color: var(--terminal-line-strong);
+  background: rgba(11, 16, 23, 0.96);
   transform: translateY(-4px);
 }
 
@@ -141,4 +196,66 @@
 
 .head-tooltipStatus--us-closed {
   @apply bg-rose-500/15 text-rose-400;
+}
+
+@media (max-width: 1200px) {
+  .head-container {
+    @apply gap-2 px-3;
+  }
+
+  .head-brand {
+    @apply hidden;
+  }
+
+  .head-date {
+    @apply hidden;
+  }
+}
+
+@media (max-width: 900px) {
+  .head-container {
+    @apply flex-wrap items-start;
+  }
+
+  .head-primary {
+    @apply w-full justify-between;
+  }
+
+  .head-status {
+    @apply ml-0 w-full justify-between;
+  }
+
+  .head-routeNav {
+    @apply flex;
+  }
+}
+
+@media (max-width: 640px) {
+  .head-container {
+    @apply px-2.5 py-2;
+  }
+
+  .head-primary {
+    @apply w-full;
+  }
+
+  .head-status {
+    @apply w-full flex-col items-stretch gap-2;
+  }
+
+  .head-routeNav {
+    @apply hidden;
+  }
+
+  .head-activeWeek {
+    @apply w-full justify-center;
+  }
+
+  .head-activeWeekPrefix {
+    min-width: 0;
+  }
+
+  .head-clock {
+    @apply ml-auto;
+  }
 }

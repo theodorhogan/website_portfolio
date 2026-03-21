@@ -1,19 +1,7 @@
-.industry-overview {
-  @apply flex w-full flex-col overflow-hidden border border-slate-800 bg-[#181d25] text-slate-100 shadow-xl;
-}
-
-.industry-overview__header {
-  @apply flex items-center justify-start border-b border-slate-800/80 bg-[#1f2530] px-2.5 py-1.5;
-}
-
-.industry-overview__titleBadge {
-  @apply rounded-sm bg-emerald-500/20 px-2 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-200;
-}
-
 .industry-overview__body {
-  @apply flex-1 overflow-auto p-2;
+  @apply flex-1 overflow-auto;
   scrollbar-width: thin;
-  scrollbar-color: rgba(51, 65, 85, 0.7) #12161d;
+  scrollbar-color: rgba(51, 65, 85, 0.7) transparent;
 }
 
 .industry-overview__body::-webkit-scrollbar {
@@ -22,7 +10,7 @@
 }
 
 .industry-overview__body::-webkit-scrollbar-track {
-  background: #12161d;
+  background: transparent;
 }
 
 .industry-overview__body::-webkit-scrollbar-thumb {
@@ -31,12 +19,12 @@
 }
 
 .industry-overview__table {
-  @apply w-full border-collapse font-mono text-[0.66rem] uppercase text-slate-200;
-  table-layout: fixed;
+  @apply w-full border-collapse text-slate-200;
+  table-layout: auto;
 }
 
 .industry-overview__colIndustry {
-  width: 24%;
+  width: 30%;
 }
 
 .industry-overview__colPrice {
@@ -48,25 +36,27 @@
 }
 
 .industry-overview__colLastWeek {
-  width: 15%;
+  width: 13%;
 }
 
 .industry-overview__table th,
 .industry-overview__table td {
-  @apply px-2 py-[0.3rem];
+  padding: var(--terminal-table-pad-y) var(--terminal-table-pad-x);
   white-space: nowrap;
 }
 
-.industry-overview__headIndustry {
-  @apply text-left font-semibold tracking-wide text-slate-400;
-}
-
 .industry-overview__headSpacer {
-  @apply text-left text-transparent;
+  @apply border-b text-left text-transparent;
+  border-color: var(--terminal-table-line-strong);
+  background: var(--terminal-table-head-bg);
 }
 
 .industry-overview__headRegion {
-  @apply text-center font-semibold tracking-wide text-slate-300;
+  @apply border-b text-center font-semibold uppercase text-slate-300;
+  border-color: rgba(76, 200, 243, 0.34);
+  background: var(--terminal-table-head-bg);
+  font-size: var(--terminal-table-head-size);
+  letter-spacing: 0.16em;
 }
 
 .industry-overview__headRegionUs {
@@ -74,34 +64,45 @@
 }
 
 .industry-overview__headRegionDivider {
-  border-left: 2px solid rgba(148, 163, 184, 0.65) !important;
+  border-left: 1px solid rgba(76, 200, 243, 0.28) !important;
 }
 
 .industry-overview__headNumber {
-  @apply text-center font-semibold tracking-normal text-slate-400;
+  @apply border-b text-center font-semibold uppercase text-slate-500;
+  border-color: var(--terminal-table-line-strong);
+  background: var(--terminal-table-head-bg);
+  font-size: var(--terminal-table-head-size);
+  letter-spacing: 0.16em;
 }
 
 .industry-overview__industry {
-  @apply text-left text-slate-100;
-  letter-spacing: 0.01em;
+  @apply border-b text-left font-semibold text-slate-100;
+  border-color: var(--terminal-table-line);
+  background: rgba(12, 18, 27, 0.52);
+  font-size: var(--terminal-table-label-size);
+  letter-spacing: 0.04em;
 }
 
 .industry-overview__number {
-  @apply text-right text-slate-100;
+  @apply border-b text-right text-slate-100;
+  border-color: var(--terminal-table-line);
+  font-size: var(--terminal-table-cell-size);
   font-variant-numeric: tabular-nums;
 }
 
 .industry-overview__change {
-  @apply text-right font-semibold;
+  @apply border-b text-right font-semibold;
+  border-color: var(--terminal-table-line);
+  font-size: var(--terminal-table-cell-size);
   font-variant-numeric: tabular-nums;
 }
 
 .industry-overview__change--positive {
-  color: #45d975;
+  color: var(--terminal-positive);
 }
 
 .industry-overview__change--negative {
-  color: #f43f5e;
+  color: var(--terminal-negative);
 }
 
 .industry-overview__change--neutral {
@@ -113,7 +114,13 @@
 }
 
 .industry-overview__cellDivider {
-  border-left: 2px solid rgba(148, 163, 184, 0.65) !important;
+  border-left: 1px solid rgba(76, 200, 243, 0.28) !important;
+}
+
+.industry-overview__table tbody tr:last-child .industry-overview__industry,
+.industry-overview__table tbody tr:last-child .industry-overview__number,
+.industry-overview__table tbody tr:last-child .industry-overview__change {
+  border-bottom: none;
 }
 
 @media (max-width: 1024px) {
@@ -129,13 +136,6 @@
 
   .industry-overview__table {
     width: max-content;
-    min-width: 46rem;
-    font-size: 0.62rem;
-  }
-
-  .industry-overview__table th,
-  .industry-overview__table td {
-    padding-left: 0.4rem;
-    padding-right: 0.4rem;
+    min-width: 52rem;
   }
 }

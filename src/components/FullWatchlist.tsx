@@ -7,6 +7,7 @@ import {
   getWatchlistStoxSeries,
   resolveAlignedTime,
 } from "../data/marketData";
+import { PanelShell } from "./PanelShell";
 import { useNewsletterContext } from "../state/useNewsletterContext";
 import "./MajorIndexes.css";
 
@@ -105,11 +106,13 @@ export function FullWatchlist() {
   }, [selected]);
 
   return (
-    <section className="major-indexes">
-      <div className="major-indexes__header">
-        <span className="major-indexes__titleBadge">FULL WATCHLIST</span>
-      </div>
-      <div className="major-indexes__body">
+    <PanelShell
+      className="major-indexes"
+      variant="standard"
+      bodyMode="scroll"
+      badge="FULL WATCHLIST"
+      bodyClassName="major-indexes__body"
+    >
         <table className="major-indexes__table" aria-label="Full watchlist snapshot">
           <colgroup>
             <col className="major-indexes__colTicker" />
@@ -139,7 +142,6 @@ export function FullWatchlist() {
             ))}
           </tbody>
         </table>
-      </div>
-    </section>
+    </PanelShell>
   );
 }

@@ -8,6 +8,7 @@ import {
   resolveAlignedPointIndex,
   type PricePoint,
 } from "../data/marketData";
+import { PanelShell } from "./PanelShell";
 import { useNewsletterContext } from "../state/useNewsletterContext";
 import "./RatesAndYield.css";
 
@@ -211,9 +212,12 @@ export function RatesAndYield() {
   }, [cycleMode, cycleMonthsInput, selected]);
 
   return (
-    <section className="rates-yield">
-      <div className="rates-yield__header">
-        <span className="rates-yield__titleBadge">Money to Capital Markets</span>
+    <PanelShell
+      className="rates-yield"
+      variant="standard"
+      bodyMode="scroll"
+      badge="Money to Capital Markets"
+      actions={
         <div className="rates-yield__controls">
           <label className="rates-yield__monthsGroup">
             <span className="rates-yield__monthsLabel">Cycle (mo)</span>
@@ -240,8 +244,9 @@ export function RatesAndYield() {
             </select>
           </label>
         </div>
-      </div>
-      <div className="rates-yield__body">
+      }
+      bodyClassName="rates-yield__body"
+    >
         <table className="rates-yield__table" aria-label="US Treasury rates and yields">
           <colgroup>
             <col className="rates-yield__colLabel" />
@@ -281,7 +286,6 @@ export function RatesAndYield() {
             ))}
           </tbody>
         </table>
-      </div>
-    </section>
+    </PanelShell>
   );
 }

@@ -5,7 +5,12 @@ import {
   getFedFuturesSnapshots,
 } from "../data/marketData";
 import { useNewsletterContext } from "../state/useNewsletterContext";
-import "./QuartlyCuts.css";
+import {
+  CompactMetricsTable,
+  type CompactMetricsRow,
+  type CompactMetricsTone,
+} from "./CompactMetricsTable";
+import { PanelShell } from "./PanelShell";
 
 type QuarterRow = {
   label: string;
@@ -62,10 +67,9 @@ function formatBps(value: number | null) {
   return `${sign}${rounded.toFixed(1)}bp`;
 }
 
-function toneClass(value: number | null) {
-  if (value === null || Math.abs(value) < 0.00005) return "quartly-cuts__value--neutral";
-  // For this table, negative values represent implied cuts and should read as favorable.
-  return value < 0 ? "quartly-cuts__value--positive" : "quartly-cuts__value--negative";
+function getTone(value: number | null): CompactMetricsTone {
+  if (value === null || Math.abs(value) < 0.00005) return "neutral";
+  return value < 0 ? "positive" : "negative";
 }
 
 function getQuarterSequence(activeTime: number) {
@@ -88,9 +92,7 @@ export function QuartlyCuts() {
     const activeTime = selected?.sortDate ?? null;
     if (activeTime === null) {
       return {
-        effr: null as number | null,
-        quarterRows: [] as QuarterRow[],
-        total: null as number | null,
+        rows: [] as CompactMetricsRow[],
       };
     }
 
@@ -124,7 +126,6 @@ export function QuartlyCuts() {
         };
       }
 
-      // Signed change in policy rate path: cuts are negative, hikes are positive.
       const cutsBps = (impliedRate - previousRate) * 100;
       previousRate = impliedRate;
       return {
@@ -138,42 +139,36 @@ export function QuartlyCuts() {
         ? quarterRows.reduce((sum, row) => sum + (row.cutsBps ?? 0), 0)
         : null;
 
-    return { effr: alignedEffr, quarterRows, total };
+    const rows: CompactMetricsRow[] = [
+      {
+        key: "effr",
+        label: "EFFR",
+        cells: [{ content: formatRate(alignedEffr), tone: "neutral" }],
+      },
+      ...quarterRows.map((row) => ({
+        key: row.label,
+        label: row.label,
+        cells: [{ content: formatBps(row.cutsBps), tone: getTone(row.cutsBps) }],
+      })),
+      {
+        key: "total",
+        label: "TOTAL",
+        labelClassName: "compact-metrics-table__name--total",
+        cells: [{ content: formatBps(total), tone: getTone(total), className: "compact-metrics-table__value--total" }],
+      },
+    ];
+
+    return { rows };
   }, [selected]);
 
   return (
-    <section className="quartly-cuts">
-      <div className="quartly-cuts__header">
-        <span className="quartly-cuts__titleBadge">CUTS</span>
-      </div>
-      <div className="quartly-cuts__body">
-        <table className="quartly-cuts__table" aria-label="Quarterly implied cuts from EFFR and ZQ">
-          <thead>
-            <tr>
-              <th scope="col" className="quartly-cuts__head quartly-cuts__head--label">PERIOD</th>
-              <th scope="col" className="quartly-cuts__head">VALUE</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row" className="quartly-cuts__label">EFFR</th>
-              <td className="quartly-cuts__value quartly-cuts__value--neutral">{formatRate(data.effr)}</td>
-            </tr>
-            {data.quarterRows.map((row) => (
-              <tr key={row.label}>
-                <th scope="row" className="quartly-cuts__label">{row.label}</th>
-                <td className={`quartly-cuts__value ${toneClass(row.cutsBps)}`}>{formatBps(row.cutsBps)}</td>
-              </tr>
-            ))}
-            <tr>
-              <th scope="row" className="quartly-cuts__label quartly-cuts__label--total">TOTAL</th>
-              <td className={`quartly-cuts__value quartly-cuts__value--total ${toneClass(data.total)}`}>
-                {formatBps(data.total)}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+    <PanelShell className="quartly-cuts" variant="standard" bodyMode="fit" badge="CUTS">
+      <CompactMetricsTable
+        ariaLabel="Quarterly implied cuts from EFFR and ZQ"
+        rowHeaderLabel="PERIOD"
+        columns={[{ key: "value", label: "VALUE", align: "right" }]}
+        rows={data.rows}
+      />
+    </PanelShell>
   );
 }

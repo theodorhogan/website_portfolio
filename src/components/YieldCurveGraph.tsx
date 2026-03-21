@@ -15,6 +15,7 @@ import {
   DURATION_CHART_WIDTH,
   MONTH_LABELS_SHORT,
 } from "./durationChartConfig";
+import { PanelShell } from "./PanelShell";
 import "./YieldCurveGraph.css";
 
 type YieldCurveChartData =
@@ -233,9 +234,12 @@ export function YieldCurveGraph() {
   }, [selected]);
 
   return (
-    <section className="yield-curve">
-      <div className="yield-curve__header">
-        <span className="yield-curve__titleBadge">Yield Curve</span>
+    <PanelShell
+      className="yield-curve h-full min-h-0"
+      variant="chart"
+      bodyMode="stretch"
+      badge="Yield Curve"
+      actions={
         <div className="yield-curve__legend">
           <span className="yield-curve__legendItem">
             <span className="yield-curve__legendDot yield-curve__legendDot--active" />
@@ -246,8 +250,9 @@ export function YieldCurveGraph() {
             Last Week ({chartData.previousLabel})
           </span>
         </div>
-      </div>
-      <div className="yield-curve__body">
+      }
+      bodyClassName="yield-curve__body"
+    >
         {chartData.hasData ? (
           <CurvePlot
             ariaLabel="Yield curve comparison"
@@ -345,7 +350,6 @@ export function YieldCurveGraph() {
         ) : (
           <div className="yield-curve__empty">No aligned Treasury data for the selected week.</div>
         )}
-      </div>
-    </section>
+    </PanelShell>
   );
 }

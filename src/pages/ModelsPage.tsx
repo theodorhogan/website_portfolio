@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { PanelShell } from "../components/PanelShell";
 import { MODELS } from "../data/models";
 import "./ModelsPage.css";
 
@@ -16,15 +17,14 @@ export function ModelsPage() {
 
   return (
     <section className="models-page">
-      <div className="models-page__shell">
-        <div className="models-page__header">
-          <div className="models-page__titleGroup">
-            <span className="models-page__titleBadge">MODELS</span>
-            <div>
-              <h1 className="models-page__title">Model Viewer</h1>
-              <p className="models-page__subtitle">Drop `.jsx` or `.tsx` files into `src/content/models/`.</p>
-            </div>
-          </div>
+      <PanelShell
+        className="models-page__shell h-full"
+        variant="standard"
+        bodyMode="stretch"
+        badge="MODELS"
+        title="Model Viewer"
+        meta="Drop `.jsx` or `.tsx` files into `src/content/models/`."
+        actions={
           <label className="models-page__selectGroup">
             <span className="sr-only">Select model file</span>
             <select
@@ -36,12 +36,12 @@ export function ModelsPage() {
                 <option key={entry.id} value={entry.id}>
                   {entry.fileName}
                 </option>
-              ))}
-            </select>
+                ))}
+              </select>
           </label>
-        </div>
-
-        <div className="models-page__viewer">
+        }
+        bodyClassName="models-page__viewer"
+      >
           {SelectedComponent ? (
             <div className="models-page__viewerInner">
               <SelectedComponent />
@@ -51,8 +51,7 @@ export function ModelsPage() {
               No model files found. Add components to `src/content/models/` and they will appear here.
             </div>
           )}
-        </div>
-      </div>
+      </PanelShell>
     </section>
   );
 }

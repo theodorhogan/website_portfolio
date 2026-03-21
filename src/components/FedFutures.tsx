@@ -13,6 +13,7 @@ import {
   DURATION_CHART_WIDTH,
   MONTH_LABELS_SHORT,
 } from "./durationChartConfig";
+import { PanelShell } from "./PanelShell";
 import "./FedFutures.css";
 
 type FedFuturesChartData =
@@ -170,12 +171,14 @@ export function FedFutures() {
   }, [selected]);
 
   return (
-    <section className="fed-futures">
-      <div className="fed-futures__header">
-        <span className="fed-futures__titleBadge">ZQ Curve</span>
-        <span className="fed-futures__date">Active ({chartData.activeLabel})</span>
-      </div>
-      <div className="fed-futures__body">
+    <PanelShell
+      className="fed-futures h-full min-h-0"
+      variant="chart"
+      bodyMode="stretch"
+      badge="ZQ Curve"
+      actions={<span className="fed-futures__date">Active ({chartData.activeLabel})</span>}
+      bodyClassName="fed-futures__body"
+    >
         {chartData.hasData ? (
           <CurvePlot
             ariaLabel="Fed futures ZQ curve"
@@ -228,7 +231,6 @@ export function FedFutures() {
         ) : (
           <div className="fed-futures__empty">No aligned ZQ data for the selected week.</div>
         )}
-      </div>
-    </section>
+    </PanelShell>
   );
 }

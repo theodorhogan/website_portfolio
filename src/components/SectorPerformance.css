@@ -1,0 +1,57 @@
+.sector-performance__body {
+  @apply grid min-h-0 flex-1 grid-cols-2 gap-0;
+}
+
+.sector-performance__region {
+  @apply flex min-w-0 flex-col px-2.5 py-1.5;
+}
+
+.sector-performance__region + .sector-performance__region {
+  border-left: 1px solid var(--terminal-line);
+}
+
+.sector-performance__regionTitle {
+  @apply mb-1.5 text-[0.56rem] font-semibold uppercase tracking-[0.14em] text-slate-500;
+}
+
+.sector-performance__chartFrame {
+  @apply min-h-0 flex-1;
+  height: 14.75rem;
+}
+
+.sector-performance__tooltip {
+  @apply rounded-md border px-2 py-1.5;
+  border-color: var(--terminal-line);
+  background: rgba(11, 16, 23, 0.96);
+}
+
+.sector-performance__tooltipLabel {
+  @apply text-[0.54rem] uppercase tracking-[0.12em] text-slate-500;
+}
+
+.sector-performance__tooltipValue {
+  @apply mt-0.5 text-[0.66rem] font-semibold;
+}
+
+.sector-performance__tooltipValue.is-positive {
+  color: var(--terminal-positive);
+}
+
+.sector-performance__tooltipValue.is-negative {
+  color: var(--terminal-negative);
+}
+
+@media (max-width: 1024px) {
+  .sector-performance__body {
+    grid-template-columns: 1fr;
+  }
+
+  .sector-performance__region + .sector-performance__region {
+    border-left: none;
+    border-top: 1px solid var(--terminal-line);
+  }
+
+  .sector-performance__chartFrame {
+    height: 13.75rem;
+  }
+}

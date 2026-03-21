@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { NavLink } from "react-router-dom";
 import "./Head.css";
 import { useNewsletterContext } from "../state/useNewsletterContext";
 
@@ -129,6 +130,13 @@ function getISOWeek(date: Date) {
 
 const monthFormatter = new Intl.DateTimeFormat("en-US", { month: "short" });
 
+const ROUTE_ITEMS = [
+  { label: "Main", path: "/" },
+  { label: "Duration", path: "/duration" },
+  { label: "Beta", path: "/beta" },
+  { label: "Models", path: "/models" },
+] as const;
+
 function formatDateWithWeek(date: Date) {
   const day = String(date.getDate()).padStart(2, "0");
   const month = monthFormatter.format(date).toUpperCase();
@@ -211,84 +219,109 @@ export function Head() {
 
   return (
     <header className="head-container">
-      <div className="head-search">
-        <span className="head-searchPrompt" aria-hidden="true">
-          &gt;
+      <div className="head-primary">
+        <span className="head-brand">
+          <span className="head-brandMark">&gt;</span>
+          Terminal
         </span>
-        <input
-          id="global-search"
-          type="search"
-          placeholder="Search"
-          className="head-searchInput"
-          aria-label="Search"
-        />
-      </div>
-      <div className="head-activeWeek" role="group" aria-label="Change active week">
-        <button
-          type="button"
-          className="head-activeWeekButton"
-          onClick={moveToOlderWeek}
-          disabled={!hasOlderWeek}
-          aria-label="Go to older week"
-        >
-          {"<"}
-        </button>
-        <span className="head-activeWeekPrefix">{activeWeekLabel}</span>
-        <button
-          type="button"
-          className="head-activeWeekButton"
-          onClick={moveToNewerWeek}
-          disabled={!hasNewerWeek}
-          aria-label="Go to newer week"
-        >
-          {">"}
-        </button>
-        <button
-          type="button"
-          className="head-activeWeekLatest"
-          onClick={moveToLatestWeek}
-          disabled={!hasSelection || isLatestSelected}
-          aria-label="Jump to latest week"
-        >
-          Latest
-        </button>
-      </div>
-      <div className="head-clock" title={tooltipTitle}>
-        <span className="head-date" aria-label={`Date ${formatDateWithWeek(now)}`}>
-          {formatDateWithWeek(now)}
-        </span>
-        <span className="head-separator" aria-hidden="true">
-          |
-        </span>
-        <time
-          className="head-timer"
-          dateTime={now.toISOString()}
-          aria-live="polite"
-          aria-label={`Current time ${formatTime(now)}. ${indicatorTitle}.`}
-        >
-          {formatTime(now)}
-        </time>
-        <span
-          className={`head-indicator head-indicator--${indicatorState}`}
-          role="presentation"
-        />
-        <span className="sr-only">{`EU market ${euStatus}. US market ${usStatus}.`}</span>
-        <div className="head-tooltip" role="status" aria-hidden="true">
-          <div className="head-tooltipRow">
-            <span className="head-tooltipMarket">EU MKT</span>
-            <span
-              className={`head-tooltipStatus head-tooltipStatus--eu-${euStatus.toLowerCase()}`}
+        <nav className="head-routeNav" aria-label="Primary">
+          {ROUTE_ITEMS.map((item) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              end={item.path === "/"}
+              className={({ isActive }) =>
+                [
+                  "head-routeLink",
+                  isActive ? "head-routeLink--active" : "head-routeLink--inactive",
+                ].join(" ")
+              }
             >
-              {euStatus}
-            </span>
-          </div>
-          <div className="head-tooltipRow">
-            <span className="head-tooltipMarket">US MKT</span>
-            <span
-              className={`head-tooltipStatus head-tooltipStatus--us-${usStatus.toLowerCase()}`}
-            >
-              {usStatus}
-            </span>
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
+        <label className="head-search">
+          <span className="head-searchPrompt" aria-hidden="true">
+            &gt;
+          </span>
+          <input
+            id="global-search"
+            type="search"
+            placeholder="Search"
+            className="head-searchInput"
+            aria-label="Search"
+          />
+        </label>
+      </div>
+      <div className="head-status">
+        <div className="head-activeWeek" role="group" aria-label="Change active week">
+          <button
+            type="button"
+            className="head-activeWeekButton"
+            onClick={moveToOlderWeek}
+            disabled={!hasOlderWeek}
+            aria-label="Go to older week"
+          >
+            {"<"}
+          </button>
+          <span className="head-activeWeekPrefix">{activeWeekLabel}</span>
+          <button
+            type="button"
+            className="head-activeWeekButton"
+            onClick={moveToNewerWeek}
+            disabled={!hasNewerWeek}
+            aria-label="Go to newer week"
+          >
+            {">"}
+          </button>
+          <button
+            type="button"
+            className="head-activeWeekLatest"
+            onClick={moveToLatestWeek}
+            disabled={!hasSelection || isLatestSelected}
+            aria-label="Jump to latest week"
+          >
+            Latest
+          </button>
+        </div>
+        <div className="head-clock" title={tooltipTitle}>
+          <span className="head-date" aria-label={`Date ${formatDateWithWeek(now)}`}>
+            {formatDateWithWeek(now)}
+          </span>
+          <span className="head-separator" aria-hidden="true">
+            |
+          </span>
+          <time
+            className="head-timer"
+            dateTime={now.toISOString()}
+            aria-live="polite"
+            aria-label={`Current time ${formatTime(now)}. ${indicatorTitle}.`}
+          >
+            {formatTime(now)}
+          </time>
+          <span
+            className={`head-indicator head-indicator--${indicatorState}`}
+            role="presentation"
+          />
+          <span className="sr-only">{`EU market ${euStatus}. US market ${usStatus}.`}</span>
+          <div className="head-tooltip" role="status" aria-hidden="true">
+            <div className="head-tooltipRow">
+              <span className="head-tooltipMarket">EU MKT</span>
+              <span
+                className={`head-tooltipStatus head-tooltipStatus--eu-${euStatus.toLowerCase()}`}
+              >
+                {euStatus}
+              </span>
+            </div>
+            <div className="head-tooltipRow">
+              <span className="head-tooltipMarket">US MKT</span>
+              <span
+                className={`head-tooltipStatus head-tooltipStatus--us-${usStatus.toLowerCase()}`}
+              >
+                {usStatus}
+              </span>
+            </div>
           </div>
         </div>
       </div>

@@ -1,98 +1,81 @@
 .duration-page {
-  @apply flex w-full items-start justify-start py-4 pl-1;
-  padding-bottom: 3.25rem;
+  @apply flex w-full items-start justify-center py-2;
 }
 
-/* 2-column layout: Left (rates then charts+cuts) | Right stack (slopes + OAS) */
 .duration-page__layout {
-  @apply grid w-full items-start gap-4 pr-2;
-  grid-template-columns: minmax(0, 1fr) minmax(16rem, 20rem);
+  @apply grid w-full items-start gap-3;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(15rem, 0.78fr);
+  grid-template-areas:
+    "rates rates side"
+    "curve futures side";
+}
+
+.duration-page__ratesSlot,
+.duration-page__curveSlot,
+.duration-page__futuresSlot,
+.duration-page__rightStack {
+  min-width: 0;
 }
 
 .duration-page__ratesSlot {
-  grid-column: 1;
-  grid-row: 1;
-  min-width: 0;
+  grid-area: rates;
 }
 
-/*
-  Flex row — charts size themselves via clamp, not by column fraction.
-  This prevents them from growing unboundedly at wide viewports.
-  Cuts sits after them top-aligned; it doesn't need to reach the rates edge.
-*/
-.duration-page__chartsRow {
-  grid-column: 1;
-  grid-row: 2;
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 1rem;
-  align-items: flex-start;
-  min-width: 0;
+.duration-page__curveSlot {
+  grid-area: curve;
 }
 
-/* Right stack (Slopes + OAS) spans both rows */
+.duration-page__futuresSlot {
+  grid-area: futures;
+}
+
 .duration-page__rightStack {
-  @apply flex min-w-0 flex-col gap-4;
-  grid-column: 2;
-  grid-row: 1 / 3;
+  @apply flex min-w-0 flex-col gap-3;
+  grid-area: side;
 }
 
+.duration-page__cutsSlot,
 .duration-page__slopesSlot,
 .duration-page__creditSlot {
   min-width: 0;
 }
 
-/*
-  Square chart panels — clamped so they never exceed 26rem.
-  28vw tracks viewport proportionally between the floor and cap.
-  flex-shrink: 0 (via flex: 0 0) prevents collapse in tight layouts.
-*/
-.duration-page__curveSlot {
-  flex: 0 0 clamp(20rem, 34vw, 32rem);
-  aspect-ratio: 12 / 11;
-  display: flex;
-  min-width: 0;
+.duration-page__ratesSlot > *,
+.duration-page__curveSlot > *,
+.duration-page__futuresSlot > *,
+.duration-page__cutsSlot > *,
+.duration-page__slopesSlot > *,
+.duration-page__creditSlot > * {
+  @apply h-full w-full;
 }
 
-/* Cuts: fixed narrow column, top-aligned, no need to match rates table width */
-.duration-page__cutsSlot {
-  flex: 0 0 10rem;
-  align-self: flex-start;
-  min-width: 0;
+.duration-page__curveSlot > :last-child,
+.duration-page__futuresSlot > :last-child {
+  min-height: clamp(19rem, 35vh, 26rem);
 }
 
-/* --- 1024px: single column stack --- */
-@media (max-width: 1024px) {
-  .duration-page {
-    @apply pb-2;
+@media (max-width: 1180px) {
+  .duration-page__layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "rates rates"
+      "curve futures"
+      "side side";
   }
+}
 
+@media (max-width: 1024px) {
   .duration-page__layout {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "rates"
+      "curve"
+      "futures"
+      "side";
   }
 
-  .duration-page__ratesSlot,
-  .duration-page__chartsRow,
-  .duration-page__rightStack {
-    grid-column: auto;
-    grid-row: auto;
-  }
-
-  /* Stack charts vertically — side-by-side is too cramped on mobile */
-  .duration-page__chartsRow {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .duration-page__curveSlot {
-    flex: 0 0 auto;
-    width: 100%;
-    max-width: 32rem;
-  }
-
-  .duration-page__cutsSlot {
-    flex: 0 0 auto;
-    width: 100%;
-    max-width: none;
+  .duration-page__curveSlot > :last-child,
+  .duration-page__futuresSlot > :last-child {
+    min-height: 20rem;
   }
 }

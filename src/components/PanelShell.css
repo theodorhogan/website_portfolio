@@ -1,0 +1,115 @@
+.panel-shell {
+  @apply flex w-full min-w-0 flex-col overflow-hidden border;
+  border-color: var(--terminal-line);
+  border-radius: var(--terminal-shell-radius);
+  background: var(--terminal-surface);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+}
+
+.panel-shell--standard,
+.panel-shell--split {
+  background:
+    linear-gradient(180deg, rgba(16, 23, 32, 0.98), rgba(16, 23, 32, 0.96));
+}
+
+.panel-shell--chart {
+  border-color: rgba(34, 115, 153, 0.38);
+  background:
+    linear-gradient(180deg, rgba(8, 18, 28, 0.98), rgba(8, 18, 28, 0.96));
+}
+
+.panel-shell__header {
+  @apply flex items-start justify-between border-b;
+  gap: var(--terminal-shell-header-gap);
+  padding: var(--terminal-shell-header-pad-y) var(--terminal-shell-header-pad-x);
+  border-color: var(--terminal-line);
+}
+
+.panel-shell--standard .panel-shell__header,
+.panel-shell--split .panel-shell__header {
+  background:
+    linear-gradient(180deg, rgba(24, 34, 46, 0.98), rgba(24, 34, 46, 0.92));
+}
+
+.panel-shell--chart .panel-shell__header {
+  @apply items-center;
+  min-height: 2rem;
+  border-color: rgba(34, 115, 153, 0.38);
+  background:
+    linear-gradient(180deg, rgba(14, 25, 38, 0.98), rgba(14, 25, 38, 0.92));
+}
+
+.panel-shell__headerMain {
+  @apply flex min-w-0 items-center;
+  gap: calc(var(--terminal-shell-header-gap) * 1.15);
+}
+
+.panel-shell__badge {
+  @apply inline-flex shrink-0 items-center rounded-sm px-1.5 py-[0.22rem] font-semibold uppercase;
+  font-size: var(--terminal-shell-badge-size);
+  letter-spacing: 0.16em;
+  background: rgba(69, 217, 117, 0.16);
+  border: 1px solid rgba(69, 217, 117, 0.22);
+  color: #b8f4ca;
+}
+
+.panel-shell__copy {
+  @apply flex min-w-0 flex-col justify-center gap-0.5;
+}
+
+.panel-shell__title {
+  @apply min-w-0 truncate font-semibold tracking-[0.06em] text-slate-100;
+  font-size: var(--terminal-shell-title-size);
+}
+
+.panel-shell__meta {
+  @apply min-w-0 truncate uppercase tracking-[0.14em] text-slate-500;
+  font-size: var(--terminal-shell-meta-size);
+}
+
+.panel-shell__actions {
+  @apply flex min-w-0 shrink-0 items-center gap-2;
+}
+
+.panel-shell__body {
+  @apply min-w-0;
+  background: transparent;
+}
+
+.panel-shell__body--fit {
+  @apply overflow-hidden;
+}
+
+.panel-shell__body--scroll {
+  @apply min-h-0 flex-1 overflow-auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(51, 65, 85, 0.7) transparent;
+}
+
+.panel-shell__body--scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.panel-shell__body--scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.panel-shell__body--scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(51, 65, 85, 0.7);
+  border-radius: 999px;
+}
+
+.panel-shell__body--stretch {
+  @apply min-h-0 flex-1 overflow-hidden;
+}
+
+@media (max-width: 1024px) {
+  .panel-shell__header {
+    @apply flex-col items-start;
+  }
+
+  .panel-shell__actions {
+    @apply w-full;
+  }
+}
