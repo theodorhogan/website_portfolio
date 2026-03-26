@@ -28,3 +28,4 @@ DATA_CONTRACTS.md
 *.njsproj
 *.sln
 *.sw?
+.claude/worktrees/elastic-torvalds/
