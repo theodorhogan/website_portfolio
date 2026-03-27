@@ -3,7 +3,7 @@
 }
 
 .economic-data__body {
-  @apply grid min-h-0 flex-1 grid-cols-[6.8rem_1fr] overflow-hidden;
+  @apply grid min-h-0 flex-1 grid-cols-[6.6rem_1fr] overflow-hidden;
 }
 
 .economic-data__rail {
@@ -68,7 +68,7 @@
 }
 
 .economic-data__detail {
-  @apply min-h-0 overflow-y-auto px-2.5 py-1.5;
+  @apply min-h-0 overflow-y-auto px-2 py-1.5;
   scrollbar-width: thin;
   scrollbar-color: rgba(51, 65, 85, 0.7) transparent;
 }
@@ -86,42 +86,92 @@
   background-clip: content-box;
 }
 
-.economic-data__content {
-  @apply whitespace-pre-wrap break-words text-[0.64rem] leading-[1.45rem] text-slate-100;
+.economic-data__table {
+  @apply w-full border-collapse;
+  table-layout: fixed;
 }
 
-.economic-data__line {
-  @apply block;
+.economic-data__head,
+.economic-data__event,
+.economic-data__value,
+.economic-data__dayLabel {
+  @apply border-b;
+  padding: var(--terminal-table-pad-y) var(--terminal-table-pad-x);
+  border-color: var(--terminal-table-line);
 }
 
-.economic-data__change {
-  @apply inline-flex items-center justify-center rounded-sm border px-1.5 py-[0.18rem] text-[0.56rem] font-semibold tracking-tight;
-  line-height: 1.1;
-  min-width: 3ch;
+.economic-data__head {
+  @apply text-left font-semibold uppercase text-slate-500;
+  background: var(--terminal-table-head-bg);
+  border-color: var(--terminal-table-line-strong);
+  font-size: var(--terminal-table-head-size);
+  letter-spacing: 0.16em;
 }
 
-.economic-data__change--positive {
+.economic-data__head--event {
+  width: 52%;
+}
+
+.economic-data__head--value {
+  @apply text-right;
+  width: 16%;
+}
+
+.economic-data__dayLabel {
+  @apply text-left font-semibold uppercase text-slate-400;
+  background: rgba(10, 16, 24, 0.92);
+  font-size: 0.56rem;
+  letter-spacing: 0.18em;
+}
+
+.economic-data__event {
+  @apply text-left text-slate-100;
+  background: rgba(12, 18, 27, 0.52);
+  font-size: var(--terminal-table-label-size);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.economic-data__value {
+  @apply text-right text-slate-100;
+  font-size: var(--terminal-table-cell-size);
+  font-variant-numeric: tabular-nums;
+}
+
+.economic-data__value--actual {
+  color: #fdba74;
+}
+
+.economic-data__value--street {
+  color: #fef08a;
+}
+
+.economic-data__value--surprise {
+  @apply text-right;
+}
+
+.economic-data__surprise {
+  @apply inline-flex items-center justify-center rounded-sm border px-1.5 py-[0.12rem];
+  min-width: 4.6rem;
+  font-size: 0.56rem;
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.economic-data__surprise--positive {
   @apply border-emerald-500/70 bg-emerald-500/15 text-emerald-200;
 }
 
-.economic-data__change--negative {
+.economic-data__surprise--negative {
   @apply border-rose-500/70 bg-rose-500/15 text-rose-200;
 }
 
-.economic-data__change--neutral {
+.economic-data__surprise--neutral {
   @apply border-sky-500/70 bg-sky-500/15 text-sky-200;
 }
 
-.economic-data__change--actual {
-  @apply border-orange-500/70 bg-orange-500/15 text-orange-200;
-}
-
-.economic-data__change--expected {
-  @apply border-yellow-400/70 bg-yellow-400/15 text-yellow-100;
-}
-
 .economic-data__empty {
-  @apply font-mono text-xs leading-5 text-slate-400;
+  @apply px-2 py-1 text-xs leading-5 text-slate-400;
 }
 
 @media (max-width: 900px) {
@@ -131,5 +181,10 @@
 
   .economic-data__rail {
     @apply max-h-40 border-b border-r-0;
+  }
+
+  .economic-data__table {
+    width: max-content;
+    min-width: 38rem;
   }
 }

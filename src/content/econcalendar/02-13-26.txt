@@ -1,4 +1,0 @@
-- Tue: CPI y/y [[2.90%]] vs street [(2.90%)] | surprise [0.00%]
-- Wed: Retail Sales [[-0.40%]] vs street [(0.10%)] | surprise [-0.50%]
-- Thu: Initial Claims [[221K]] vs street [(225K)] | surprise [-1.78%]
-- Fri: NFP revision [[+18K]] vs prior [(-12K)] | surprise [+250.00%]

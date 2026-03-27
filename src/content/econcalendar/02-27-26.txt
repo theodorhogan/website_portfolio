@@ -1,5 +1,0 @@
-- Thu: GDP Growth Rate QoQ 2nd Est. Q4 [[2.2%]] vs street [(2.3%)]  surprise [-4.35%]
-- Thu: Initial Claims FEB/21 [[231K]] vs street [(229K)]  surprise [+0.87%]
-- Thu: Durable Goods Orders MoM JAN [[-0.9%]] vs street [(-1.1%)]  surprise [+18.18%]
-- Fri: Core PCE Price Index MoM JAN [[0.3%]] vs street [(0.3%)]  surprise [0.00%]
-- Fri: Personal Spending MoM JAN [[0.2%]] vs street [(0.2%)]  surprise [0.00%]

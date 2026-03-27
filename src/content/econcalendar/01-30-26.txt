@@ -1,4 +1,0 @@
-- Tue: GDP q/q saar [[2.10%]] vs street [(2.00%)] | surprise [+5.00%]
-- Wed: PCE y/y [[2.60%]] vs street [(2.60%)] | surprise [0.00%]
-- Thu: Initial Claims [[214K]] vs street [(222K)] | surprise [-3.60%]
-- Fri: Employment Cost Index [[1.0%]] vs street [(0.9%)] | surprise [+11.11%]

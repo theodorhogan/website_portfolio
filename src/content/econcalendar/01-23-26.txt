@@ -1,4 +1,0 @@
-- Tue: Housing Starts [[1.42M]] vs street [(1.46M)] | surprise [-2.74%]
-- Wed: Existing Home Sales [[4.05M]] vs street [(4.00M)] | surprise [+1.25%]
-- Thu: Initial Claims [[218K]] vs street [(220K)] | surprise [-0.91%]
-- Fri: Consumer Sentiment [[79.6]] vs street [(78.4)] | surprise [+1.53%]

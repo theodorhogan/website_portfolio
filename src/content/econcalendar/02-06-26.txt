@@ -1,4 +1,0 @@
-- Mon: ISM Services [[52.1]] vs street [(52.5)] | surprise [-0.76%]
-- Tue: JOLTS [[8.71M]] vs street [(8.80M)] | surprise [-1.02%]
-- Wed: Unit Labor Costs [[2.2%]] vs street [(2.0%)] | surprise [+10.00%]
-- Thu: Initial Claims [[226K]] vs street [(228K)] | surprise [-0.88%]

@@ -1,4 +1,0 @@
-- Tue: Trade Balance [[-63.5B]] vs street [(-62.8B)] | surprise [-1.11%]
-- Wed: Wholesale Inventories [[0.3%]] vs street [(0.3%)] | surprise [0.00%]
-- Thu: Initial Claims [[232K]] vs street [(231K)] | surprise [+0.43%]
-- Fri: Payrolls [[184K]] vs street [(180K)] | surprise [+2.22%]

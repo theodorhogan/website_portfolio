@@ -1,4 +1,0 @@
-- Tue: Consumer Confidence [[103.2]] vs street [(102.0)] | surprise [+1.18%]
-- Wed: Pending Home Sales [[-0.8%]] vs street [(-0.6%)] | surprise [-0.20%]
-- Thu: Initial Claims [[229K]] vs street [(230K)] | surprise [-0.43%]
-- Fri: Durable Goods [[-0.2%]] vs street [(0.1%)] | surprise [-0.30%]

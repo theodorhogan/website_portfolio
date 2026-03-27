@@ -1,4 +1,0 @@
-- Tue: NFIB Small Business [[91.2]] vs street [(91.0)] | surprise [+0.22%]
-- Wed: Industrial Production [[-0.10%]] vs street [(0.20%)] | surprise [-0.30%]
-- Thu: Initial Claims [[230K]] vs street [(228K)] | surprise [+0.88%]
-- Fri: Leading Index [[-0.20%]] vs street [(-0.10%)] | surprise [-0.10%]
