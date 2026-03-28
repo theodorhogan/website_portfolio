@@ -188,7 +188,7 @@ export function getIndexChartDataset(index: IndexKey, activeTimeMs: number): Ind
 
 export function formatPe(value: number | null) {
   if (value === null || Number.isNaN(value)) return "--";
-  return value.toFixed(1);
+  return value.toFixed(2);
 }
 
 export function formatChartSubtitleDate(timeMs: number | null) {

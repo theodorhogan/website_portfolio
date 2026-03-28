@@ -4,6 +4,7 @@ export type EconomicEvent = {
   sortDate: number;
   weekday: number;
   weekdayLabel: string;
+  country: string;
   event: string;
   actual: number | null;
   street: number | null;
@@ -109,6 +110,7 @@ function parseEconomicEvents(rawCsv: string): EconomicEvent[] {
     .map((line, rowIndex) => {
       const cells = parseCsvLine(line);
       const date = cells[indexByHeader.get("date") ?? -1] ?? "";
+      const country = (cells[indexByHeader.get("country") ?? -1] ?? "").trim() || "US";
       const event = cells[indexByHeader.get("event") ?? -1] ?? "";
       const actual = parseNumber(cells[indexByHeader.get("actual") ?? -1] ?? "");
       const street = parseNumber(cells[indexByHeader.get("street") ?? -1] ?? "");
@@ -127,6 +129,7 @@ function parseEconomicEvents(rawCsv: string): EconomicEvent[] {
         sortDate: eventDate.getTime(),
         weekday: eventDate.getUTCDay(),
         weekdayLabel: WEEKDAY_LABELS[eventDate.getUTCDay()],
+        country,
         event,
         actual,
         street,

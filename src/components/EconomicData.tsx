@@ -276,9 +276,9 @@ export function EconomicData() {
             <thead>
               <tr>
                 <th className="economic-data__head economic-data__head--event">Event</th>
-                <th className="economic-data__head economic-data__head--value">Actual</th>
-                <th className="economic-data__head economic-data__head--value">Street</th>
-                <th className="economic-data__head economic-data__head--value">Surprise</th>
+                <th className="economic-data__head economic-data__head--value">Act</th>
+                <th className="economic-data__head economic-data__head--value">Est</th>
+                <th className="economic-data__head economic-data__head--value economic-data__head--change">Chg.</th>
               </tr>
             </thead>
             <tbody>
@@ -294,7 +294,10 @@ export function EconomicData() {
 
                     return (
                       <tr key={event.id}>
-                        <td className="economic-data__event">{event.event}</td>
+                        <td className="economic-data__event">
+                          {event.event}
+                          <span className="economic-data__eventCountry"> ({event.country})</span>
+                        </td>
                         <td className="economic-data__value economic-data__value--actual">
                           {formatValue(event.actual, kind)}
                         </td>

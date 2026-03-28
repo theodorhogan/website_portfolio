@@ -3,18 +3,18 @@
 }
 
 .economic-data__body {
-  @apply grid min-h-0 flex-1 grid-cols-[6.6rem_1fr] overflow-hidden;
+  @apply grid min-h-0 flex-1 grid-cols-[5.9rem_1fr] overflow-hidden;
 }
 
 .economic-data__rail {
-  @apply flex min-h-0 flex-col gap-1 overflow-y-auto border-r p-1.5;
+  @apply flex min-h-0 flex-col gap-1 overflow-y-auto border-r p-1;
   border-color: var(--terminal-line);
   background: rgba(12, 18, 27, 0.88);
   scrollbar-width: thin;
 }
 
 .economic-data__railButton {
-  @apply flex flex-col items-start gap-0.5 rounded border px-1.5 py-1 text-[0.58rem] uppercase tracking-[0.14em] text-slate-300 transition-colors;
+  @apply flex flex-col items-start gap-0.5 rounded border px-1.5 py-1 text-[0.54rem] uppercase tracking-[0.12em] text-slate-300 transition-colors;
   border-color: rgba(54, 69, 92, 0.88);
   background: rgba(12, 18, 27, 0.92);
 }
@@ -36,7 +36,7 @@
 }
 
 .economic-data__railWeekBadge {
-  @apply inline-flex items-center gap-1 rounded-sm border px-1.5 py-[0.12rem] text-[0.56rem] font-bold tracking-[0.14em];
+  @apply inline-flex items-center gap-1 rounded-sm border px-1 py-[0.1rem] text-[0.52rem] font-bold tracking-[0.12em];
 }
 
 .economic-data__railWeekBadge--upcoming {
@@ -60,15 +60,15 @@
 }
 
 .economic-data__railYear {
-  @apply text-[0.5rem] font-medium leading-tight text-slate-500;
+  @apply text-[0.46rem] font-medium leading-tight text-slate-500;
 }
 
 .economic-data__railRange {
-  @apply text-[0.5rem] tracking-[0.1em] text-slate-600;
+  @apply text-[0.46rem] tracking-[0.08em] text-slate-600;
 }
 
 .economic-data__detail {
-  @apply min-h-0 overflow-y-auto px-2 py-1.5;
+  @apply min-h-0 overflow-y-auto overflow-x-hidden;
   scrollbar-width: thin;
   scrollbar-color: rgba(51, 65, 85, 0.7) transparent;
 }
@@ -96,7 +96,7 @@
 .economic-data__value,
 .economic-data__dayLabel {
   @apply border-b;
-  padding: var(--terminal-table-pad-y) var(--terminal-table-pad-x);
+  padding: 0.34rem 0.5rem;
   border-color: var(--terminal-table-line);
 }
 
@@ -104,37 +104,48 @@
   @apply text-left font-semibold uppercase text-slate-500;
   background: var(--terminal-table-head-bg);
   border-color: var(--terminal-table-line-strong);
-  font-size: var(--terminal-table-head-size);
-  letter-spacing: 0.16em;
+  font-size: 0.54rem;
+  letter-spacing: 0.12em;
 }
 
 .economic-data__head--event {
-  width: 52%;
+  width: 66%;
 }
 
 .economic-data__head--value {
-  @apply text-right;
-  width: 16%;
+  @apply text-center;
+  width: 11%;
+}
+
+.economic-data__head--change {
+  width: 12%;
 }
 
 .economic-data__dayLabel {
   @apply text-left font-semibold uppercase text-slate-400;
-  background: rgba(10, 16, 24, 0.92);
-  font-size: 0.56rem;
-  letter-spacing: 0.18em;
+  background: rgba(10, 16, 24, 0.96);
+  border-top: 1px solid var(--terminal-table-line-strong);
+  font-size: 0.52rem;
+  letter-spacing: 0.16em;
 }
 
 .economic-data__event {
   @apply text-left text-slate-100;
-  background: rgba(12, 18, 27, 0.52);
-  font-size: var(--terminal-table-label-size);
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
+}
+
+.economic-data__eventCountry {
+  @apply text-slate-500;
+  font-size: 0.56rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
 }
 
 .economic-data__value {
-  @apply text-right text-slate-100;
-  font-size: var(--terminal-table-cell-size);
+  @apply text-center text-slate-100;
+  font-size: 0.7rem;
   font-variant-numeric: tabular-nums;
 }
 
@@ -147,12 +158,12 @@
 }
 
 .economic-data__value--surprise {
-  @apply text-right;
+  @apply text-center;
 }
 
 .economic-data__surprise {
-  @apply inline-flex items-center justify-center rounded-sm border px-1.5 py-[0.12rem];
-  min-width: 4.6rem;
+  @apply inline-flex items-center justify-center rounded-sm border px-[0.38rem] py-[0.08rem];
+  min-width: auto;
   font-size: 0.56rem;
   font-weight: 600;
   line-height: 1.05;
