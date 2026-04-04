@@ -6,7 +6,7 @@ import {
 } from "../data/marketData";
 import { useNewsletterContext } from "../state/useNewsletterContext";
 import { CurvePlot } from "./CurvePlot";
-import { buildLinePath, buildYTicks, getPaddedDomain } from "./curveChartUtils";
+import { buildLinePath, buildYTicks } from "./curveChartUtils";
 import {
   DURATION_CHART_HEIGHT,
   DURATION_CHART_MARGIN_DUAL_AXIS,
@@ -94,14 +94,10 @@ export function FedFutures() {
       };
     }
 
-    const domain = getPaddedDomain(priceValues, 0.1, 0.18);
-    const firstPrice = orderedContracts.find((contract) => contract !== null)?.price ?? null;
-    const lastPrice = [...orderedContracts].reverse().find((contract) => contract !== null)?.price ?? null;
-    // Anchor domain exactly: first contract sits on the x-axis, 12th contract on the top grid line
-    if (firstPrice !== null && lastPrice !== null && lastPrice > firstPrice) {
-      domain.min = firstPrice;
-      domain.max = lastPrice;
-    }
+    const domain = {
+      min: Math.min(...priceValues),
+      max: Math.max(...priceValues),
+    };
     const plotLeft = DURATION_CHART_MARGIN_DUAL_AXIS.left;
     const plotRight = DURATION_CHART_WIDTH - DURATION_CHART_MARGIN_DUAL_AXIS.right;
     const plotTop = DURATION_CHART_MARGIN_DUAL_AXIS.top;

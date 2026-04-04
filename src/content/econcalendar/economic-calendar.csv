@@ -80,10 +80,11 @@ date,country,event,actual,street,surprise
 2026-03-25,GB,Inflation Rate YoY FEB GB,3,3,0.0
 2026-03-26,DE,GfK Consumer Confidence APR,-28,-26.5,-5.660377358490567
 2026-03-27,GB,Retail Sales MoM FEB GB,-0.4,-0.7,42.85714285714285
-2026-03-30,DE,Inflation Rate YoY Prel MAR,,2.6,
-2026-03-31,EA,Inflation Rate YoY Flash MAR,,2.8,
-2026-03-31,US,JOLTs Job Openings FEB,,6850000,
-2026-04-01,US,ISM Manufacturing PMI MAR,,52.3,
-2026-04-01,US,Retail Sales MoM FEB,,0.4,
-2026-04-03,US,Non Farm Payrolls MAR,,48000,
-2026-04-03,US,Unemployment Rate MAR,,4.5,
+2026-03-30,DE,Inflation Rate YoY Prel MAR,2.7,2.7,0
+2026-03-31,EA,Inflation Rate YoY Flash MAR,2.5,2.6,-3.8461538461538494
+2026-03-31,US,JOLTs Job Openings FEB,6882000,6920000,-0.5491329479768786
+2026-04-01,US,ISM Manufacturing PMI MAR,52.7,52.5,0.38095238095238637
+2026-04-01,US,Retail Sales MoM FEB,0.6,0.5,19.999999999999996
+2026-04-02,US,US President Trump Speech,,,
+2026-04-03,US,Non Farm Payrolls MAR,178000,60000,196.66666666666666
+2026-04-03,US,Unemployment Rate MAR,4.3,4.4,-2.2727272727272845
