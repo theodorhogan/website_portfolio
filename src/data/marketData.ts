@@ -295,7 +295,7 @@ function parseFedFutures(rawCsv: string) {
 
     if (category !== "future") continue;
     if (!Number.isFinite(excelDate) || !Number.isFinite(price) || !Number.isFinite(sequence)) continue;
-    if (sequence < 1 || sequence > 12) continue;
+    if (sequence < 1) continue;
 
     const time = toExcelUtcTime(excelDate);
     const rowMap = snapshotsMap.get(time) ?? new Map<number, FedFutureContract>();

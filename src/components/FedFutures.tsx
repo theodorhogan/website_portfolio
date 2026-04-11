@@ -81,8 +81,9 @@ export function FedFutures() {
       };
     }
 
+    const maxSequence = Math.max(0, ...snapshot.contracts.map((contract) => contract.sequence));
     const contractsBySequence = new Map(snapshot.contracts.map((contract) => [contract.sequence, contract]));
-    const orderedContracts = Array.from({ length: 12 }, (_, idx) => contractsBySequence.get(idx + 1) ?? null);
+    const orderedContracts = Array.from({ length: maxSequence }, (_, idx) => contractsBySequence.get(idx + 1) ?? null);
     const priceValues = orderedContracts
       .map((contract) => (contract ? contract.price : null))
       .filter((value): value is number => value !== null);
@@ -105,7 +106,8 @@ export function FedFutures() {
     const plotWidth = plotRight - plotLeft;
     const plotHeight = plotBottom - plotTop;
 
-    const xForIndex = (index: number) => plotLeft + (index / 11) * plotWidth;
+    const xForIndex = (index: number) =>
+      plotLeft + (index / Math.max(orderedContracts.length - 1, 1)) * plotWidth;
     const yForValue = (value: number) =>
       plotBottom - ((value - domain.min) / Math.max(domain.max - domain.min, 0.0001)) * plotHeight;
 
