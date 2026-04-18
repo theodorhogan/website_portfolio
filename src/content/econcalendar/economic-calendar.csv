@@ -101,6 +101,15 @@ date,country,event,actual,street,surprise
 2026-04-10,US,Inflation Rate MoM MAR,0.9,0.9,0
 2026-04-10,US,Inflation Rate YoY MAR,3.3,3.3,0
 2026-04-10,US,Michigan Consumer Sentiment Prel APR,47.6,52,-8.461538461538458
-2026-04-13,US,Existing Home Sales MAR,,4010000,
-2026-04-14,US,PPI MoM MAR,,1.2,
-2026-04-16,GB,GDP MoM FEB,,0.1,
+2026-04-13,US,Existing Home Sales MAR,3980000,4060000,-1.9704433497536946
+2026-04-14,US,PPI MoM MAR,0.5,1.1,-54.54545454545455
+2026-04-16,GB,GDP MoM FEB,0.5,0.1,400
+2026-04-21,GB,Unemployment Rate FEB,,5.2,
+2026-04-21,DE,ZEW Economic Sentiment Index APR,,-10,
+2026-04-21,US,Retail Sales MoM MAR,,1.3,
+2026-04-22,GB,Inflation Rate YoY MAR,,3.3,
+2026-04-23,DE,S&P Global Manufacturing PMI Flash APR,,51.5,
+2026-04-23,GB,S&P Global Manufacturing PMI Flash APR GB,,49.5,
+2026-04-23,GB,S&P Global Services PMI Flash APR,,50,
+2026-04-24,GB,Retail Sales MoM MAR,,0.2,
+2026-04-24,DE,Ifo Business Climate APR,,85.4,
