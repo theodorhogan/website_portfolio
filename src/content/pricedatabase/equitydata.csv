@@ -1970,3 +1970,71 @@
 46220,D-Wave,QBTS,stox,16.73,0
 46220,Q/C Technologies,QCLS,stox,3.44,0
 46220,Intuit,INTU,stox,291.09,0
+46227,MSCI World,MSCI,einx,1333.566834,0
+46227,S&P 500,SXP,einx,7411.98,0
+46227,NASDAQ 100,NDX,einx,28128.342,0
+46227,RUSSEL 2000,R2000,einx,7281.785036,0
+46227,Core S&P Small Cap,IJR,einx,144.86,0
+46227,DAX,DAX,einx,25099,0
+46227,STOXX600,STOXX600,einx,644.51,0
+46227,FTSE,FTSE,einx,10736.23,0
+46227,AEX,AEX,einx,1090.04,0
+46227,Nikkei,Nikkei,einx,64611.15,0
+46227,Information Tech,XLK,einx,175.88,1
+46227,Financials,XLF,einx,56.31,2
+46227,Healthcare,XLV,einx,162.57,3
+46227,Consumer Disc.,XLY,einx,109.41,4
+46227,Communication,XLC,einx,106.3,5
+46227,Industrials,XLI,einx,182.66,6
+46227,Consumer Staples,XLP,einx,84.13,7
+46227,Energy,XLE,einx,59.62,8
+46227,Materials,XLB,einx,51.26,9
+46227,Utilities,XLU,einx,46.29,10
+46227,Real Estate,XLRE,einx,45.95,11
+46227,Information Tech,EXV3,einx,93.69,1
+46227,Financials,EXV1,einx,41.145,2
+46227,Healthcare,EXV4,einx,114.68,3
+46227,Consumer Disc.,EXV5,einx,39.06,4
+46227,Communication,EXV2,einx,26.705,5
+46227,Industrials,EXV6,einx,78.99,6
+46227,Consumer Staples,EXV7,einx,124.38,7
+46227,Energy,EXV9,einx,24.61,8
+46227,Materials,EXV8,einx,86.44,9
+46227,Utilities,EXH9,einx,59.11,10
+46227,Real Estate,EXI5,einx,14.36,11
+46227,Nvidia,NVDA,stox,206.84,0
+46227,Microsoft,MSFT,stox,381.7,0
+46227,Apple,AAPL,stox,333.02,0
+46227,Alphabet,GOOGL,stox,319.74,0
+46227,Meta,META,stox,595.19,0
+46227,Amazon,AMZN,stox,232.11,0
+46227,Tesla,TSLA,stox,313.03,0
+46227,Palantir,PLTR,stox,122.92,0
+46227,PayPal,PYPL,stox,56.15,0
+46227,Klarna,KLAR,stox,17.36,0
+46227,Ondas,ONDS,stox,7.8,0
+46227,Reddit,RDDT,stox,168.73,0
+46227,Intel,INTC,stox,92.32,0
+46227,Bath & Body Works,BBWI,stox,19.9,0
+46227,Ulta Beauty,ULTA,stox,475.36,0
+46227,UnitedHealth,UNH,stox,420.74,0
+46227,Adobe,ADBE,stox,225.11,0
+46227,Alibaba,BABA,stox,112.14,0
+46227,CrowdStrike,CRWD,stox,183.28,0
+46227,Salesforce,CRM,stox,163.66,0
+46227,Snowflake,SNOW,stox,268.06,0
+46227,Block ,XYZ,stox,77.15,0
+46227,Cloudflare,NET,stox,262.15,0
+46227,AMD,AMD,stox,521.95,0
+46227,Texas Instruments,TXN,stox,279.58,0
+46227,Netflix,NFLX,stox,70.09,0
+46227,Disney,DIS,stox,94.85,0
+46227,Target,TGT,stox,136.78,0
+46227,Walmart,WMT,stox,109.47,0
+46227,Enphase Energy,ENPH,stox,36.7,0
+46227,3D Systems,DDD,stox,2.57,0
+46227,IonQ,IONQ,stox,32.84,0
+46227,Rigetti,RGTI,stox,14.15,0
+46227,D-Wave,QBTS,stox,16.21,0
+46227,Q/C Technologies,QCLS,stox,3.23,0
+46227,Intuit,INTU,stox,296.33,0
