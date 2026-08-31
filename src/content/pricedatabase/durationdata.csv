@@ -838,3 +838,25 @@
 46255,DE 10 Year Bund,DE10Y,yield,3.264,0
 46255,UK 10 Year Gilt,UK10Y,yield,5.045,0
 46255,Effective Rate,EFFR,rate,3.63,0
+46262,ICE BofA Global Corporate,IG,spread,79,0
+46262,High Quality,AA,spread,58,0
+46262,Low Investment Grade,BBB,spread,97,0
+46262,ICE BofA US High Yield,HY,spread,260,0
+46262,Speculative,BB,spread,150,0
+46262,Distressed,CCC,spread,1026,0
+46262,ZQ Future 1,Aug ZQ26,future,96.37000275,1
+46262,ZQ Future 2,Sep ZQ26,future,96.29250336,2
+46262,ZQ Future 3,Oct ZQ26,future,96.19999695,3
+46262,ZQ Future 4,Nov ZQ26,future,96.14499664,4
+46262,ZQ Future 5,Dec ZQ26,future,96.04499817,5
+46262,ZQ Future 6,Jan ZQ27,future,96,6
+46262,ZQ Future 7,Feb ZQ27,future,95.94000244,7
+46262,ZQ Future 8,Mar ZQ27,future,95.89499664,8
+46262,ZQ Future 9,Apr ZQ27,future,95.84500122,9
+46262,ZQ Future 10,May ZQ27,future,95.81500244,10
+46262,ZQ Future 11,Jun ZQ27,future,95.79499817,11
+46262,ZQ Future 12,Jul ZQ27,future,95.78500366,12
+46262,ZQ Future 13,Aug ZQ27,future,95.77999878,13
+46262,DE 10 Year Bund,DE10Y,yield,3.279,0
+46262,UK 10 Year Gilt,UK10Y,yield,5.049,0
+46262,Effective Rate,EFFR,rate,3.63,0
