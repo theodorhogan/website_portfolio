@@ -1058,3 +1058,47 @@
 46325,DE 10 Year Bund,DE10Y,yield,3.338,0
 46325,UK 10 Year Gilt,UK10Y,yield,5.288,0
 46325,Effective Rate,EFFR,rate,3.88,0
+46332,ICE BofA Global Corporate,IG,spread,96,0
+46332,High Quality,AA,spread,69,0
+46332,Low Investment Grade,BBB,spread,116,0
+46332,ICE BofA US High Yield,HY,spread,342,0
+46332,Speculative,BB,spread,208,0
+46332,Distressed,CCC,spread,1317,0
+46332,ZQ Future 1,Nov ZQ26,future,96.1225,1
+46332,ZQ Future 2,Dec ZQ26,future,95.985,2
+46332,ZQ Future 3,Jan ZQ27,future,95.925,3
+46332,ZQ Future 4,Feb ZQ27,future,95.88,4
+46332,ZQ Future 5,Mar ZQ27,future,95.835,5
+46332,ZQ Future 6,Apr ZQ27,future,95.78,6
+46332,ZQ Future 7,May ZQ27,future,95.745,7
+46332,ZQ Future 8,Jun ZQ27,future,95.7,8
+46332,ZQ Future 9,Jul ZQ27,future,95.68,9
+46332,ZQ Future 10,Aug ZQ27,future,95.67,10
+46332,ZQ Future 11,Sep ZQ27,future,95.66,11
+46332,ZQ Future 12,Oct ZQ27,future,95.65,12
+46332,ZQ Future 13,Nov ZQ27,future,95.65,13
+46332,DE 10 Year Bund,DE10Y,yield,3.257,0
+46332,UK 10 Year Gilt,UK10Y,yield,5.143,0
+46332,Effective Rate,EFFR,rate,3.88,0
+46339,ICE BofA Global Corporate,IG,spread,91,0
+46339,High Quality,AA,spread,64,0
+46339,Low Investment Grade,BBB,spread,111,0
+46339,ICE BofA US High Yield,HY,spread,323,0
+46339,Speculative,BB,spread,186,0
+46339,Distressed,CCC,spread,1316,0
+46339,ZQ Future 1,Nov ZQ26,future,96.12249756,1
+46339,ZQ Future 2,Dec ZQ26,future,95.93000031,2
+46339,ZQ Future 3,Jan ZQ27,future,95.83499908,3
+46339,ZQ Future 4,Feb ZQ27,future,95.68000031,4
+46339,ZQ Future 5,Mar ZQ27,future,95.60500336,5
+46339,ZQ Future 6,Apr ZQ27,future,95.51000214,6
+46339,ZQ Future 7,May ZQ27,future,95.43000031,7
+46339,ZQ Future 8,Jun ZQ27,future,95.35500336,8
+46339,ZQ Future 9,Jul ZQ27,future,95.31999969,9
+46339,ZQ Future 10,Aug ZQ27,future,95.28500366,10
+46339,ZQ Future 11,Sep ZQ27,future,95.26999664,11
+46339,ZQ Future 12,Oct ZQ27,future,95.24500275,12
+46339,ZQ Future 13,Nov ZQ27,future,95.26000214,13
+46339,DE 10 Year Bund,DE10Y,yield,3.387,0
+46339,UK 10 Year Gilt,UK10Y,yield,5.326,0
+46339,Effective Rate,EFFR,rate,3.88,0
