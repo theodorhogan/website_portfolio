@@ -1,156 +1,64 @@
-import { useMemo } from "react";
-import {
-  DAY_MS,
-  computePercentChange,
-  getAlignedPoint,
-  getIndustrySeries,
-  type PricePoint,
-} from "../data/marketData";
-import { PanelShell } from "./PanelShell";
+import { Fragment, useMemo } from "react";
+import { INDUSTRIES, getIndustrySeries, type PricePoint } from "../data/equityData";
 import { useNewsletterContext } from "../state/useNewsletterContext";
+import { WEEK_MS } from "../utils/dates";
+import { formatPercentChange, formatPrice, getChangeTone, type ChangeTone } from "../utils/format";
+import { computePercentChange, getAlignedPoint } from "../utils/timeSeries";
+import { PanelShell } from "./PanelShell";
 import "./IndustryOverview.css";
 
-type IndustryRow = {
-  id: number;
-  label: string;
-  usPriceText: string;
-  usWeekChangeText: string;
-  usWeekChangeClassName: string;
-  usLastWeekChangeText: string;
-  usLastWeekChangeClassName: string;
-  euPriceText: string;
-  euWeekChangeText: string;
-  euWeekChangeClassName: string;
-  euLastWeekChangeText: string;
-  euLastWeekChangeClassName: string;
-};
-
 type RegionMetrics = {
-  priceText: string;
-  weekChangeText: string;
-  weekChangeClassName: string;
-  lastWeekChangeText: string;
-  lastWeekChangeClassName: string;
+  price: string;
+  weekChange: string;
+  weekTone: ChangeTone;
+  lastWeekChange: string;
+  lastWeekTone: ChangeTone;
 };
 
-const INDUSTRIES = [
-  { id: 1, label: "Information Tech" },
-  { id: 2, label: "Financials" },
-  { id: 3, label: "Healthcare" },
-  { id: 4, label: "Consumer Disc." },
-  { id: 5, label: "Communication" },
-  { id: 6, label: "Industrials" },
-  { id: 7, label: "Consumer Staples" },
-  { id: 8, label: "Energy" },
-  { id: 9, label: "Materials" },
-  { id: 10, label: "Utilities" },
-  { id: 11, label: "Real Estate" },
-] as const;
+const EMPTY_METRICS: RegionMetrics = {
+  price: "--",
+  weekChange: "--",
+  weekTone: "neutral",
+  lastWeekChange: "--",
+  lastWeekTone: "neutral",
+};
 
-const INDUSTRY_SERIES = getIndustrySeries();
+const REGIONS = ["us", "eu"] as const;
 
-const priceFormatter = new Intl.NumberFormat("en-US", {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
+function computeRegionMetrics(series: PricePoint[], activeTime: number | null): RegionMetrics {
+  const current = activeTime === null ? null : getAlignedPoint(series, activeTime);
+  if (activeTime === null || !current) return EMPTY_METRICS;
 
-function getChangeClassName(change: number | null) {
-  if (change === null || Math.abs(change) < 0.00005) {
-    return "industry-overview__change industry-overview__change--neutral";
-  }
-  if (change > 0) {
-    return "industry-overview__change industry-overview__change--positive";
-  }
-  return "industry-overview__change industry-overview__change--negative";
-}
-
-function formatPercent(change: number | null, bracketed: boolean) {
-  if (change === null || Math.abs(change) < 0.00005) {
-    return bracketed ? "[0.00%]" : "0.00%";
-  }
-
-  const sign = change > 0 ? "+" : "";
-  const base = `${sign}${(change * 100).toFixed(2)}%`;
-  return bracketed ? `[${base}]` : base;
-}
-
-function formatPrice(price: number | null) {
-  if (price === null) return "--";
-  return priceFormatter.format(price);
-}
-
-function computeRegionMetrics(series: PricePoint[], activeTime: number): RegionMetrics {
-  const current = getAlignedPoint(series, activeTime);
-  const lastWeek = getAlignedPoint(series, activeTime - 7 * DAY_MS);
-  const twoWeeks = getAlignedPoint(series, activeTime - 14 * DAY_MS);
-
-  if (!current) {
-    return {
-      priceText: "--",
-      weekChangeText: "--",
-      weekChangeClassName: "industry-overview__change industry-overview__change--neutral",
-      lastWeekChangeText: "--",
-      lastWeekChangeClassName: "industry-overview__change industry-overview__change--neutral",
-    };
-  }
-
-  const weekChange = computePercentChange(current.value, lastWeek?.value ?? null);
-  const lastWeekChange = computePercentChange(lastWeek?.value ?? null, twoWeeks?.value ?? null);
+  const lastWeek = getAlignedPoint(series, activeTime - WEEK_MS)?.value ?? null;
+  const twoWeeks = getAlignedPoint(series, activeTime - 2 * WEEK_MS)?.value ?? null;
+  const weekChange = computePercentChange(current.value, lastWeek);
+  const lastWeekChange = computePercentChange(lastWeek, twoWeeks);
 
   return {
-    priceText: formatPrice(current.value),
-    weekChangeText: formatPercent(weekChange, false),
-    weekChangeClassName: getChangeClassName(weekChange),
-    lastWeekChangeText: formatPercent(lastWeekChange, true),
-    lastWeekChangeClassName: getChangeClassName(lastWeekChange),
+    price: formatPrice(current.value),
+    weekChange: formatPercentChange(weekChange),
+    weekTone: getChangeTone(weekChange),
+    lastWeekChange: formatPercentChange(lastWeekChange, true),
+    lastWeekTone: getChangeTone(lastWeekChange),
   };
 }
 
 export function IndustryOverview() {
   const { selected } = useNewsletterContext();
+  const activeTime = selected?.sortDate ?? null;
 
-  const rows = useMemo<IndustryRow[]>(() => {
-    const activeTime = selected?.sortDate ?? null;
-
+  const rows = useMemo(() => {
+    const seriesById = getIndustrySeries();
     return INDUSTRIES.map((industry) => {
-      const series = INDUSTRY_SERIES.get(industry.id) ?? { us: [], eu: [] };
-
-      if (activeTime === null) {
-        return {
-          id: industry.id,
-          label: industry.label,
-          usPriceText: "--",
-          usWeekChangeText: "--",
-          usWeekChangeClassName: "industry-overview__change industry-overview__change--neutral",
-          usLastWeekChangeText: "--",
-          usLastWeekChangeClassName: "industry-overview__change industry-overview__change--neutral",
-          euPriceText: "--",
-          euWeekChangeText: "--",
-          euWeekChangeClassName: "industry-overview__change industry-overview__change--neutral",
-          euLastWeekChangeText: "--",
-          euLastWeekChangeClassName: "industry-overview__change industry-overview__change--neutral",
-        };
-      }
-
-      const us = computeRegionMetrics(series.us, activeTime);
-      const eu = computeRegionMetrics(series.eu, activeTime);
-
+      const series = seriesById.get(industry.id);
       return {
         id: industry.id,
         label: industry.label,
-        usPriceText: us.priceText,
-        usWeekChangeText: us.weekChangeText,
-        usWeekChangeClassName: us.weekChangeClassName,
-        usLastWeekChangeText: us.lastWeekChangeText,
-        usLastWeekChangeClassName: us.lastWeekChangeClassName,
-        euPriceText: eu.priceText,
-        euWeekChangeText: eu.weekChangeText,
-        euWeekChangeClassName: eu.weekChangeClassName,
-        euLastWeekChangeText: eu.lastWeekChangeText,
-        euLastWeekChangeClassName: eu.lastWeekChangeClassName,
+        us: computeRegionMetrics(series?.us ?? [], activeTime),
+        eu: computeRegionMetrics(series?.eu ?? [], activeTime),
       };
     });
-  }, [selected]);
+  }, [activeTime]);
 
   return (
     <PanelShell
@@ -162,48 +70,56 @@ export function IndustryOverview() {
       meta="Sector ETFs - Week on Week"
       bodyClassName="industry-overview__body"
     >
-        <table className="industry-overview__table" aria-label="Industry overview US versus EU">
-          <colgroup>
-            <col className="industry-overview__colIndustry" />
-            <col className="industry-overview__colPrice" />
-            <col className="industry-overview__colChange" />
-            <col className="industry-overview__colLastWeek" />
-            <col className="industry-overview__colPrice" />
-            <col className="industry-overview__colChange" />
-            <col className="industry-overview__colLastWeek" />
-          </colgroup>
-          <thead>
-            <tr>
-              <th scope="col" className="industry-overview__headSpacer" aria-label="Industry" />
-              <th scope="colgroup" colSpan={3} className="industry-overview__headRegion industry-overview__headRegionUs">US</th>
-              <th scope="colgroup" colSpan={3} className="industry-overview__headRegion industry-overview__headRegionDivider">
-                EU
-              </th>
-            </tr>
-            <tr>
-              <th scope="col" className="industry-overview__headSpacer" aria-label="Industry name" />
-              <th scope="col" className="industry-overview__headNumber">Price</th>
-              <th scope="col" className="industry-overview__headNumber">% CHANGE</th>
-              <th scope="col" className="industry-overview__headNumber industry-overview__cellBeforeDivider">[% last wk]</th>
-              <th scope="col" className="industry-overview__headNumber industry-overview__cellDivider">Price</th>
-              <th scope="col" className="industry-overview__headNumber">% CHANGE</th>
-              <th scope="col" className="industry-overview__headNumber">[% last wk]</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row) => (
-              <tr key={row.id}>
-                <td className="industry-overview__industry">{row.label}</td>
-                <td className="industry-overview__number">{row.usPriceText}</td>
-                <td className={row.usWeekChangeClassName}>{row.usWeekChangeText}</td>
-                <td className={`${row.usLastWeekChangeClassName} industry-overview__cellBeforeDivider`}>{row.usLastWeekChangeText}</td>
-                <td className="industry-overview__number industry-overview__cellDivider">{row.euPriceText}</td>
-                <td className={row.euWeekChangeClassName}>{row.euWeekChangeText}</td>
-                <td className={row.euLastWeekChangeClassName}>{row.euLastWeekChangeText}</td>
-              </tr>
+      <table className="industry-overview__table" aria-label="Industry overview US versus EU">
+        <thead>
+          <tr>
+            <th scope="col" className="industry-overview__headSpacer" aria-label="Industry" />
+            <th scope="colgroup" colSpan={3} className="industry-overview__headRegion">
+              US
+            </th>
+            <th scope="colgroup" colSpan={3} className="industry-overview__headRegion industry-overview__cellDivider">
+              EU
+            </th>
+          </tr>
+          <tr>
+            <th scope="col" className="industry-overview__headSpacer" aria-label="Industry name" />
+            {REGIONS.map((region) => (
+              <Fragment key={region}>
+                <th
+                  scope="col"
+                  className={`industry-overview__headNumber${region === "eu" ? " industry-overview__cellDivider" : ""}`}
+                >
+                  Price
+                </th>
+                <th scope="col" className="industry-overview__headNumber">% Chg</th>
+                <th scope="col" className="industry-overview__headNumber">[% Last Wk]</th>
+              </Fragment>
             ))}
-          </tbody>
-        </table>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.id}>
+              <td className="industry-overview__industry">{row.label}</td>
+              {REGIONS.map((region) => (
+                <Fragment key={region}>
+                  <td
+                    className={`industry-overview__number${region === "eu" ? " industry-overview__cellDivider" : ""}`}
+                  >
+                    {row[region].price}
+                  </td>
+                  <td className={`industry-overview__change industry-overview__change--${row[region].weekTone}`}>
+                    {row[region].weekChange}
+                  </td>
+                  <td className={`industry-overview__change industry-overview__change--${row[region].lastWeekTone}`}>
+                    {row[region].lastWeekChange}
+                  </td>
+                </Fragment>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </PanelShell>
   );
 }

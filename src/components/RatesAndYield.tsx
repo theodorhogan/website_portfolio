@@ -1,35 +1,33 @@
 import { Fragment, useMemo, useState } from "react";
+import { TREASURY_INSTRUMENT_ORDER, getTreasurySeries, type PricePoint } from "../data/ratesData";
+import { useNewsletterContext } from "../state/useNewsletterContext";
+import { WEEK_MS, formatDayMonthYear } from "../utils/dates";
+import { getInverseChangeTone, type ChangeTone } from "../utils/format";
 import {
-  DAY_MS,
-  TREASURY_INSTRUMENT_ORDER,
   computeNominalChange,
   getAlignedPoint,
-  getTreasurySeries,
+  getYearAnchorPoint,
   resolveAlignedPointIndex,
-  type PricePoint,
-} from "../data/marketData";
+} from "../utils/timeSeries";
 import { PanelShell } from "./PanelShell";
-import { useNewsletterContext } from "../state/useNewsletterContext";
 import "./RatesAndYield.css";
 
 type CycleMode = "high" | "low";
-type RowTone = "normal" | "inverse-positive" | "inverse-negative" | "neutral";
 
 type TableCell = {
   text: string;
-  tone?: RowTone;
+  tone?: ChangeTone;
 };
 
 type TableRow = {
   label: string;
   cells: TableCell[];
+  isDate?: boolean;
 };
 
 const MIN_CYCLE_MONTHS = 1;
 const MAX_CYCLE_MONTHS = 36;
 const DEFAULT_CYCLE_MONTHS = 6;
-const MONTH_LABELS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-const RATE_SERIES = getTreasurySeries();
 
 function roundTo2(value: number) {
   return Math.round(value * 100) / 100;
@@ -43,13 +41,10 @@ function clampCycleMonths(value: number) {
 function getWindowStartTime(endpointTime: number, cycleMonths: number) {
   const endpointDate = new Date(endpointTime);
   endpointDate.setUTCMonth(endpointDate.getUTCMonth() - cycleMonths);
-  return Date.UTC(
-    endpointDate.getUTCFullYear(),
-    endpointDate.getUTCMonth(),
-    endpointDate.getUTCDate(),
-  );
+  return Date.UTC(endpointDate.getUTCFullYear(), endpointDate.getUTCMonth(), endpointDate.getUTCDate());
 }
 
+/** Highest or lowest print in the look-back window ending at the active point; ties resolve to the latest date. */
 function getCyclePoint(
   series: PricePoint[],
   activeIndex: number,
@@ -57,25 +52,14 @@ function getCyclePoint(
   cycleMonths: number,
   activeTime: number,
 ) {
-  if (activeIndex < 0) return null;
-
   const windowStart = getWindowStartTime(activeTime, cycleMonths);
   let bestPoint: PricePoint | null = null;
 
-  for (let i = 0; i <= activeIndex; i += 1) {
+  for (let i = activeIndex; i >= 0; i -= 1) {
     const point = series[i];
-    if (point.time < windowStart) continue;
+    if (point.time < windowStart) break;
 
-    if (!bestPoint) {
-      bestPoint = point;
-      continue;
-    }
-
-    if (mode === "high") {
-      if (point.value > bestPoint.value || (point.value === bestPoint.value && point.time > bestPoint.time)) {
-        bestPoint = point;
-      }
-    } else if (point.value < bestPoint.value || (point.value === bestPoint.value && point.time > bestPoint.time)) {
+    if (!bestPoint || (mode === "high" ? point.value > bestPoint.value : point.value < bestPoint.value)) {
       bestPoint = point;
     }
   }
@@ -83,70 +67,26 @@ function getCyclePoint(
   return bestPoint;
 }
 
-function getYearStartPoint(series: PricePoint[], activeIndex: number, activeYear: number) {
-  const yearStartTime = Date.UTC(activeYear, 0, 1);
-  let lastPointBeforeYearStart: PricePoint | null = null;
-
-  for (let i = 0; i <= activeIndex; i += 1) {
-    if (series[i].time <= yearStartTime) {
-      lastPointBeforeYearStart = series[i];
-      continue;
-    }
-    break;
-  }
-
-  if (lastPointBeforeYearStart) {
-    return lastPointBeforeYearStart;
-  }
-
-  for (let i = 0; i <= activeIndex; i += 1) {
-    if (new Date(series[i].time).getUTCFullYear() === activeYear) {
-      return series[i];
-    }
-  }
-
-  return null;
-}
-
 function formatRate(value: number | null) {
-  if (value === null) return "";
-  return value.toFixed(2);
+  return value === null ? "" : value.toFixed(2);
 }
 
 function formatNominalChange(value: number | null) {
   if (value === null) return "";
   if (Math.abs(value) < 0.00005) return "0.00";
-
-  const sign = value > 0 ? "+" : "";
-  return `${sign}${value.toFixed(2)}`;
-}
-
-function formatDate(time: number | null) {
-  if (time === null) return "";
-  const date = new Date(time);
-  const day = String(date.getUTCDate()).padStart(2, "0");
-  const month = MONTH_LABELS[date.getUTCMonth()];
-  const year = String(date.getUTCFullYear()).slice(-2);
-  return `${day}-${month}-${year}`;
-}
-
-function getInverseTone(value: number | null): RowTone | undefined {
-  if (value === null) return undefined;
-  if (Math.abs(value) < 0.00005) return "neutral";
-  return value < 0 ? "inverse-positive" : "inverse-negative";
+  return `${value > 0 ? "+" : ""}${value.toFixed(2)}`;
 }
 
 export function RatesAndYield() {
   const [cycleMode, setCycleMode] = useState<CycleMode>("low");
   const [cycleMonthsInput, setCycleMonthsInput] = useState(String(DEFAULT_CYCLE_MONTHS));
   const { selected } = useNewsletterContext();
+  const activeTime = selected?.sortDate ?? null;
 
   const rows = useMemo<TableRow[]>(() => {
+    const seriesByTicker = getTreasurySeries();
     const cycleMonths = clampCycleMonths(Number(cycleMonthsInput));
-    const activeTime = selected?.sortDate ?? null;
     const activeYear = activeTime !== null ? new Date(activeTime).getUTCFullYear() : null;
-    const activeWeekLabel = activeTime !== null ? formatDate(activeTime) : "--";
-    const lastWeekLabel = activeTime !== null ? formatDate(activeTime - 7 * DAY_MS) : "--";
 
     const cycleDateCells: TableCell[] = [];
     const cycleRateCells: TableCell[] = [];
@@ -155,53 +95,52 @@ export function RatesAndYield() {
     const weekChangeCells: TableCell[] = [];
     const yearStartCells: TableCell[] = [];
     const ytdChangeCells: TableCell[] = [];
+    const columns = [
+      cycleDateCells,
+      cycleRateCells,
+      currentCells,
+      lastWeekCells,
+      weekChangeCells,
+      yearStartCells,
+      ytdChangeCells,
+    ];
 
     for (const ticker of TREASURY_INSTRUMENT_ORDER) {
-      const series = RATE_SERIES.get(ticker) ?? [];
+      const series = seriesByTicker.get(ticker) ?? [];
       const activeIndex = activeTime !== null ? resolveAlignedPointIndex(series, activeTime) : -1;
 
       if (activeTime === null || activeYear === null || activeIndex < 0) {
-        cycleDateCells.push({ text: "" });
-        cycleRateCells.push({ text: "" });
-        currentCells.push({ text: "" });
-        lastWeekCells.push({ text: "" });
-        weekChangeCells.push({ text: "" });
-        yearStartCells.push({ text: "" });
-        ytdChangeCells.push({ text: "" });
+        for (const cells of columns) cells.push({ text: "" });
         continue;
       }
 
-      const currentPoint = series[activeIndex];
-      const lastWeekPoint = getAlignedPoint(series, activeTime - 7 * DAY_MS);
-      const yearStartPoint = getYearStartPoint(series, activeIndex, activeYear);
+      const lastWeekPoint = getAlignedPoint(series, activeTime - WEEK_MS);
+      const yearStartPoint = getYearAnchorPoint(series, activeYear);
       const cyclePoint = getCyclePoint(series, activeIndex, cycleMode, cycleMonths, activeTime);
 
-      const currentDisplay = roundTo2(currentPoint.value);
-      const lastWeekDisplay = lastWeekPoint ? roundTo2(lastWeekPoint.value) : null;
-      const yearStartDisplay = yearStartPoint ? roundTo2(yearStartPoint.value) : null;
-
-      const weekChangeRaw = computeNominalChange(currentDisplay, lastWeekDisplay);
-      const ytdChangeRaw = computeNominalChange(currentDisplay, yearStartDisplay);
+      // Changes are computed from the rounded values so they always match the figures shown above them.
+      const current = roundTo2(series[activeIndex].value);
+      const lastWeek = lastWeekPoint ? roundTo2(lastWeekPoint.value) : null;
+      const yearStart = yearStartPoint ? roundTo2(yearStartPoint.value) : null;
+      const weekChangeRaw = computeNominalChange(current, lastWeek);
+      const ytdChangeRaw = computeNominalChange(current, yearStart);
       const weekChange = weekChangeRaw !== null ? roundTo2(weekChangeRaw) : null;
       const ytdChange = ytdChangeRaw !== null ? roundTo2(ytdChangeRaw) : null;
 
-      cycleDateCells.push({ text: formatDate(cyclePoint?.time ?? null) });
+      cycleDateCells.push({ text: cyclePoint ? formatDayMonthYear(cyclePoint.time) : "" });
       cycleRateCells.push({ text: formatRate(cyclePoint?.value ?? null) });
-      currentCells.push({ text: formatRate(currentDisplay) });
-      lastWeekCells.push({ text: formatRate(lastWeekDisplay) });
-      weekChangeCells.push({
-        text: formatNominalChange(weekChange),
-        tone: getInverseTone(weekChange),
-      });
-      yearStartCells.push({ text: formatRate(yearStartDisplay) });
-      ytdChangeCells.push({
-        text: formatNominalChange(ytdChange),
-        tone: getInverseTone(ytdChange),
-      });
+      currentCells.push({ text: formatRate(current) });
+      lastWeekCells.push({ text: formatRate(lastWeek) });
+      weekChangeCells.push({ text: formatNominalChange(weekChange), tone: getInverseChangeTone(weekChange) });
+      yearStartCells.push({ text: formatRate(yearStart) });
+      ytdChangeCells.push({ text: formatNominalChange(ytdChange), tone: getInverseChangeTone(ytdChange) });
     }
 
+    const activeWeekLabel = activeTime !== null ? formatDayMonthYear(activeTime) : "--";
+    const lastWeekLabel = activeTime !== null ? formatDayMonthYear(activeTime - WEEK_MS) : "--";
+
     return [
-      { label: cycleMode === "high" ? "Cycle High Date" : "Cycle Low Date", cells: cycleDateCells },
+      { label: cycleMode === "high" ? "Cycle High Date" : "Cycle Low Date", cells: cycleDateCells, isDate: true },
       { label: cycleMode === "high" ? "Cycle High Rate" : "Cycle Low Rate", cells: cycleRateCells },
       { label: `This Week Yield (${activeWeekLabel})`, cells: currentCells },
       { label: `Last Week Yield (${lastWeekLabel})`, cells: lastWeekCells },
@@ -209,7 +148,7 @@ export function RatesAndYield() {
       { label: `Yield @ 1/1/${activeYear ?? "--"}`, cells: yearStartCells },
       { label: "YTD", cells: ytdChangeCells },
     ];
-  }, [cycleMode, cycleMonthsInput, selected]);
+  }, [cycleMode, cycleMonthsInput, activeTime]);
 
   return (
     <PanelShell
@@ -247,45 +186,45 @@ export function RatesAndYield() {
       }
       bodyClassName="rates-yield__body"
     >
-        <table className="rates-yield__table" aria-label="US Treasury rates and yields">
-          <colgroup>
-            <col className="rates-yield__colLabel" />
-            {TREASURY_INSTRUMENT_ORDER.map((ticker) => (
-              <col key={ticker} className="rates-yield__colData" />
-            ))}
-          </colgroup>
-          <tbody>
-            {rows.map((row, rowIndex) => (
-              <Fragment key={row.label}>
-                {rowIndex === 2 && (
-                  <tr className="rates-yield__categoryRow">
-                    <th scope="row" className="rates-yield__categoryLabel">
-                      Category
-                    </th>
-                    {TREASURY_INSTRUMENT_ORDER.map((ticker) => (
-                      <td key={`category-${ticker}`} className="rates-yield__categoryCell">
-                        {ticker}
-                      </td>
-                    ))}
-                  </tr>
-                )}
-                <tr>
-                  <th scope="row" className="rates-yield__rowLabel">
-                    {row.label}
+      <table className="rates-yield__table" aria-label="US Treasury rates and yields">
+        <colgroup>
+          <col className="rates-yield__colLabel" />
+          {TREASURY_INSTRUMENT_ORDER.map((ticker) => (
+            <col key={ticker} />
+          ))}
+        </colgroup>
+        <tbody>
+          {rows.map((row, rowIndex) => (
+            <Fragment key={row.label}>
+              {rowIndex === 2 && (
+                <tr className="rates-yield__categoryRow">
+                  <th scope="row" className="rates-yield__categoryLabel">
+                    Category
                   </th>
-                  {row.cells.map((cell, index) => (
-                    <td
-                      key={`${row.label}-${TREASURY_INSTRUMENT_ORDER[index]}`}
-                      className={`rates-yield__cell${cell.tone ? ` rates-yield__cell--${cell.tone}` : ""}`}
-                    >
-                      {cell.text}
-                    </td>
+                  {TREASURY_INSTRUMENT_ORDER.map((ticker) => (
+                    <th key={ticker} scope="col" className="rates-yield__categoryCell">
+                      {ticker}
+                    </th>
                   ))}
                 </tr>
-              </Fragment>
-            ))}
-          </tbody>
-        </table>
+              )}
+              <tr>
+                <th scope="row" className="rates-yield__rowLabel">
+                  {row.label}
+                </th>
+                {row.cells.map((cell, index) => (
+                  <td
+                    key={TREASURY_INSTRUMENT_ORDER[index]}
+                    className={`rates-yield__cell${cell.tone ? ` rates-yield__cell--${cell.tone}` : ""}${row.isDate ? " rates-yield__cell--date" : ""}`}
+                  >
+                    {cell.text}
+                  </td>
+                ))}
+              </tr>
+            </Fragment>
+          ))}
+        </tbody>
+      </table>
     </PanelShell>
   );
 }

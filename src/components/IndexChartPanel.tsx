@@ -1,13 +1,9 @@
 import { useEffect, useMemo, useRef } from "react";
 import { CrosshairMode, createChart, type IChartApi, type ISeriesApi, type Time } from "lightweight-charts";
 import { useNewsletterContext } from "../state/useNewsletterContext";
-import {
-  formatChartPrice,
-  formatChartSubtitleDate,
-  formatPe,
-  getIndexChartDataset,
-  type IndexKey,
-} from "./indexChartData";
+import { MONTH_LABELS, formatDayMonthYear } from "../utils/dates";
+import { formatPrice } from "../utils/format";
+import { formatChartSubtitleDate, formatPe, getIndexChartDataset, type IndexKey } from "./indexChartData";
 import { PanelShell } from "./PanelShell";
 import "./IndexChart.css";
 
@@ -17,114 +13,56 @@ type IndexChartPanelProps = {
   title: string;
 };
 
+/** `NOV-26` axis labels. Candles are keyed by business day, the only shape handled here. */
 function formatMonthTick(time: Time) {
-  if (typeof time === "string") {
-    const date = new Date(`${time}T00:00:00Z`);
-    const month = date.toLocaleString("en-US", { month: "short", timeZone: "UTC" }).toUpperCase();
-    const year = String(date.getUTCFullYear()).slice(-2);
-    return `${month}-${year}`;
-  }
-
-  if (typeof time === "object" && "year" in time) {
-    const month = new Date(Date.UTC(time.year, time.month - 1, time.day)).toLocaleString("en-US", {
-      month: "short",
-      timeZone: "UTC",
-    }).toUpperCase();
-    const year = String(time.year).slice(-2);
-    return `${month}-${year}`;
-  }
-
-  return "";
-}
-
-function candleTimeToUtcMs(time: Time) {
-  if (typeof time === "string") {
-    const date = new Date(`${time}T00:00:00Z`);
-    return Number.isNaN(date.getTime()) ? null : date.getTime();
-  }
-
-  if (typeof time === "object" && "year" in time) {
-    return Date.UTC(time.year, time.month - 1, time.day);
-  }
-
-  return null;
-}
-
-function formatAthDate(timeMs: number | null) {
-  if (timeMs === null) return "-- --- --";
-  const date = new Date(timeMs);
-  const day = String(date.getUTCDate()).padStart(2, "0");
-  const month = date.toLocaleString("en-US", { month: "short", timeZone: "UTC" }).toUpperCase();
-  const year = String(date.getUTCFullYear()).slice(-2);
-  return `${day}-${month}-${year}`;
+  if (typeof time !== "object") return "";
+  return `${MONTH_LABELS[time.month - 1]}-${String(time.year).slice(-2)}`;
 }
 
 export function IndexChartPanel({ index, badge, title }: IndexChartPanelProps) {
   const { selected } = useNewsletterContext();
+  const activeTime = selected?.sortDate ?? null;
   const containerRef = useRef<HTMLDivElement>(null);
+  const chartRef = useRef<IChartApi | null>(null);
+  const seriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
 
-  const chartData = useMemo(() => {
-    const activeTimeMs = selected?.sortDate ?? Date.now();
-    return getIndexChartDataset(index, activeTimeMs);
-  }, [index, selected]);
+  const chartData = useMemo(() => getIndexChartDataset(index, activeTime ?? Date.now()), [index, activeTime]);
 
-  const athInfo = useMemo(() => {
-    if (chartData.candles.length === 0 || chartData.latestClose === null || chartData.latestClose <= 0) {
-      return { athPrice: null as number | null, athTimeMs: null as number | null, deltaPct: null as number | null };
-    }
+  const { windowHigh, latestClose } = chartData;
+  const highDeltaPct =
+    windowHigh && latestClose !== null && windowHigh.value > 0 ? (latestClose / windowHigh.value - 1) * 100 : null;
 
-    let athPrice = -Infinity;
-    let athTimeMs: number | null = null;
-    for (const candle of chartData.candles) {
-      if (candle.high > athPrice) {
-        athPrice = candle.high;
-        athTimeMs = candleTimeToUtcMs(candle.time);
-      }
-    }
-
-    if (!Number.isFinite(athPrice) || athPrice <= 0) {
-      return { athPrice: null as number | null, athTimeMs: null as number | null, deltaPct: null as number | null };
-    }
-
-    const deltaPct = (chartData.latestClose / athPrice - 1) * 100;
-    return { athPrice, athTimeMs, deltaPct };
-  }, [chartData.candles, chartData.latestClose]);
-
+  // Build the chart once; week changes only swap the data in the effect below.
   useEffect(() => {
     const container = containerRef.current;
-    if (!container || chartData.candles.length === 0) {
-      return;
-    }
+    if (!container) return;
 
-    let chart: IChartApi | null = createChart(container, {
+    const chart = createChart(container, {
+      autoSize: true,
       layout: {
-        background: { color: "#181d25" },
+        background: { color: "transparent" },
         textColor: "#cbd5f5",
+        fontFamily: getComputedStyle(container).fontFamily,
+        fontSize: 10,
       },
       grid: {
         vertLines: { color: "rgba(148, 163, 184, 0.1)" },
         horzLines: { color: "rgba(148, 163, 184, 0.1)" },
       },
-      width: container.clientWidth,
-      height: container.clientHeight,
       crosshair: { mode: CrosshairMode.Normal },
-      rightPriceScale: {
-        borderVisible: false,
-      },
-      leftPriceScale: {
-        visible: false,
-      },
+      rightPriceScale: { borderVisible: false },
+      leftPriceScale: { visible: false },
       timeScale: {
         borderVisible: false,
         rightOffset: 2,
-        tickMarkFormatter: (time: Time) => formatMonthTick(time),
+        lockVisibleTimeRangeOnResize: true,
+        tickMarkFormatter: formatMonthTick,
       },
-      localization: {
-        locale: "en-US",
-      },
+      localization: { locale: "en-US" },
     });
 
-    const series: ISeriesApi<"Candlestick"> = chart.addCandlestickSeries({
+    chartRef.current = chart;
+    seriesRef.current = chart.addCandlestickSeries({
       upColor: "#45d975",
       borderUpColor: "#45d975",
       wickUpColor: "#45d975",
@@ -134,37 +72,16 @@ export function IndexChartPanel({ index, badge, title }: IndexChartPanelProps) {
       priceLineVisible: false,
     });
 
-    series.setData(chartData.candles);
-    chart.timeScale().fitContent();
-
-    const applyChartSize = (width: number, height: number) => {
-      if (!chart) return;
-      chart.applyOptions({ width: Math.max(1, width), height: Math.max(1, height) });
-      chart.timeScale().fitContent();
-    };
-
-    let resizeObserver: ResizeObserver | null = null;
-    const onWindowResize = () => applyChartSize(container.clientWidth, container.clientHeight);
-
-    if (typeof ResizeObserver !== "undefined") {
-      resizeObserver = new ResizeObserver((entries) => {
-        if (entries.length === 0) return;
-        const { width, height } = entries[0].contentRect;
-        applyChartSize(width, height);
-      });
-      resizeObserver.observe(container);
-    } else {
-      window.addEventListener("resize", onWindowResize);
-    }
-
-    applyChartSize(container.clientWidth, container.clientHeight);
-
     return () => {
-      resizeObserver?.disconnect();
-      window.removeEventListener("resize", onWindowResize);
-      chart?.remove();
-      chart = null;
+      chart.remove();
+      chartRef.current = null;
+      seriesRef.current = null;
     };
+  }, []);
+
+  useEffect(() => {
+    seriesRef.current?.setData(chartData.candles);
+    chartRef.current?.timeScale().fitContent();
   }, [chartData]);
 
   return (
@@ -180,23 +97,22 @@ export function IndexChartPanel({ index, badge, title }: IndexChartPanelProps) {
             FWD P/E: {formatPe(chartData.currentPe)} [LAST WK FWD P/E: {formatPe(chartData.lastWeekPe)}]
           </span>
           <span className="index-chart__subtitle">
-            ATH({formatAthDate(athInfo.athTimeMs)}): {formatChartPrice(athInfo.athPrice)}{" "}
+            ATH({windowHigh ? formatDayMonthYear(windowHigh.time) : "-- --- --"}): {formatPrice(windowHigh?.value ?? null)}{" "}
             <span
               className={
-                athInfo.deltaPct !== null && athInfo.deltaPct < 0
-                  ? "index-chart__athDelta--down"
-                  : "index-chart__athDelta--flat"
+                highDeltaPct !== null && highDeltaPct < 0 ? "index-chart__athDelta--down" : "index-chart__athDelta--flat"
               }
             >
-              ({athInfo.deltaPct === null ? "--" : `${athInfo.deltaPct >= 0 ? "+" : ""}${athInfo.deltaPct.toFixed(2)}%`})
+              ({highDeltaPct === null ? "--" : `${highDeltaPct >= 0 ? "+" : ""}${highDeltaPct.toFixed(2)}%`})
             </span>{" "}
-            | Close {formatChartPrice(chartData.latestClose)} | {formatChartSubtitleDate(chartData.latestTimeMs)}
+            | Close {formatPrice(latestClose)} | {formatChartSubtitleDate(chartData.latestTimeMs)}
           </span>
         </div>
       }
       bodyClassName="index-chart__body"
     >
       <div ref={containerRef} className="index-chart__canvas" />
+      {chartData.candles.length === 0 ? <p className="index-chart__empty">No index data for the selected week.</p> : null}
     </PanelShell>
   );
 }

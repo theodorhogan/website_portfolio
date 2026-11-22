@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import "./BlogWindow.css";
 import { useNewsletterContext } from "../state/useNewsletterContext";
+import { formatDayMonthYear, getIsoWeekNumber } from "../utils/dates";
 import { PanelShell } from "./PanelShell";
 
 const HIGHLIGHT_TOKEN =
@@ -111,7 +112,8 @@ export function BlogWindow() {
       variant="standard"
       bodyMode="scroll"
       badge="Market Update"
-      title={<span className="blog-window__titleText">{selected.fileName}</span>}
+      title={<span className="blog-window__titleText">{selected.title}</span>}
+      meta={`Week ${String(getIsoWeekNumber(selected.sortDate)).padStart(2, "0")} - ${formatDayMonthYear(selected.sortDate)}`}
       actions={
         <label className="blog-window__selectGroup">
           <span className="sr-only">Select bulletin by date</span>
@@ -126,9 +128,9 @@ export function BlogWindow() {
       }
       bodyClassName="blog-window__body"
     >
-      <div role="article" aria-label={selected.fullLabel}>
-        <div className="blog-window__content">{renderContentWithChangeBadges(selected.content)}</div>
-      </div>
+      <article className="blog-window__content" aria-label={selected.fullLabel}>
+        {renderContentWithChangeBadges(selected.content)}
+      </article>
     </PanelShell>
   );
 }

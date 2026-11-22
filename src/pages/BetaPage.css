@@ -2,82 +2,63 @@
   @apply flex w-full items-start justify-center py-2;
 }
 
+/*
+ * Charts | sectors | quotes. The two table columns have floors sized to their
+ * tables, so the chart column absorbs any squeeze before a table has to scroll.
+ */
 .beta-page__layout {
   @apply grid w-full items-start gap-3;
-  grid-template-columns: minmax(0, 1.44fr) minmax(0, 1.18fr) minmax(16.75rem, 0.72fr);
+  grid-template-columns: minmax(0, 1.25fr) minmax(33.5rem, 1.15fr) minmax(23rem, 0.8fr);
 }
 
 .beta-page__column {
-  min-width: 0;
+  @apply grid min-w-0 content-start gap-3;
 }
 
-.beta-page__column--left,
-.beta-page__column--middle {
-  @apply grid content-start gap-3;
-}
-
-.beta-page__column--middle {
-  grid-template-rows: auto auto;
-}
-
-.beta-page__column--right {
-  @apply flex min-w-0 flex-col gap-3;
-}
-
+/* Each slot is a one-cell grid so its panel stretches to the slot and scrolls inside it when capped. */
 .beta-page__slot {
-  min-width: 0;
-}
-
-.beta-page__slot > * {
-  @apply h-full w-full;
+  @apply grid min-w-0;
+  grid-template-rows: minmax(0, 1fr);
 }
 
 .beta-page__slot--spx,
 .beta-page__slot--stoxx {
-  min-height: clamp(18rem, 34vh, 24rem);
+  height: clamp(18rem, 34vh, 24rem);
 }
 
 .beta-page__slot--sector {
   min-height: 17rem;
 }
 
-.beta-page__slot--major {
-  min-height: 15.5rem;
-}
-
 .beta-page__slot--watchlist {
-  min-height: clamp(29rem, 56vh, 42rem);
+  max-height: clamp(29rem, 62vh, 46rem);
 }
 
-@media (max-width: 1180px) {
+/* Too narrow for three columns: quotes move below, side by side. */
+@media (max-width: 1320px) {
   .beta-page__layout {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 
   .beta-page__column--right {
     grid-column: 1 / -1;
-  }
-
-  .beta-page__slot--major,
-  .beta-page__slot--watchlist {
-    min-height: 24rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
   }
 }
 
 @media (max-width: 1024px) {
-  .beta-page__layout {
+  .beta-page__layout,
+  .beta-page__column--right {
     grid-template-columns: 1fr;
   }
 
-  .beta-page__column--right {
-    grid-column: auto;
+  .beta-page__slot--spx,
+  .beta-page__slot--stoxx {
+    height: 20rem;
   }
 
-  .beta-page__slot--spx,
-  .beta-page__slot--stoxx,
-  .beta-page__slot--sector,
-  .beta-page__slot--major,
   .beta-page__slot--watchlist {
-    min-height: 20rem;
+    max-height: 32rem;
   }
 }

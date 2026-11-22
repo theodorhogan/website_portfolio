@@ -96,22 +96,28 @@
   @apply text-slate-100;
 }
 
-.rates-yield__cell--inverse-positive {
+/* Tones are already inverted for yields: a fall is "positive". */
+.rates-yield__cell--positive {
   color: var(--terminal-positive);
   font-weight: 600;
 }
 
-.rates-yield__cell--inverse-negative {
+.rates-yield__cell--negative {
   color: var(--terminal-negative);
   font-weight: 600;
 }
 
+/* Fixed label width sized for the longest row label; the 13 tenor columns share the rest equally. */
 .rates-yield__colLabel {
-  width: 16%;
+  width: 13.25rem;
 }
 
-.rates-yield__colData {
-  width: 6.46%;
+/* Dates are the widest values in the table; set them a step smaller so 13 fit side by side. */
+.rates-yield__cell--date {
+  padding-left: 0.1rem;
+  padding-right: 0.1rem;
+  font-size: 0.62rem;
+  letter-spacing: -0.01em;
 }
 
 .rates-yield__table tbody tr:last-child .rates-yield__rowLabel,
@@ -129,7 +135,6 @@
   }
 
   .rates-yield__table {
-    min-width: 56rem;
-    table-layout: auto;
+    min-width: 60rem;
   }
 }

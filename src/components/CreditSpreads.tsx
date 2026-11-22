@@ -1,18 +1,10 @@
 import { useMemo } from "react";
-import {
-  DAY_MS,
-  CREDIT_SPREAD_ORDER,
-  getAlignedPoint,
-  getCreditSpreadSeries,
-  type CreditSpreadKey,
-} from "../data/marketData";
+import { CREDIT_SPREAD_ORDER, getCreditSpreadSeries, type CreditSpreadKey } from "../data/ratesData";
 import { useNewsletterContext } from "../state/useNewsletterContext";
-import { getYearAnchorValue } from "../utils/timeSeries";
-import {
-  CompactMetricsTable,
-  type CompactMetricsRow,
-  type CompactMetricsTone,
-} from "./CompactMetricsTable";
+import { WEEK_MS } from "../utils/dates";
+import { getInverseChangeTone } from "../utils/format";
+import { getAlignedPoint, getYearAnchorValue } from "../utils/timeSeries";
+import { CompactMetricsTable, type CompactMetricsRow } from "./CompactMetricsTable";
 import { PanelShell } from "./PanelShell";
 
 type SpreadRow = {
@@ -24,19 +16,12 @@ type SpreadRow = {
   ytd: number | null;
 };
 
-const SERIES = getCreditSpreadSeries();
-
 function formatSpread(value: number | null, bracket = false, showPositiveSign = false) {
   if (value === null) return "--";
   const rounded = Math.round(value);
   const sign = showPositiveSign && rounded > 0 ? "+" : "";
   const txt = `${sign}${rounded}bp`;
   return bracket ? `[${txt}]` : txt;
-}
-
-function getTone(value: number | null): CompactMetricsTone {
-  if (value === null || Math.abs(value) < 0.00005) return "neutral";
-  return value < 0 ? "positive" : "negative";
 }
 
 export function CreditSpreads() {
@@ -46,14 +31,16 @@ export function CreditSpreads() {
     const activeTime = selected?.sortDate ?? null;
     const activeYear = activeTime !== null ? new Date(activeTime).getUTCFullYear() : null;
 
+    const seriesByTicker = getCreditSpreadSeries();
+
     const rawRows: SpreadRow[] = CREDIT_SPREAD_ORDER.map((ticker) => {
       if (activeTime === null || activeYear === null) {
         return { ticker, thisWeek: null, lastWeek: null, delta: null, yearStart: null, ytd: null };
       }
 
-      const series = SERIES.get(ticker) ?? [];
+      const series = seriesByTicker.get(ticker) ?? [];
       const thisWeek = getAlignedPoint(series, activeTime)?.value ?? null;
-      const lastWeek = getAlignedPoint(series, activeTime - 7 * DAY_MS)?.value ?? null;
+      const lastWeek = getAlignedPoint(series, activeTime - WEEK_MS)?.value ?? null;
       const yearStart = getYearAnchorValue(series, activeYear);
       const delta = thisWeek !== null && lastWeek !== null ? thisWeek - lastWeek : null;
       const ytd = thisWeek !== null && yearStart !== null ? thisWeek - yearStart : null;
@@ -67,9 +54,9 @@ export function CreditSpreads() {
       cells: [
         { content: formatSpread(row.thisWeek), tone: "neutral" },
         { content: formatSpread(row.lastWeek, true), tone: "neutral" },
-        { content: formatSpread(row.delta, false, true), tone: getTone(row.delta) },
+        { content: formatSpread(row.delta, false, true), tone: getInverseChangeTone(row.delta) },
         { content: formatSpread(row.yearStart), tone: "neutral" },
-        { content: formatSpread(row.ytd, false, true), tone: getTone(row.ytd) },
+        { content: formatSpread(row.ytd, false, true), tone: getInverseChangeTone(row.ytd) },
       ],
     }));
 

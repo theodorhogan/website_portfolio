@@ -1,35 +1,32 @@
 import type { BusinessDay, CandlestickData } from "lightweight-charts";
 import indexDataCsv from "../content/pricedatabase/indexdata.csv?raw";
 import peDataCsv from "../content/pricedatabase/pricetoearnings.csv?raw";
-import { parseCsvLine, parseUsDateToUtcTime } from "../data/marketData";
+import { parseCsvRows, parseNumberCell } from "../utils/csv";
+import { DAY_MS, WEEK_MS, parseUsDateToUtcTime } from "../utils/dates";
+import { findLastIndexAtOrBefore, type TimedValuePoint } from "../utils/timeSeries";
 
 export type IndexKey = "SPX" | "STOXX600";
-
-type ClosePoint = {
-  timeMs: number;
-  close: number;
-};
-
-type ForwardPePoint = {
-  timeMs: number;
-  value: number;
-};
 
 type IndexChartDataset = {
   candles: CandlestickData<BusinessDay>[];
   latestClose: number | null;
   latestTimeMs: number | null;
+  /** Highest close inside the charted window, and the day it printed. */
+  windowHigh: TimedValuePoint | null;
   currentPe: number | null;
   lastWeekPe: number | null;
 };
 
-const DAY_MS = 24 * 60 * 60 * 1000;
 const YEAR_WINDOW_MS = 365 * DAY_MS;
-
-function normalizeToUtcDay(timeMs: number) {
-  const date = new Date(timeMs);
-  return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
-}
+const INDEX_KEYS: IndexKey[] = ["SPX", "STOXX600"];
+const EMPTY_DATASET: IndexChartDataset = {
+  candles: [],
+  latestClose: null,
+  latestTimeMs: null,
+  windowHigh: null,
+  currentPe: null,
+  lastWeekPe: null,
+};
 
 function toBusinessDay(timeMs: number): BusinessDay {
   const date = new Date(timeMs);
@@ -40,172 +37,90 @@ function toBusinessDay(timeMs: number): BusinessDay {
   };
 }
 
-function parseIndexData(rawCsv: string) {
-  const spx: ClosePoint[] = [];
-  const stoxx: ClosePoint[] = [];
-
-  for (const line of rawCsv.trim().split(/\r?\n/)) {
-    const [spxDateRaw, spxPriceRaw, stoxxDateRaw, stoxxPriceRaw] = parseCsvLine(line);
-
-    const spxTime = spxDateRaw ? parseUsDateToUtcTime(spxDateRaw) : null;
-    const spxClose = spxPriceRaw ? Number(spxPriceRaw) : NaN;
-    if (spxTime !== null && Number.isFinite(spxClose)) {
-      spx.push({ timeMs: spxTime, close: spxClose });
-    }
-
-    const stoxxTime = stoxxDateRaw ? parseUsDateToUtcTime(stoxxDateRaw) : null;
-    const stoxxClose = stoxxPriceRaw ? Number(stoxxPriceRaw) : NaN;
-    if (stoxxTime !== null && Number.isFinite(stoxxClose)) {
-      stoxx.push({ timeMs: stoxxTime, close: stoxxClose });
-    }
-  }
-
-  const dedupeAndSort = (points: ClosePoint[]) =>
-    [...new Map(points.map((point) => [point.timeMs, point])).values()].sort(
-      (a, b) => a.timeMs - b.timeMs,
-    );
-
-  return {
-    SPX: dedupeAndSort(spx),
-    STOXX600: dedupeAndSort(stoxx),
-  } as const;
+function toSortedSeries(valuesByTime: Map<number, number>): TimedValuePoint[] {
+  return [...valuesByTime.entries()].sort((a, b) => a[0] - b[0]).map(([time, value]) => ({ time, value }));
 }
 
-function parseForwardPeData(rawCsv: string) {
-  const peMap = new Map<IndexKey, ForwardPePoint[]>();
-  peMap.set("SPX", []);
-  peMap.set("STOXX600", []);
+/** `indexdata.csv` holds two side-by-side date/close column pairs: SPX then STOXX 600. */
+function parseIndexCloses(rawCsv: string): Record<IndexKey, TimedValuePoint[]> {
+  const maps = INDEX_KEYS.map(() => new Map<number, number>());
 
-  for (const line of rawCsv.trim().split(/\r?\n/)) {
-    const [dateRaw, tickerRaw, valueRaw] = parseCsvLine(line);
-    const ticker = tickerRaw?.trim().toUpperCase();
-    const timeMs = dateRaw ? parseUsDateToUtcTime(dateRaw) : null;
-    const value = valueRaw ? Number(valueRaw) : NaN;
-
-    if (!ticker || timeMs === null || !Number.isFinite(value)) {
-      continue;
-    }
-
-    const key = ticker === "SPX" ? "SPX" : ticker === "STOXX600" ? "STOXX600" : null;
-    if (!key) continue;
-
-    peMap.get(key)?.push({ timeMs, value });
-  }
-
-  return {
-    SPX: [...(peMap.get("SPX") ?? [])].sort((a, b) => a.timeMs - b.timeMs),
-    STOXX600: [...(peMap.get("STOXX600") ?? [])].sort((a, b) => a.timeMs - b.timeMs),
-  } as const;
-}
-
-function buildForwardPeLookup(data: Record<IndexKey, ForwardPePoint[]>) {
-  return {
-    SPX: new Map(data.SPX.map((point) => [point.timeMs, point.value])),
-    STOXX600: new Map(data.STOXX600.map((point) => [point.timeMs, point.value])),
-  } as const;
-}
-
-function resolveEndpointIndex(points: ClosePoint[], activeTimeMs: number) {
-  for (let i = points.length - 1; i >= 0; i -= 1) {
-    if (points[i].timeMs <= activeTimeMs) {
-      return i;
-    }
-  }
-
-  return points.length > 0 ? 0 : -1;
-}
-
-function getExactForwardPe(
-  peLookup: ReadonlyMap<number, number>,
-  targetTimeMs: number,
-) {
-  const normalizedTarget = normalizeToUtcDay(targetTimeMs);
-  return peLookup.get(normalizedTarget) ?? null;
-}
-
-const INDEX_CLOSES = parseIndexData(indexDataCsv);
-const INDEX_FORWARD_PE = parseForwardPeData(peDataCsv);
-const INDEX_FORWARD_PE_LOOKUP = buildForwardPeLookup(INDEX_FORWARD_PE);
-
-export function getIndexChartDataset(index: IndexKey, activeTimeMs: number): IndexChartDataset {
-  const points = INDEX_CLOSES[index];
-  if (!points || points.length === 0) {
-    return {
-      candles: [],
-      latestClose: null,
-      latestTimeMs: null,
-      currentPe: null,
-      lastWeekPe: null,
-    };
-  }
-
-  const endpointIndex = resolveEndpointIndex(points, activeTimeMs);
-  if (endpointIndex < 0) {
-    return {
-      candles: [],
-      latestClose: null,
-      latestTimeMs: null,
-      currentPe: null,
-      lastWeekPe: null,
-    };
-  }
-
-  const endpoint = points[endpointIndex];
-  const windowStart = endpoint.timeMs - YEAR_WINDOW_MS;
-  let startIndex = 0;
-  while (startIndex < endpointIndex && points[startIndex].timeMs < windowStart) {
-    startIndex += 1;
-  }
-
-  const candles: CandlestickData<BusinessDay>[] = [];
-  for (let i = startIndex; i <= endpointIndex; i += 1) {
-    const current = points[i];
-    const previous = i > 0 ? points[i - 1] : current;
-    const open = previous.close;
-    const close = current.close;
-
-    candles.push({
-      time: toBusinessDay(current.timeMs),
-      open,
-      high: Math.max(open, close),
-      low: Math.min(open, close),
-      close,
+  for (const cells of parseCsvRows(rawCsv)) {
+    maps.forEach((map, pairIndex) => {
+      const time = parseUsDateToUtcTime(cells[pairIndex * 2] ?? "");
+      const close = parseNumberCell(cells[pairIndex * 2 + 1]);
+      if (time !== null && close !== null) map.set(time, close);
     });
   }
 
-  const peLookup = INDEX_FORWARD_PE_LOOKUP[index];
-  const currentPe = getExactForwardPe(peLookup, activeTimeMs);
-  const lastWeekPe = getExactForwardPe(peLookup, activeTimeMs - 7 * DAY_MS);
+  return { SPX: toSortedSeries(maps[0]), STOXX600: toSortedSeries(maps[1]) };
+}
+
+/** `pricetoearnings.csv` rows are `date, ticker, forward P/E`. */
+function parseForwardPe(rawCsv: string): Record<IndexKey, Map<number, number>> {
+  const lookup: Record<IndexKey, Map<number, number>> = { SPX: new Map(), STOXX600: new Map() };
+
+  for (const [dateRaw, tickerRaw, valueRaw] of parseCsvRows(rawCsv)) {
+    const time = parseUsDateToUtcTime(dateRaw ?? "");
+    const value = parseNumberCell(valueRaw);
+    const key = INDEX_KEYS.find((candidate) => candidate === tickerRaw?.toUpperCase());
+    if (key && time !== null && value !== null) lookup[key].set(time, value);
+  }
+
+  return lookup;
+}
+
+const INDEX_CLOSES = parseIndexCloses(indexDataCsv);
+const INDEX_FORWARD_PE = parseForwardPe(peDataCsv);
+
+/** One year of close-to-close candles ending at the last print on or before `activeTimeMs`. */
+export function getIndexChartDataset(index: IndexKey, activeTimeMs: number): IndexChartDataset {
+  const points = INDEX_CLOSES[index];
+  if (points.length === 0) return EMPTY_DATASET;
+
+  // Before the first print there is nothing to end on, so fall back to the first point.
+  const endpointIndex = Math.max(findLastIndexAtOrBefore(points, activeTimeMs), 0);
+  const endpoint = points[endpointIndex];
+  const windowStart = endpoint.time - YEAR_WINDOW_MS;
+
+  const candles: CandlestickData<BusinessDay>[] = [];
+  let windowHigh: TimedValuePoint | null = null;
+
+  for (let i = endpointIndex; i >= 0 && points[i].time >= windowStart; i -= 1) {
+    const close = points[i].value;
+    const open = i > 0 ? points[i - 1].value : close;
+    const high = Math.max(open, close);
+
+    candles.push({ time: toBusinessDay(points[i].time), open, high, low: Math.min(open, close), close });
+    // `>=` while walking backwards keeps the earliest day on ties.
+    if (!windowHigh || high >= windowHigh.value) windowHigh = { time: points[i].time, value: high };
+  }
+  candles.reverse();
+
+  const activeDay = Math.floor(activeTimeMs / DAY_MS) * DAY_MS;
+  const peLookup = INDEX_FORWARD_PE[index];
 
   return {
     candles,
-    latestClose: endpoint.close,
-    latestTimeMs: endpoint.timeMs,
-    currentPe,
-    lastWeekPe,
+    latestClose: endpoint.value,
+    latestTimeMs: endpoint.time,
+    windowHigh,
+    currentPe: peLookup.get(activeDay) ?? null,
+    lastWeekPe: peLookup.get(activeDay - WEEK_MS) ?? null,
   };
 }
 
 export function formatPe(value: number | null) {
-  if (value === null || Number.isNaN(value)) return "--";
-  return value.toFixed(2);
+  return value === null ? "--" : value.toFixed(2);
 }
+
+const subtitleDateFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "2-digit",
+  year: "numeric",
+  timeZone: "UTC",
+});
 
 export function formatChartSubtitleDate(timeMs: number | null) {
-  if (timeMs === null) return "--";
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "2-digit",
-    year: "numeric",
-    timeZone: "UTC",
-  });
-  return formatter.format(new Date(timeMs));
-}
-
-export function formatChartPrice(value: number | null) {
-  if (value === null || Number.isNaN(value)) return "--";
-  return new Intl.NumberFormat("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
+  return timeMs === null ? "--" : subtitleDateFormatter.format(new Date(timeMs));
 }

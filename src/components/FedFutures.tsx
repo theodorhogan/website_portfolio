@@ -1,17 +1,14 @@
 import { useMemo } from "react";
-import {
-  getFedFuturesSnapshots,
-  resolveAlignedPointIndex,
-  type FedFutureSnapshot,
-} from "../data/marketData";
+import { getFedFuturesSnapshots } from "../data/ratesData";
 import { useNewsletterContext } from "../state/useNewsletterContext";
+import { formatDayMonthYear } from "../utils/dates";
+import { getAlignedPoint } from "../utils/timeSeries";
 import { CurvePlot } from "./CurvePlot";
 import { buildLinePath, buildYTicks } from "./curveChartUtils";
 import {
   DURATION_CHART_HEIGHT,
   DURATION_CHART_MARGIN_DUAL_AXIS,
   DURATION_CHART_WIDTH,
-  MONTH_LABELS_SHORT,
 } from "./durationChartConfig";
 import { PanelShell } from "./PanelShell";
 import "./FedFutures.css";
@@ -34,8 +31,6 @@ type FedFuturesChartData =
       plotBottom: number;
     };
 
-const FED_FUTURES_SNAPSHOTS = getFedFuturesSnapshots();
-
 function formatTickerLabel(ticker: string) {
   const parts = ticker.trim().split(/\s+/);
   if (parts.length === 0) return ticker;
@@ -45,20 +40,6 @@ function formatTickerLabel(ticker: string) {
   const yearMatch = code.match(/(\d{2})$/);
   const year = yearMatch ? yearMatch[1] : "";
   return year ? `${month}-${year}` : month;
-}
-
-function formatDate(time: number | null) {
-  if (time === null) return "--";
-  const date = new Date(time);
-  const day = String(date.getUTCDate()).padStart(2, "0");
-  const month = MONTH_LABELS_SHORT[date.getUTCMonth()];
-  const year = String(date.getUTCFullYear()).slice(-2);
-  return `${day}-${month}-${year}`;
-}
-
-function resolveSnapshot(snapshots: FedFutureSnapshot[], targetTime: number) {
-  const index = resolveAlignedPointIndex(snapshots, targetTime);
-  return index >= 0 ? snapshots[index] : null;
 }
 
 export function FedFutures() {
@@ -73,11 +54,11 @@ export function FedFutures() {
       };
     }
 
-    const snapshot = resolveSnapshot(FED_FUTURES_SNAPSHOTS, activeTime);
+    const snapshot = getAlignedPoint(getFedFuturesSnapshots(), activeTime);
     if (!snapshot) {
       return {
         hasData: false,
-        activeLabel: formatDate(activeTime),
+        activeLabel: formatDayMonthYear(activeTime),
       };
     }
 
@@ -91,7 +72,7 @@ export function FedFutures() {
     if (priceValues.length === 0) {
       return {
         hasData: false,
-        activeLabel: formatDate(snapshot.time),
+        activeLabel: formatDayMonthYear(snapshot.time),
       };
     }
 
@@ -156,7 +137,7 @@ export function FedFutures() {
 
     return {
       hasData: true,
-      activeLabel: formatDate(snapshot.time),
+      activeLabel: formatDayMonthYear(snapshot.time),
       path,
       points,
       connectors,

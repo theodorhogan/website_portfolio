@@ -11,8 +11,15 @@
 }
 
 .models-page__select {
-  @apply rounded-md border border-slate-800 bg-[#121826] px-3 py-2 font-mono text-xs uppercase tracking-wide text-slate-200 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500;
-  min-width: 16rem;
+  @apply rounded-md border px-2 py-[0.3rem] text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-slate-200 focus:outline-none focus:ring-1;
+  min-width: 15rem;
+  border-color: var(--terminal-line);
+  background: rgba(15, 21, 31, 0.95);
+}
+
+.models-page__select:focus {
+  border-color: var(--terminal-accent);
+  --tw-ring-color: rgba(69, 217, 117, 0.35);
 }
 
 .models-page__viewer {

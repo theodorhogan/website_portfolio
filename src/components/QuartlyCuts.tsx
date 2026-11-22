@@ -1,15 +1,9 @@
 import { useMemo } from "react";
-import {
-  getAlignedPoint,
-  getEffrSeries,
-  getFedFuturesSnapshots,
-} from "../data/marketData";
+import { getEffrSeries, getFedFuturesSnapshots } from "../data/ratesData";
 import { useNewsletterContext } from "../state/useNewsletterContext";
-import {
-  CompactMetricsTable,
-  type CompactMetricsRow,
-  type CompactMetricsTone,
-} from "./CompactMetricsTable";
+import { getInverseChangeTone } from "../utils/format";
+import { getAlignedPoint } from "../utils/timeSeries";
+import { CompactMetricsTable, type CompactMetricsRow } from "./CompactMetricsTable";
 import { PanelShell } from "./PanelShell";
 
 type QuarterRow = {
@@ -39,9 +33,6 @@ const MONTH_AFTER_QUARTER_CLOSE: Record<number, number> = {
   4: 1,
 };
 
-const EFFR_SERIES = getEffrSeries();
-const FED_SNAPSHOTS = getFedFuturesSnapshots();
-
 function formatQuarterLabel(quarter: number, year: number) {
   return `Q${quarter}' ${String(year).slice(-2)}`;
 }
@@ -65,11 +56,6 @@ function formatBps(value: number | null) {
   const rounded = Math.round(value * 10) / 10;
   const sign = rounded > 0 ? "+" : "";
   return `${sign}${rounded.toFixed(1)}bp`;
-}
-
-function getTone(value: number | null): CompactMetricsTone {
-  if (value === null || Math.abs(value) < 0.00005) return "neutral";
-  return value < 0 ? "positive" : "negative";
 }
 
 function getQuarterSequence(activeTime: number) {
@@ -96,8 +82,8 @@ export function QuartlyCuts() {
       };
     }
 
-    const alignedEffr = getAlignedPoint(EFFR_SERIES, activeTime)?.value ?? null;
-    const snapshot = getAlignedPoint(FED_SNAPSHOTS, activeTime);
+    const alignedEffr = getAlignedPoint(getEffrSeries(), activeTime)?.value ?? null;
+    const snapshot = getAlignedPoint(getFedFuturesSnapshots(), activeTime);
     const quarterSequence = getQuarterSequence(activeTime);
 
     const futuresRateByMonthYear = new Map<string, number>();
@@ -148,13 +134,13 @@ export function QuartlyCuts() {
       ...quarterRows.map((row) => ({
         key: row.label,
         label: row.label,
-        cells: [{ content: formatBps(row.cutsBps), tone: getTone(row.cutsBps) }],
+        cells: [{ content: formatBps(row.cutsBps), tone: getInverseChangeTone(row.cutsBps) }],
       })),
       {
         key: "total",
         label: "TOTAL",
         labelClassName: "compact-metrics-table__name--total",
-        cells: [{ content: formatBps(total), tone: getTone(total), className: "compact-metrics-table__value--total" }],
+        cells: [{ content: formatBps(total), tone: getInverseChangeTone(total), className: "compact-metrics-table__value--total" }],
       },
     ];
 

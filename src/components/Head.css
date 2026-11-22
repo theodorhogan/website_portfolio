@@ -43,18 +43,77 @@
 }
 
 .head-search {
-  @apply hidden min-w-[12rem] items-center gap-2 rounded-md border px-3 py-1.5 text-sm text-slate-400 xl:flex;
+  @apply relative hidden w-[16rem] items-center gap-2 rounded-md border px-3 py-1.5 text-sm text-slate-400 transition-colors xl:flex;
   border-color: var(--terminal-line);
   background: rgba(14, 19, 28, 0.92);
 }
 
+.head-search:focus-within {
+  border-color: rgba(69, 217, 117, 0.55);
+}
+
 .head-searchPrompt {
-  @apply font-mono text-base;
+  @apply text-[0.8rem] leading-none;
   color: var(--terminal-accent);
 }
 
 .head-searchInput {
-  @apply w-full bg-transparent text-[0.72rem] text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-0;
+  @apply w-full min-w-0 bg-transparent text-[0.72rem] text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-0;
+}
+
+.head-searchInput::-webkit-search-cancel-button {
+  display: none;
+}
+
+.head-searchKey {
+  @apply flex h-4 w-4 flex-none items-center justify-center rounded-sm border text-[0.58rem] leading-none text-slate-500;
+  border-color: var(--terminal-line-strong);
+  font-family: inherit;
+}
+
+.head-searchResults {
+  @apply absolute left-0 top-full z-40 m-0 mt-2 list-none overflow-hidden rounded-md border p-1;
+  width: min(30rem, 90vw);
+  border-color: var(--terminal-line-strong);
+  background: rgba(11, 16, 23, 0.98);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+}
+
+.head-searchResult {
+  @apply flex cursor-pointer flex-col gap-1 rounded px-2.5 py-2;
+}
+
+.head-searchResult.is-active {
+  background: rgba(69, 217, 117, 0.1);
+}
+
+.head-searchResultHead {
+  @apply flex items-baseline justify-between gap-3;
+}
+
+.head-searchResultTitle {
+  @apply min-w-0 truncate text-[0.72rem] font-semibold text-slate-100;
+}
+
+.head-searchResult.is-active .head-searchResultTitle {
+  color: var(--terminal-accent-soft);
+}
+
+.head-searchResultDate {
+  @apply flex-none text-[0.6rem] tracking-[0.12em] text-slate-500;
+}
+
+.head-searchResultSnippet {
+  @apply truncate text-[0.64rem] text-slate-400;
+}
+
+.head-searchResultSnippet mark {
+  @apply rounded-sm bg-transparent font-semibold;
+  color: var(--terminal-accent-soft);
+}
+
+.head-searchEmpty {
+  @apply px-2.5 py-2 text-[0.68rem] text-slate-500;
 }
 
 .head-activeWeek {
@@ -87,7 +146,7 @@
 }
 
 .head-clock {
-  @apply relative flex flex-none items-center gap-2 text-white;
+  @apply relative flex flex-none items-center gap-2 rounded text-white;
 }
 
 .head-date {
@@ -99,7 +158,7 @@
 }
 
 .head-indicator {
-  @apply relative mt-0.5 h-2.5 w-2.5 rounded-full;
+  @apply relative h-2.5 w-2.5 flex-none rounded-full;
 }
 
 .head-indicator::after {

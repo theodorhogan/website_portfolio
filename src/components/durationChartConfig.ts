@@ -13,18 +13,3 @@ export const DURATION_CHART_MARGIN_DUAL_AXIS = {
   bottom: 76,
   left: 52,
 } as const;
-
-export const MONTH_LABELS_SHORT = [
-  "JAN",
-  "FEB",
-  "MAR",
-  "APR",
-  "MAY",
-  "JUN",
-  "JUL",
-  "AUG",
-  "SEP",
-  "OCT",
-  "NOV",
-  "DEC",
-] as const;

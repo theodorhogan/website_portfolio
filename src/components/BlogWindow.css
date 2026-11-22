@@ -21,7 +21,7 @@
 }
 
 .blog-window__body {
-  @apply flex-1 overflow-y-auto px-2.5 py-2 text-sm leading-relaxed text-slate-200;
+  @apply flex-1 overflow-y-auto px-4 py-3 text-sm leading-relaxed text-slate-200;
   scrollbar-width: thin;
   scrollbar-color: rgba(51, 65, 85, 0.7) transparent;
 }
@@ -43,14 +43,17 @@
   background-color: rgba(71, 85, 105, 0.85);
 }
 
+/* Long-form text: a touch larger than table cells, capped at a readable line length. */
 .blog-window__content {
-  @apply whitespace-pre-wrap break-words text-[0.68rem] leading-[1.55rem] text-slate-100;
+  @apply whitespace-pre-wrap break-words text-[0.78rem] leading-[1.6rem] text-slate-200;
+  max-width: 100ch;
 }
 
 .blog-window__change {
-  @apply inline-flex items-center justify-center rounded-sm border px-1.5 py-[0.18rem] text-[0.58rem] font-semibold tracking-tight;
+  @apply inline-flex items-center justify-center rounded-sm border px-1.5 py-[0.18rem] align-[0.08em] text-[0.66rem] font-semibold tracking-tight;
   line-height: 1.1;
   min-width: 3ch;
+  font-variant-numeric: tabular-nums;
 }
 
 .blog-window__change--positive {
@@ -77,9 +80,4 @@
   @apply text-xs text-slate-400;
 }
 
-@media (max-width: 1024px) {
-  .blog-window {
-    height: auto;
-    min-height: 18rem;
-  }
-}
+

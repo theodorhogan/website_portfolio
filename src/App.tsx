@@ -1,9 +1,10 @@
 import { Suspense, lazy, useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Head } from "./components/Head";
 import { NavBar } from "./components/NavBar";
 import { NewsletterProvider } from "./state/NewsletterContext";
+import { isEditableTarget } from "./utils/dom";
 
 const MainPage = lazy(() => import("./pages/MainPage").then((module) => ({ default: module.MainPage })));
 const DurationPage = lazy(() =>
@@ -14,37 +15,21 @@ const ModelsPage = lazy(() =>
   import("./pages/ModelsPage").then((module) => ({ default: module.ModelsPage })),
 );
 
-function isEditableTarget(target: EventTarget | null) {
-  if (!(target instanceof HTMLElement)) return false;
-  const tag = target.tagName.toLowerCase();
-  return tag === "input" || tag === "textarea" || tag === "select" || target.isContentEditable;
-}
-
+/** `?grid=1` starts with the layout grid overlay on; `g` toggles it. */
 function getInitialGridEnabled() {
-  if (typeof window === "undefined") return false;
-
-  const gridParam = new URLSearchParams(window.location.search).get("grid");
-  if (gridParam === "1") return true;
-  if (gridParam === "0") return false;
-  return false;
+  return new URLSearchParams(window.location.search).get("grid") === "1";
 }
 
 function AppContent() {
-  const location = useLocation();
-  const isWideRoute =
-    location.pathname === "/" ||
-    location.pathname === "/beta" ||
-    location.pathname === "/duration" ||
-    location.pathname === "/models";
-
   return (
-    <div className={`app-content${isWideRoute ? " app-content--wide" : ""}`}>
+    <div className="app-content">
       <Suspense fallback={<div className="app-content__loading">Loading...</div>}>
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/duration" element={<DurationPage />} />
           <Route path="/beta" element={<BetaPage />} />
           <Route path="/models" element={<ModelsPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
     </div>

@@ -1,6 +1,6 @@
 :root {
   color-scheme: dark;
-  --terminal-font: "JetBrains Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
+  --terminal-font: "JetBrains Mono Variable", "JetBrains Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
   --terminal-bg: #090d12;
   --terminal-bg-elev: #0f151f;
   --terminal-surface: #101720;
@@ -58,36 +58,44 @@ body {
     linear-gradient(225deg, rgba(76, 200, 243, 0.035), transparent 26%);
 }
 
-.app-content {
-  @apply mx-auto flex h-full w-full flex-1 flex-col overflow-hidden;
-  max-width: 110rem;
-  padding: 0.75rem 0.875rem 0.875rem;
+/* Keyboard focus ring for every interactive control. */
+:focus-visible {
+  outline: 1px solid var(--terminal-accent);
+  outline-offset: 2px;
 }
 
-.app-content--wide {
-  @apply overflow-y-auto;
+::selection {
+  background: rgba(69, 217, 117, 0.28);
+  color: #f1f5f9;
+}
+
+.app-content {
+  @apply mx-auto flex h-full w-full flex-1 flex-col overflow-x-hidden overflow-y-auto;
+  max-width: 110rem;
+  padding: 0.75rem 0.875rem 0.875rem;
+  /* The page scrollbar only shows while the pointer is over the content. */
   scrollbar-color: transparent transparent;
 }
 
-.app-content--wide:hover {
+.app-content:hover {
   scrollbar-color: rgba(72, 91, 117, 0.55) transparent;
 }
 
-.app-content--wide::-webkit-scrollbar {
+.app-content::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
-.app-content--wide::-webkit-scrollbar-track {
+.app-content::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.app-content--wide::-webkit-scrollbar-thumb {
+.app-content::-webkit-scrollbar-thumb {
   background: transparent;
   border-radius: 999px;
 }
 
-.app-content--wide:hover::-webkit-scrollbar-thumb {
+.app-content:hover::-webkit-scrollbar-thumb {
   background: rgba(72, 91, 117, 0.55);
 }
 
@@ -128,5 +136,15 @@ body {
 @media (max-width: 640px) {
   .app-content {
     @apply px-2.5 pb-16;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

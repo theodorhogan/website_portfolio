@@ -19,7 +19,7 @@
 }
 
 .panel-shell__header {
-  @apply flex items-start justify-between border-b;
+  @apply flex items-center justify-between border-b;
   gap: var(--terminal-shell-header-gap);
   padding: var(--terminal-shell-header-pad-y) var(--terminal-shell-header-pad-x);
   border-color: var(--terminal-line);
@@ -32,7 +32,6 @@
 }
 
 .panel-shell--chart .panel-shell__header {
-  @apply items-center;
   min-height: 2rem;
   border-color: rgba(34, 115, 153, 0.38);
   background:

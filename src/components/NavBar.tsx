@@ -1,28 +1,18 @@
 import { NavLink } from "react-router-dom";
+import { ROUTE_ITEMS } from "../routes";
 import "./NavBar.css";
 
-const navItems = [
-  { label: "Main", path: "/" },
-  { label: "Duration", path: "/duration" },
-  { label: "Beta", path: "/beta" },
-  { label: "Models", path: "/models" },
-];
-
+/** Bottom tab bar, shown on phones where the header nav is hidden. */
 export function NavBar() {
   return (
-    <nav className="navbar">
+    <nav className="navbar" aria-label="Primary">
       <ul className="navbar-list">
-        {navItems.map((item) => (
+        {ROUTE_ITEMS.map((item) => (
           <li key={item.path} className="navbar-item">
             <NavLink
               to={item.path}
-              className={({ isActive }) =>
-                [
-                  "navbar-link",
-                  isActive ? "navbar-link--active" : "navbar-link--inactive",
-                ].join(" ")
-              }
               end={item.path === "/"}
+              className={({ isActive }) => `navbar-link ${isActive ? "navbar-link--active" : "navbar-link--inactive"}`}
             >
               {item.label}
             </NavLink>

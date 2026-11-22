@@ -23,20 +23,8 @@
   table-layout: auto;
 }
 
-.industry-overview__colIndustry {
-  width: 30%;
-}
-
-.industry-overview__colPrice {
-  width: 11%;
-}
-
-.industry-overview__colChange {
-  width: 12%;
-}
-
-.industry-overview__colLastWeek {
-  width: 13%;
+.industry-overview__table {
+  --terminal-table-pad-x: 0.45rem;
 }
 
 .industry-overview__table th,
@@ -59,20 +47,12 @@
   letter-spacing: 0.16em;
 }
 
-.industry-overview__headRegionUs {
-  border-right: none !important;
-}
-
-.industry-overview__headRegionDivider {
-  border-left: 1px solid rgba(76, 200, 243, 0.28) !important;
-}
-
 .industry-overview__headNumber {
-  @apply border-b text-center font-semibold uppercase text-slate-500;
+  @apply border-b text-right font-semibold uppercase text-slate-500;
   border-color: var(--terminal-table-line-strong);
   background: var(--terminal-table-head-bg);
   font-size: var(--terminal-table-head-size);
-  letter-spacing: 0.16em;
+  letter-spacing: 0.1em;
 }
 
 .industry-overview__industry {
@@ -109,12 +89,13 @@
   @apply text-slate-200;
 }
 
-.industry-overview__cellBeforeDivider {
-  border-right: none !important;
+/* Vertical rule between the US and EU column groups. */
+.industry-overview__cellDivider {
+  border-left: 1px solid rgba(76, 200, 243, 0.28);
 }
 
-.industry-overview__cellDivider {
-  border-left: 1px solid rgba(76, 200, 243, 0.28) !important;
+.industry-overview__table tbody tr:hover td {
+  background-color: rgba(148, 163, 184, 0.05);
 }
 
 .industry-overview__table tbody tr:last-child .industry-overview__industry,

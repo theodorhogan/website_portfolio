@@ -1,6 +1,7 @@
 export type NewsletterEntry = {
   id: string;
   fileName: string;
+  title: string;
   dateLabel: string;
   fullLabel: string;
   content: string;
@@ -23,6 +24,7 @@ function parseNewsletterPath(path: string, rawContent: string): NewsletterEntry 
   return {
     id: `${monthStr}-${dayStr}-${yearStr}`,
     fileName: file,
+    title,
     dateLabel,
     fullLabel: title ? `${dateLabel} - ${title}` : dateLabel,
     content: rawContent.trim(),

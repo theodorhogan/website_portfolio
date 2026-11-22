@@ -1,17 +1,10 @@
 import { useMemo } from "react";
-import {
-  DAY_MS,
-  getAlignedPoint,
-  getTreasurySeries,
-  type TreasuryInstrumentKey,
-} from "../data/marketData";
+import { getTreasurySeries, type TreasuryInstrumentKey } from "../data/ratesData";
 import { useNewsletterContext } from "../state/useNewsletterContext";
-import { getYearAnchorValue } from "../utils/timeSeries";
-import {
-  CompactMetricsTable,
-  type CompactMetricsRow,
-  type CompactMetricsTone,
-} from "./CompactMetricsTable";
+import { WEEK_MS } from "../utils/dates";
+import { getChangeTone } from "../utils/format";
+import { getAlignedPoint, getYearAnchorValue } from "../utils/timeSeries";
+import { CompactMetricsTable, type CompactMetricsRow } from "./CompactMetricsTable";
 import { PanelShell } from "./PanelShell";
 
 type SlopeRow = {
@@ -28,11 +21,9 @@ const SLOPE_DEFS: Array<{ ticker: string; left: TreasuryInstrumentKey; right: Tr
   { ticker: "3M-10Y", left: "US3M", right: "US10Y" },
 ];
 
-const TREASURY_SERIES = getTreasurySeries();
-
 function getSlopeValue(leftTicker: TreasuryInstrumentKey, rightTicker: TreasuryInstrumentKey, targetTime: number) {
-  const leftSeries = TREASURY_SERIES.get(leftTicker) ?? [];
-  const rightSeries = TREASURY_SERIES.get(rightTicker) ?? [];
+  const leftSeries = getTreasurySeries().get(leftTicker) ?? [];
+  const rightSeries = getTreasurySeries().get(rightTicker) ?? [];
   const left = getAlignedPoint(leftSeries, targetTime);
   const right = getAlignedPoint(rightSeries, targetTime);
   if (!left || !right) return null;
@@ -40,8 +31,8 @@ function getSlopeValue(leftTicker: TreasuryInstrumentKey, rightTicker: TreasuryI
 }
 
 function getSlopeYearAnchor(leftTicker: TreasuryInstrumentKey, rightTicker: TreasuryInstrumentKey, year: number) {
-  const leftSeries = TREASURY_SERIES.get(leftTicker) ?? [];
-  const rightSeries = TREASURY_SERIES.get(rightTicker) ?? [];
+  const leftSeries = getTreasurySeries().get(leftTicker) ?? [];
+  const rightSeries = getTreasurySeries().get(rightTicker) ?? [];
   const left = getYearAnchorValue(leftSeries, year);
   const right = getYearAnchorValue(rightSeries, year);
   if (left === null || right === null) return null;
@@ -54,11 +45,6 @@ function formatBps(value: number | null, bracket = false, showPositiveSign = fal
   const sign = showPositiveSign && bps > 0 ? "+" : "";
   const text = `${sign}${bps}bp`;
   return bracket ? `[${text}]` : text;
-}
-
-function getTone(value: number | null): CompactMetricsTone {
-  if (value === null || Math.abs(value) < 0.00005) return "neutral";
-  return value > 0 ? "positive" : "negative";
 }
 
 export function YieldSlopes() {
@@ -81,7 +67,7 @@ export function YieldSlopes() {
       }
 
       const thisWeek = getSlopeValue(def.left, def.right, activeTime);
-      const lastWeek = getSlopeValue(def.left, def.right, activeTime - 7 * DAY_MS);
+      const lastWeek = getSlopeValue(def.left, def.right, activeTime - WEEK_MS);
       const yearStart = getSlopeYearAnchor(def.left, def.right, activeYear);
       const delta = thisWeek !== null && lastWeek !== null ? thisWeek - lastWeek : null;
       const ytd = thisWeek !== null && yearStart !== null ? thisWeek - yearStart : null;
@@ -95,9 +81,9 @@ export function YieldSlopes() {
       cells: [
         { content: formatBps(row.thisWeek), tone: "neutral" },
         { content: formatBps(row.lastWeek, true), tone: "neutral" },
-        { content: formatBps(row.delta, false, true), tone: getTone(row.delta) },
+        { content: formatBps(row.delta, false, true), tone: getChangeTone(row.delta) },
         { content: formatBps(row.yearStart), tone: "neutral" },
-        { content: formatBps(row.ytd, false, true), tone: getTone(row.ytd) },
+        { content: formatBps(row.ytd, false, true), tone: getChangeTone(row.ytd) },
       ],
     }));
 

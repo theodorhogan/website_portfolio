@@ -21,24 +21,9 @@
   table-layout: auto;
 }
 
-.major-indexes__colTicker {
-  width: 16%;
-}
-
-.major-indexes__colPrice {
-  width: 22%;
-}
-
-.major-indexes__colChange {
-  width: 18%;
-}
-
-.major-indexes__colLastWeek {
-  width: 22%;
-}
-
-.major-indexes__colHigh {
-  width: 18%;
+/* Five numeric columns in a narrow side panel: tighter gutters than the shared table default. */
+.major-indexes__table {
+  --terminal-table-pad-x: 0.45rem;
 }
 
 .major-indexes__table th {
@@ -48,7 +33,7 @@
   white-space: nowrap;
   background: var(--terminal-table-head-bg);
   font-size: var(--terminal-table-head-size);
-  letter-spacing: 0.16em;
+  letter-spacing: 0.1em;
 }
 
 .major-indexes__table thead th {
@@ -104,6 +89,14 @@
 
 .major-indexes__change--neutral {
   @apply text-slate-200;
+}
+
+.major-indexes__table tbody tr:hover td {
+  background: rgba(148, 163, 184, 0.05);
+}
+
+.major-indexes__empty {
+  @apply px-3 py-6 text-center text-[0.68rem] text-slate-500;
 }
 
 @media (max-width: 1024px) {

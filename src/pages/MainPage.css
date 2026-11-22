@@ -1,49 +1,47 @@
+/* Two panes that fill the viewport below the header; each scrolls on its own. */
 .main-page {
   @apply flex w-full justify-center py-2;
+  height: 100%;
+  min-height: 30rem;
 }
 
 .main-page__layout {
-  @apply grid w-full items-start gap-3;
-  grid-template-columns: minmax(0, 1.62fr) minmax(22rem, 0.92fr);
+  @apply grid h-full w-full gap-3;
+  grid-template-columns: minmax(0, 1.62fr) minmax(24rem, 0.92fr);
+  grid-template-rows: minmax(0, 1fr);
 }
 
 .main-page__workspace,
-.main-page__context {
-  min-width: 0;
-}
-
-.main-page__blogSlot {
-  min-height: clamp(33rem, 62vh, 48rem);
-}
-
+.main-page__context,
+.main-page__blogSlot,
 .main-page__economicSlot {
-  min-height: clamp(33rem, 62vh, 48rem);
+  @apply flex min-h-0 min-w-0;
 }
 
-.main-page__blogSlot > *,
-.main-page__economicSlot > * {
-  @apply h-full w-full;
+.main-page__blogSlot,
+.main-page__economicSlot {
+  @apply flex-1;
 }
 
 @media (max-width: 1024px) {
   .main-page {
     @apply py-0;
+    height: auto;
+    min-height: 0;
   }
 
   .main-page__layout {
+    @apply h-auto;
     grid-template-columns: 1fr;
+    grid-template-rows: none;
   }
 
-  .main-page__workspace {
-    @apply order-1;
-  }
-
-  .main-page__context {
-    @apply order-2;
-  }
-
-  .main-page__blogSlot,
-  .main-page__economicSlot {
+  .main-page__blogSlot {
     min-height: 20rem;
+    max-height: 70vh;
+  }
+
+  .main-page__economicSlot {
+    height: 28rem;
   }
 }

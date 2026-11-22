@@ -1,9 +1,9 @@
 .economic-data__headerDate {
-  @apply text-[0.54rem] uppercase tracking-[0.14em] text-slate-500;
+  @apply whitespace-nowrap text-[0.58rem] uppercase tracking-[0.14em] text-slate-500;
 }
 
 .economic-data__body {
-  @apply grid min-h-0 flex-1 grid-cols-[5.9rem_1fr] overflow-hidden;
+  @apply grid min-h-0 flex-1 grid-cols-[6.75rem_1fr] overflow-hidden;
 }
 
 .economic-data__rail {
@@ -14,7 +14,7 @@
 }
 
 .economic-data__railButton {
-  @apply flex flex-col items-start gap-0.5 rounded border px-1.5 py-1 text-[0.54rem] uppercase tracking-[0.12em] text-slate-300 transition-colors;
+  @apply flex flex-col items-start gap-[0.2rem] rounded border px-2 py-1.5 text-left uppercase text-slate-300 transition-colors;
   border-color: rgba(54, 69, 92, 0.88);
   background: rgba(12, 18, 27, 0.92);
 }
@@ -24,47 +24,40 @@
 }
 
 .economic-data__railButton--upcoming {
-  @apply border-sky-500/70;
+  @apply border-sky-500/50;
 }
 
-.economic-data__railButton.is-selected-upcoming {
+.economic-data__railButton--upcoming.is-selected {
   @apply border-sky-400 bg-sky-500/20 text-sky-100;
 }
 
-.economic-data__railButton.is-selected-past {
+.economic-data__railButton--past.is-selected {
   @apply border-emerald-400 bg-emerald-500/15 text-emerald-100;
 }
 
-.economic-data__railWeekBadge {
-  @apply inline-flex items-center gap-1 rounded-sm border px-1 py-[0.1rem] text-[0.52rem] font-bold tracking-[0.12em];
+.economic-data__railWeek {
+  @apply flex w-full items-center justify-between gap-1 text-[0.62rem] font-bold leading-none tracking-[0.1em];
 }
 
-.economic-data__railWeekBadge--upcoming {
-  @apply border-sky-500/60 bg-sky-500/10 text-sky-300;
+.economic-data__railButton--upcoming .economic-data__railWeek {
+  @apply text-sky-300;
 }
 
-.economic-data__railWeekBadge--upcomingSelected {
-  @apply border-sky-300 bg-sky-500/25 text-sky-100;
+.economic-data__railButton--upcoming.is-selected .economic-data__railWeek {
+  @apply text-sky-100;
 }
 
-.economic-data__railWeekBadge--past {
-  @apply border-slate-600 bg-slate-800/40 text-slate-300;
+/* Hollow dot: this week has no calendar rows yet. */
+.economic-data__railNoData {
+  @apply h-1.5 w-1.5 flex-none rounded-full border border-slate-600;
 }
 
-.economic-data__railWeekBadge--pastSelected {
-  @apply border-emerald-300 bg-emerald-500/25 text-emerald-100;
-}
-
-.economic-data__railWeekBadgeDate {
-  @apply text-[0.46rem] font-semibold tracking-[0.1em] text-slate-200;
-}
-
-.economic-data__railYear {
-  @apply text-[0.46rem] font-medium leading-tight text-slate-500;
+.economic-data__railDate {
+  @apply text-[0.58rem] font-semibold leading-none tracking-[0.08em] text-slate-300;
 }
 
 .economic-data__railRange {
-  @apply text-[0.46rem] tracking-[0.08em] text-slate-600;
+  @apply whitespace-nowrap text-[0.5rem] leading-none tracking-normal text-slate-500;
 }
 
 .economic-data__detail {
@@ -109,16 +102,16 @@
 }
 
 .economic-data__head--event {
-  width: 66%;
+  width: 58%;
 }
 
 .economic-data__head--value {
   @apply text-center;
-  width: 11%;
+  width: 13%;
 }
 
 .economic-data__head--change {
-  width: 12%;
+  width: 16%;
 }
 
 .economic-data__dayLabel {
@@ -182,7 +175,15 @@
 }
 
 .economic-data__empty {
-  @apply px-2 py-1 text-xs leading-5 text-slate-400;
+  @apply flex h-full flex-col items-center justify-center gap-1.5 px-6 py-8 text-center;
+}
+
+.economic-data__emptyTitle {
+  @apply text-[0.72rem] font-semibold uppercase tracking-[0.1em] text-slate-400;
+}
+
+.economic-data__emptyHint {
+  @apply text-[0.64rem] text-slate-600;
 }
 
 @media (max-width: 900px) {

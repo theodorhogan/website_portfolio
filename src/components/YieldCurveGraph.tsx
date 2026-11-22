@@ -1,20 +1,11 @@
 import { useMemo } from "react";
-import {
-  DAY_MS,
-  TREASURY_INSTRUMENT_ORDER,
-  getTreasurySeries,
-  resolveAlignedPointIndex,
-  type TreasuryInstrumentKey,
-} from "../data/marketData";
+import { TREASURY_INSTRUMENT_ORDER, getTreasurySeries, type TreasuryInstrumentKey } from "../data/ratesData";
 import { useNewsletterContext } from "../state/useNewsletterContext";
+import { WEEK_MS, formatDayMonthYear } from "../utils/dates";
+import { getAlignedPoint } from "../utils/timeSeries";
 import { CurvePlot } from "./CurvePlot";
 import { buildLinePath, buildYTicks, getPaddedDomain } from "./curveChartUtils";
-import {
-  DURATION_CHART_HEIGHT,
-  DURATION_CHART_MARGIN,
-  DURATION_CHART_WIDTH,
-  MONTH_LABELS_SHORT,
-} from "./durationChartConfig";
+import { DURATION_CHART_HEIGHT, DURATION_CHART_MARGIN, DURATION_CHART_WIDTH } from "./durationChartConfig";
 import { PanelShell } from "./PanelShell";
 import "./YieldCurveGraph.css";
 
@@ -66,27 +57,22 @@ const INSTRUMENT_LABELS: Record<TreasuryInstrumentKey, string> = {
   US30Y: "30Y",
 };
 
-const RATE_SERIES = getTreasurySeries();
 const IDX_3M = TREASURY_INSTRUMENT_ORDER.indexOf("US3M");
 const IDX_2Y = TREASURY_INSTRUMENT_ORDER.indexOf("US2Y");
 const IDX_10Y = TREASURY_INSTRUMENT_ORDER.indexOf("US10Y");
 
-function formatDate(time: number | null) {
-  if (time === null) return "--";
-  const date = new Date(time);
-  const day = String(date.getUTCDate()).padStart(2, "0");
-  const month = MONTH_LABELS_SHORT[date.getUTCMonth()];
-  const year = String(date.getUTCFullYear()).slice(-2);
-  return `${day}-${month}-${year}`;
-}
+/** Curve values for each tenor as of `targetTime`, plus the date they were actually printed. */
+function resolveCurve(targetTime: number) {
+  const seriesByTicker = getTreasurySeries();
+  let printTime: number | null = null;
 
-function resolveLabelTime(targetTime: number) {
-  for (const ticker of TREASURY_INSTRUMENT_ORDER) {
-    const series = RATE_SERIES.get(ticker) ?? [];
-    const index = resolveAlignedPointIndex(series, targetTime);
-    if (index >= 0) return series[index].time;
-  }
-  return null;
+  const values = TREASURY_INSTRUMENT_ORDER.map((ticker) => {
+    const point = getAlignedPoint(seriesByTicker.get(ticker) ?? [], targetTime);
+    if (point && printTime === null) printTime = point.time;
+    return point ? point.value : null;
+  });
+
+  return { values, label: formatDayMonthYear(printTime ?? targetTime) };
 }
 
 function getSlopeTone(value: number) {
@@ -112,28 +98,17 @@ export function YieldCurveGraph() {
       };
     }
 
-    const previousTime = activeTime - 7 * DAY_MS;
-
-    const activeValues = TREASURY_INSTRUMENT_ORDER.map((ticker) => {
-      const series = RATE_SERIES.get(ticker) ?? [];
-      const index = resolveAlignedPointIndex(series, activeTime);
-      return index >= 0 ? series[index].value : null;
-    });
-    const previousValues = TREASURY_INSTRUMENT_ORDER.map((ticker) => {
-      const series = RATE_SERIES.get(ticker) ?? [];
-      const index = resolveAlignedPointIndex(series, previousTime);
-      return index >= 0 ? series[index].value : null;
-    });
+    const active = resolveCurve(activeTime);
+    const previous = resolveCurve(activeTime - WEEK_MS);
+    const activeValues = active.values;
+    const previousValues = previous.values;
     const valuePool = [...activeValues, ...previousValues].filter((value): value is number => value !== null);
-
-    const activeLabelTime = resolveLabelTime(activeTime);
-    const previousLabelTime = resolveLabelTime(previousTime);
 
     if (valuePool.length === 0) {
       return {
         hasData: false,
-        activeLabel: formatDate(activeLabelTime ?? activeTime),
-        previousLabel: formatDate(previousLabelTime ?? previousTime),
+        activeLabel: active.label,
+        previousLabel: previous.label,
       };
     }
 
@@ -218,8 +193,8 @@ export function YieldCurveGraph() {
 
     return {
       hasData: true,
-      activeLabel: formatDate(activeLabelTime ?? activeTime),
-      previousLabel: formatDate(previousLabelTime ?? previousTime),
+      activeLabel: active.label,
+      previousLabel: previous.label,
       activePath,
       previousPath,
       activePoints,

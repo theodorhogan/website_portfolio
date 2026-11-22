@@ -26,17 +26,18 @@
 }
 
 .index-chart__body {
-  @apply flex flex-1;
+  @apply relative flex-1;
   background: rgba(11, 17, 25, 0.55);
 }
 
+/* Pinned to the body so the chart's own size can never feed back into the layout. */
 .index-chart__canvas {
-  @apply h-full w-full;
+  @apply absolute inset-0;
 }
 
-.index-chart__canvas .tv-lightweight-charts-logo,
-.index-chart__canvas .tv-lightweight-charts-logo__link {
-  display: none !important;
+.index-chart__empty {
+  @apply absolute inset-0 m-0 flex items-center justify-center text-[0.68rem] text-slate-500;
+  background: rgba(8, 18, 28, 0.9);
 }
 
 @media (max-width: 1024px) {
