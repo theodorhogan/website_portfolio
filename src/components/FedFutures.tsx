@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { getFedFuturesSnapshots } from "../data/ratesData";
 import { useNewsletterContext } from "../state/useNewsletterContext";
-import { formatDayMonthYear } from "../utils/dates";
+import { WEEK_MS, formatDayMonthYear } from "../utils/dates";
 import { getAlignedPoint } from "../utils/timeSeries";
 import { CurvePlot } from "./CurvePlot";
 import { buildLinePath, buildYTicks } from "./curveChartUtils";
@@ -21,7 +21,10 @@ type FedFuturesChartData =
   | {
       hasData: true;
       activeLabel: string;
+      /** Date of the week-ago snapshot, or null when there is none to compare against. */
+      previousLabel: string | null;
       path: string;
+      previousPath: string;
       points: Array<{ x: number; y: number; ticker: string; impliedRate: number }>;
       connectors: Array<{ key: string; x1: number; x2: number; y: number; label: string }>;
       yTicks: Array<{ value: number; y: number }>;
@@ -69,6 +72,18 @@ export function FedFutures() {
       .map((contract) => (contract ? contract.price : null))
       .filter((value): value is number => value !== null);
 
+    // Week-ago prices are matched by contract month, not by position: when the front contract
+    // expires every sequence number shifts, so position 1 would compare two different months.
+    const weekAgo = getAlignedPoint(getFedFuturesSnapshots(), activeTime - WEEK_MS);
+    const previousSnapshot = weekAgo && weekAgo.time < snapshot.time ? weekAgo : null;
+    const previousPriceByTicker = new Map(
+      (previousSnapshot?.contracts ?? []).map((contract) => [contract.ticker.toUpperCase(), contract.price]),
+    );
+    const previousValues = orderedContracts.map((contract) =>
+      contract ? (previousPriceByTicker.get(contract.ticker.toUpperCase()) ?? null) : null,
+    );
+    const previousPriceValues = previousValues.filter((value): value is number => value !== null);
+
     if (priceValues.length === 0) {
       return {
         hasData: false,
@@ -77,8 +92,8 @@ export function FedFutures() {
     }
 
     const domain = {
-      min: Math.min(...priceValues),
-      max: Math.max(...priceValues),
+      min: Math.min(...priceValues, ...previousPriceValues),
+      max: Math.max(...priceValues, ...previousPriceValues),
     };
     const plotLeft = DURATION_CHART_MARGIN_DUAL_AXIS.left;
     const plotRight = DURATION_CHART_WIDTH - DURATION_CHART_MARGIN_DUAL_AXIS.right;
@@ -94,6 +109,7 @@ export function FedFutures() {
 
     const valuesByIndex = orderedContracts.map((contract) => (contract ? contract.price : null));
     const path = buildLinePath(valuesByIndex, xForIndex, yForValue);
+    const previousPath = buildLinePath(previousValues, xForIndex, yForValue);
     const yTicks = buildYTicks(domain.min, domain.max, plotTop, plotHeight, 5);
 
     const points = orderedContracts
@@ -138,7 +154,10 @@ export function FedFutures() {
     return {
       hasData: true,
       activeLabel: formatDayMonthYear(snapshot.time),
+      previousLabel:
+        previousSnapshot && previousPriceValues.length > 0 ? formatDayMonthYear(previousSnapshot.time) : null,
       path,
+      previousPath,
       points,
       connectors,
       yTicks,
@@ -155,7 +174,20 @@ export function FedFutures() {
       variant="chart"
       bodyMode="stretch"
       badge="ZQ Curve"
-      actions={<span className="fed-futures__date">Active ({chartData.activeLabel})</span>}
+      actions={
+        <div className="fed-futures__legend">
+          <span className="fed-futures__legendItem">
+            <span className="fed-futures__legendDot fed-futures__legendDot--active" />
+            Active ({chartData.activeLabel})
+          </span>
+          {chartData.hasData && chartData.previousLabel ? (
+            <span className="fed-futures__legendItem">
+              <span className="fed-futures__legendDot fed-futures__legendDot--previous" />
+              Last Week ({chartData.previousLabel})
+            </span>
+          ) : null}
+        </div>
+      }
       bodyClassName="fed-futures__body"
     >
         {chartData.hasData ? (
@@ -175,10 +207,16 @@ export function FedFutures() {
             }))}
             xTicks={chartData.xTicks}
             series={[
+              // Drawn first so the active curve and its points sit on top.
+              {
+                key: "zq-previous",
+                path: chartData.previousPath,
+                pathClassName: "fed-futures__path fed-futures__path--previous",
+              },
               {
                 key: "zq-line",
                 path: chartData.path,
-                pathClassName: "fed-futures__path",
+                pathClassName: "fed-futures__path fed-futures__path--active",
                 points: chartData.points.map((point) => ({
                   x: point.x,
                   y: point.y,

@@ -1,5 +1,23 @@
-.fed-futures__date {
-  @apply text-[0.54rem] uppercase tracking-[0.14em] text-slate-400;
+.fed-futures__legend {
+  @apply flex items-center gap-3;
+}
+
+.fed-futures__legendItem {
+  @apply inline-flex items-center gap-1.5 text-[0.54rem] uppercase tracking-[0.14em] text-slate-400;
+}
+
+.fed-futures__legendDot {
+  @apply inline-block h-2 w-2 rounded-full;
+}
+
+.fed-futures__legendDot--active {
+  background-color: #22d3ee;
+  box-shadow: 0 0 6px rgba(34, 211, 238, 0.6);
+}
+
+.fed-futures__legendDot--previous {
+  background-color: #facc15;
+  box-shadow: 0 0 6px rgba(250, 204, 21, 0.45);
 }
 
 .fed-futures__body {
@@ -23,10 +41,19 @@
 
 .fed-futures__path {
   fill: none;
-  stroke: #22d3ee;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+.fed-futures__path--active {
+  stroke: #22d3ee;
+}
+
+/* Week-ago curve: line only, no points or callouts. */
+.fed-futures__path--previous {
+  stroke: #facc15;
+  stroke-dasharray: 5 5;
 }
 
 .fed-futures__point {
@@ -64,6 +91,12 @@
   font-family: var(--terminal-font);
   font-size: 6px;
   letter-spacing: 0.06em;
+}
+
+@media (max-width: 1024px) {
+  .fed-futures__legend {
+    @apply flex-wrap;
+  }
 }
 
 .fed-futures__empty {
