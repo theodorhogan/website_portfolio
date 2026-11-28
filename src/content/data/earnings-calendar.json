@@ -1,0 +1,41 @@
+{
+  "weeks": [
+    {
+      "week": "2026-11-20",
+      "rows": [
+        {"date": "2026-11-23", "ticker": "CRWD", "name": "CrowdStrike", "when": null, "epsEstimate": 0.0, "estimates": 13, "epsYearAgo": null, "marketCapBn": 213.971665, "source": "nasdaq"},
+        {"date": "2026-11-23", "ticker": "HPE", "name": "Hewlett Packard Enterprise Company", "when": "after-close", "epsEstimate": 1.28, "estimates": 7, "epsYearAgo": 0.62, "marketCapBn": 63.74486, "source": "lseg"},
+        {"date": "2026-11-23", "ticker": "A", "name": "Agilent Technologies", "when": "after-close", "epsEstimate": 1.73, "estimates": 7, "epsYearAgo": 1.59, "marketCapBn": 49.630757, "source": "lseg"},
+        {"date": "2026-11-23", "ticker": "J", "name": "Jacobs Solutions", "when": "after-close", "epsEstimate": 2.12, "estimates": 3, "epsYearAgo": 1.75, "marketCapBn": 18.4370934, "source": "lseg"},
+        {"date": "2026-11-24", "ticker": "ADI", "name": "Analog Devices", "when": "pre-market", "epsEstimate": 3.88, "estimates": 10, "epsYearAgo": 2.26, "marketCapBn": 183.529177, "source": "lseg"},
+        {"date": "2026-11-24", "ticker": "MDT", "name": "Medtronic", "when": "pre-market", "epsEstimate": 1.33, "estimates": 8, "epsYearAgo": 1.36, "marketCapBn": 128.834765, "source": "lseg"},
+        {"date": "2026-11-24", "ticker": "DLTR", "name": "Dollar Tree", "when": "pre-market", "epsEstimate": 0.91, "estimates": 10, "epsYearAgo": 1.21, "marketCapBn": 26.0993741, "source": "lseg"},
+        {"date": "2026-11-24", "ticker": "BBY", "name": "Best Buy Co.", "when": "pre-market", "epsEstimate": 1.49, "estimates": 10, "epsYearAgo": 1.4, "marketCapBn": 20.3435868, "source": "lseg"},
+        {"date": "2026-11-24", "ticker": "SJM", "name": "The J.M. Smucker Company", "when": "pre-market", "epsEstimate": 2.56, "estimates": 5, "epsYearAgo": 2.1, "marketCapBn": 14.1839821, "source": "lseg"},
+        {"date": "2026-11-24", "ticker": "DELL", "name": "Dell Technologies", "when": "after-close", "epsEstimate": 6.59, "estimates": 8, "epsYearAgo": 2.59, "marketCapBn": 212.940046, "source": "lseg"},
+        {"date": "2026-11-24", "ticker": "ADSK", "name": "Autodesk", "when": "after-close", "epsEstimate": 3.07, "estimates": 10, "epsYearAgo": 2.67, "marketCapBn": 53.36397, "source": "lseg"},
+        {"date": "2026-11-24", "ticker": "WDAY", "name": "Workday", "when": "after-close", "epsEstimate": 2.74, "estimates": 10, "epsYearAgo": 2.32, "marketCapBn": 42.435281, "source": "lseg"},
+        {"date": "2026-11-24", "ticker": "HPQ", "name": "HP", "when": "after-close", "epsEstimate": 0.75, "estimates": 5, "epsYearAgo": 0.93, "marketCapBn": 26.0617585, "source": "lseg"},
+        {"date": "2026-11-25", "ticker": "DE", "name": "Deere & Company", "when": "pre-market", "epsEstimate": 4.05, "estimates": 1, "epsYearAgo": 3.93, "marketCapBn": 170.680975, "source": "lseg"}
+      ]
+    },
+    {
+      "week": "2026-11-27",
+      "rows": [
+        {"date": "2026-11-30", "ticker": "MRVL", "name": "Marvell Technology", "when": null, "epsEstimate": 1.09, "estimates": 12, "epsYearAgo": 0.76, "marketCapBn": 114.812518, "source": "lseg"},
+        {"date": "2026-11-30", "ticker": "OKTA", "name": "Okta", "when": "after-close", "epsEstimate": 0.93, "estimates": 10, "epsYearAgo": 0.82, "marketCapBn": 35.273617, "source": "lseg"},
+        {"date": "2026-12-01", "ticker": "CPRT", "name": "Copart", "when": "pre-market", "epsEstimate": 0.4, "estimates": 4, "epsYearAgo": 0.41, "marketCapBn": 30.723326, "source": "lseg"},
+        {"date": "2026-12-01", "ticker": "NTAP", "name": "NetApp", "when": "after-close", "epsEstimate": 2.61, "estimates": 8, "epsYearAgo": 2.05, "marketCapBn": 32.4091351, "source": "lseg"},
+        {"date": "2026-12-02", "ticker": "KR", "name": "Kroger Company (The)", "when": "pre-market", "epsEstimate": 1.16, "estimates": 9, "epsYearAgo": 1.05, "marketCapBn": 41.240809, "source": "lseg"},
+        {"date": "2026-12-02", "ticker": "DG", "name": "Dollar General", "when": "pre-market", "epsEstimate": 1.41, "estimates": 13, "epsYearAgo": 1.28, "marketCapBn": 30.7253002, "source": "lseg"},
+        {"date": "2026-12-02", "ticker": "BF.B", "name": "Brown Forman", "when": "pre-market", "epsEstimate": 0.46, "estimates": 4, "epsYearAgo": 0.47, "marketCapBn": 13.9494738, "source": "lseg"},
+        {"date": "2026-12-02", "ticker": "HRL", "name": "Hormel Foods", "when": "pre-market", "epsEstimate": 0.37, "estimates": 5, "epsYearAgo": 0.32, "marketCapBn": 12.7076004, "source": "lseg"},
+        {"date": "2026-12-02", "ticker": "CRM", "name": "Salesforce", "when": "after-close", "epsEstimate": 3.44, "estimates": 13, "epsYearAgo": 3.25, "marketCapBn": 162.303836, "source": "lseg"},
+        {"date": "2026-12-02", "ticker": "SNOW", "name": "Snowflake", "when": "after-close", "epsEstimate": -0.32, "estimates": 11, "epsYearAgo": -0.84, "marketCapBn": 94.451614, "source": "nasdaq"},
+        {"date": "2026-12-02", "ticker": "COO", "name": "The Cooper Companies", "when": "after-close", "epsEstimate": 1.07, "estimates": 7, "epsYearAgo": 1.15, "marketCapBn": 11.8447729, "source": "lseg"},
+        {"date": "2026-12-03", "ticker": "VEEV", "name": "Veeva Systems", "when": "after-close", "epsEstimate": 2.34, "estimates": 7, "epsYearAgo": 2.04, "marketCapBn": 44.023017, "source": "lseg"},
+        {"date": "2026-12-03", "ticker": "ULTA", "name": "Ulta Beauty", "when": "after-close", "epsEstimate": 5.66, "estimates": 12, "epsYearAgo": 5.14, "marketCapBn": 27.4776617, "source": "lseg"}
+      ]
+    }
+  ]
+}

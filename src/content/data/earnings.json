@@ -1,0 +1,1192 @@
+{
+  "weeks": [
+    {
+      "week": "2026-01-02",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 300.810087719,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": null
+    },
+    {
+      "week": "2026-01-09",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 315.216289593,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": null
+    },
+    {
+      "week": "2026-01-16",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 312.613063063,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": null
+    },
+    {
+      "week": "2026-01-23",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 311.513963964,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": null
+    },
+    {
+      "week": "2026-01-30",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 311.167264574,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": null
+    },
+    {
+      "week": "2026-02-06",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 313.678733032,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 15.1,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-02-13",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 313.585779817,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 15.4,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-02-20",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 315.502739726,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 15.4,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-02-27",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 314.822883295,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 15.8,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-03-06",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 315.987810595,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 15.2,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-03-13",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 316.874820831,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.8,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-03-20",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 320.043285785,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.7,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-03-27",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 322.147192716,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.3,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-04-03",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 338.267728674,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.5,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-04-10",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 339.148756219,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.8,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-04-17",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 341.123025371,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.8,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-04-24",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 342.335403727,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": null
+    },
+    {
+      "week": "2026-05-01",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 343.636882129,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.4,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-05-08",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 347.041744841,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.2,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-05-15",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 346.83988764,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.8,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-05-22",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 348.413519814,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.6,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-05-29",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 350.766311893,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.7,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-06-05",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 351.690402477,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.5,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-06-12",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 352.035054477,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.3,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-06-19",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 352.636577339,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.7,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-06-26",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 353.219020173,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": null
+    },
+    {
+      "week": "2026-07-03",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 371.008428359,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.7,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-07-10",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 371.160705537,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.6,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-07-17",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 371.583956153,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.7,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-07-24",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 372.836016097,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.7,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-07-31",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 374.111888112,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.7,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-08-07",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 375.672639225,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.9,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-08-14",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 377.217054264,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.8,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-08-21",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 377.675688976,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.6,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-08-28",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 378.398429833,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.7,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-09-04",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 380.977295163,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.5,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-09-11",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 381.133897461,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": null
+    },
+    {
+      "week": "2026-09-18",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 381.571072319,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": null
+    },
+    {
+      "week": "2026-09-25",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 380.885882932,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": null
+    },
+    {
+      "week": "2026-10-02",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 381.557312253,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.0,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-10-09",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 384.048180924,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 13.7,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-10-16",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 404.405491024,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 13.8,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-10-23",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 405.514893617,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 13.9,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-10-30",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 405.568218299,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 13.8,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-11-06",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 405.767876788,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.1,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-11-13",
+      "season": null,
+      "reported": null,
+      "total": null,
+      "beatPct": null,
+      "beatPctLongRun": null,
+      "surprisePct": null,
+      "epsGrowthPct": null,
+      "epsGrowthExEnergyPct": null,
+      "fwd4qEps": 406.322944653,
+      "reportingNextWeek": null,
+      "comment": null,
+      "source": {
+        "title": "backfill",
+        "url": null,
+        "published": null
+      },
+      "stoxx": {
+        "reported": null,
+        "beatPct": null,
+        "epsGrowthPct": null,
+        "forwardPe": 14.1,
+        "source": {"title": "backfill", "url": null, "published": null}
+      }
+    },
+    {
+      "week": "2026-11-20",
+      "season": "2026Q3",
+      "reported": 462,
+      "total": 500,
+      "beatPct": 83.5,
+      "beatPctLongRun": 67.7,
+      "surprisePct": 5.8,
+      "epsGrowthPct": 34.0,
+      "epsGrowthExEnergyPct": 28.6,
+      "fwd4qEps": 406.9,
+      "reportingNextWeek": 13,
+      "comment": "According to LSEG's This Week in Earnings, 83.5% of the 462 S&P 500 companies that have reported for Q3 beat analyst estimates, well above the long-term average of 67.7%, and earnings came in 5.8% above expectations in aggregate. Energy and information technology lead with beat rates near 95%, and health care has the largest aggregate surprise at 12.4%. Materials is the weak spot: only half of its companies beat, and nearly as many missed.",
+      "source": {
+        "title": "This Week in Earnings",
+        "url": "https://lipperalpha.refinitiv.com/2026/11/this-week-in-earnings-26q3-november-19-2026/",
+        "published": "2026-11-19"
+      },
+      "stoxx": {
+        "reported": 286,
+        "beatPct": 56.6,
+        "epsGrowthPct": 24.6,
+        "forwardPe": 13.7,
+        "source": {"title": "STOXX 600 Earnings Outlook", "url": "https://lipperalpha.refinitiv.com/2026/11/stoxx-600-earnings-outlook-26q3-november-19-2026/", "published": "2026-11-19"}
+      }
+    },
+    {
+      "week": "2026-11-27",
+      "season": "2026Q3",
+      "reported": 481,
+      "total": 500,
+      "beatPct": 83.8,
+      "beatPctLongRun": 67.7,
+      "surprisePct": 5.8,
+      "epsGrowthPct": 34.3,
+      "epsGrowthExEnergyPct": 28.9,
+      "fwd4qEps": 408.2,
+      "reportingNextWeek": 12,
+      "comment": "With 481 of the S&P 500 companies reported for Q3, LSEG's This Week in Earnings puts the beat rate at 83.8%, well above the long-term average of 67.7%, and companies are beating estimates by 5.8% in aggregate. Information technology (95.7%) and energy (95.2%) have the highest beat rates, and health care the largest surprise at 12.1%. Materials remains the laggard, with half of its companies beating and 45.8% missing.",
+      "source": {
+        "title": "This Week in Earnings",
+        "url": "https://lipperalpha.refinitiv.com/2026/11/this-week-in-earnings-26q3-november-25-2026/",
+        "published": "2026-11-25"
+      },
+      "stoxx": {
+        "reported": 294,
+        "beatPct": 56.8,
+        "epsGrowthPct": 25.4,
+        "forwardPe": 13.2,
+        "source": {"title": "STOXX 600 Earnings Outlook", "url": "https://lipperalpha.refinitiv.com/2026/11/stoxx-600-earnings-outlook-26q3-november-26-2026/", "published": "2026-11-26"}
+      }
+    }
+  ]
+}

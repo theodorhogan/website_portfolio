@@ -1,0 +1,79 @@
+{
+  "generated": "2026-11-28T13:21:59Z",
+  "datasets": [
+    {
+      "file": "instruments.csv",
+      "asOf": "2026-11-27",
+      "source": "watchlist.toml and fixed lists",
+      "held": []
+    },
+    {
+      "file": "closes-daily.csv",
+      "asOf": "2026-11-27",
+      "source": "yahoo; MSCI, R2000: backfill, factset",
+      "held": []
+    },
+    {
+      "file": "index-ohlc.csv",
+      "asOf": "2026-11-27",
+      "source": "yahoo",
+      "held": []
+    },
+    {
+      "file": "treasury-nominal.csv",
+      "asOf": "2026-11-27",
+      "source": "treasury.gov",
+      "held": []
+    },
+    {
+      "file": "treasury-real.csv",
+      "asOf": "2026-11-27",
+      "source": "treasury.gov",
+      "held": []
+    },
+    {
+      "file": "series.csv",
+      "asOf": "2026-11-27",
+      "source": ", backfill, factset, fred",
+      "held": []
+    },
+    {
+      "file": "zq.csv",
+      "asOf": "2026-11-27",
+      "source": "backfill, factset, yahoo",
+      "held": []
+    },
+    {
+      "file": "fedwatch.json",
+      "asOf": "2026-11-27",
+      "source": "zq.csv, EFFR, Fed calendar",
+      "held": []
+    },
+    {
+      "file": "index-pe.csv",
+      "asOf": "2026-11-27",
+      "source": "backfill, factset, lseg, na",
+      "held": [
+        "NIKKEI"
+      ]
+    },
+    {
+      "file": "econ-us.json",
+      "asOf": "2026-11-25",
+      "source": "fred, factset",
+      "held": []
+    },
+    {
+      "file": "earnings.json",
+      "asOf": "2026-11-27",
+      "source": "backfill, lseg",
+      "held": []
+    },
+    {
+      "file": "earnings-calendar.json",
+      "asOf": "2026-11-27",
+      "source": "lseg, nasdaq",
+      "held": []
+    }
+  ]
+}
