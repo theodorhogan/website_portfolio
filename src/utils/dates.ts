@@ -39,6 +39,13 @@ export function parseUsDateToUtcTime(raw: string) {
   return Date.UTC(Number(match[3]), Number(match[1]) - 1, Number(match[2]));
 }
 
+/** `YYYY-MM-DD` -> UTC-midnight timestamp, or null. */
+export function parseIsoDateToUtcTime(raw: string) {
+  const match = raw.trim().match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return null;
+  return Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+}
+
 /** The local calendar date of `date`, expressed as a UTC-midnight timestamp. */
 export function localDateToUtcTime(date: Date) {
   return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());

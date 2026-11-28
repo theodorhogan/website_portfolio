@@ -6,13 +6,18 @@ import { NavBar } from "./components/NavBar";
 import { NewsletterProvider } from "./state/NewsletterContext";
 import { isEditableTarget } from "./utils/dom";
 
+// One chunk per page, so a page only downloads the datasets it renders.
 const MainPage = lazy(() => import("./pages/MainPage").then((module) => ({ default: module.MainPage })));
 const DurationPage = lazy(() =>
   import("./pages/DurationPage").then((module) => ({ default: module.DurationPage })),
 );
+const RealPage = lazy(() => import("./pages/RealPage").then((module) => ({ default: module.RealPage })));
 const BetaPage = lazy(() => import("./pages/BetaPage").then((module) => ({ default: module.BetaPage })));
-const ModelsPage = lazy(() =>
-  import("./pages/ModelsPage").then((module) => ({ default: module.ModelsPage })),
+const EarningsPage = lazy(() =>
+  import("./pages/EarningsPage").then((module) => ({ default: module.EarningsPage })),
+);
+const EconomyPage = lazy(() =>
+  import("./pages/EconomyPage").then((module) => ({ default: module.EconomyPage })),
 );
 
 /** `?grid=1` starts with the layout grid overlay on; `g` toggles it. */
@@ -27,8 +32,10 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/duration" element={<DurationPage />} />
+          <Route path="/real" element={<RealPage />} />
           <Route path="/beta" element={<BetaPage />} />
-          <Route path="/models" element={<ModelsPage />} />
+          <Route path="/earnings" element={<EarningsPage />} />
+          <Route path="/economy" element={<EconomyPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>

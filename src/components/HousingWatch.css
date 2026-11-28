@@ -1,0 +1,23 @@
+/* Two tables share the panel: both give the label column the same share so their figures line up. */
+.housing-watch__table {
+  --terminal-table-pad-x: 0.45rem;
+  min-width: 20rem;
+}
+
+.housing-watch__table .compact-metrics-table__head {
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.housing-watch__table .compact-metrics-table__head--rowHeader {
+  width: 34%;
+}
+
+.housing-watch__table .compact-metrics-table__name,
+.housing-watch__table .compact-metrics-table__value {
+  white-space: nowrap;
+}
+
+.housing-watch__table--monthly {
+  border-top: 1px solid var(--terminal-table-line-strong);
+}

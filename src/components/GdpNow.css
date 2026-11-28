@@ -1,0 +1,84 @@
+.gdp-now__body {
+  @apply flex items-stretch gap-4 px-3.5 py-3;
+}
+
+.gdp-now__summary {
+  @apply flex shrink-0 flex-col justify-center gap-1.5;
+  width: 19rem;
+}
+
+.gdp-now__quarter {
+  @apply flex items-baseline gap-2 font-semibold uppercase text-slate-200;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+}
+
+.gdp-now__unit {
+  color: var(--terminal-copy-dim);
+  font-size: 0.54rem;
+  font-weight: 400;
+}
+
+.gdp-now__figures {
+  @apply flex items-baseline gap-2.5;
+  font-variant-numeric: tabular-nums;
+}
+
+.gdp-now__value {
+  @apply font-bold leading-none text-slate-100;
+  font-size: 1.75rem;
+  letter-spacing: 0.02em;
+}
+
+.gdp-now__change {
+  @apply font-semibold;
+  font-size: 0.8rem;
+}
+
+.gdp-now__change--positive {
+  color: var(--terminal-positive);
+}
+
+.gdp-now__change--negative {
+  color: var(--terminal-negative);
+}
+
+.gdp-now__change--neutral {
+  @apply text-slate-200;
+}
+
+.gdp-now__updated {
+  @apply uppercase;
+  color: var(--terminal-copy-dim);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+}
+
+.gdp-now__comparison {
+  color: var(--terminal-copy-dim);
+  font-size: 0.66rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.gdp-now__chart {
+  @apply flex-1;
+  height: 8rem;
+}
+
+.gdp-now__empty {
+  @apply m-0 w-full py-6 text-center text-[0.68rem] text-slate-500;
+}
+
+@media (max-width: 640px) {
+  .gdp-now__body {
+    @apply flex-col gap-3;
+  }
+
+  .gdp-now__summary {
+    @apply w-full;
+  }
+
+  .gdp-now__chart {
+    @apply flex-none;
+  }
+}

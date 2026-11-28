@@ -1,0 +1,83 @@
+.commodities__table {
+  @apply w-full border-collapse text-slate-200;
+  table-layout: auto;
+  --terminal-table-pad-x: 0.5rem;
+}
+
+.commodities__head {
+  @apply sticky top-0 z-[1] border-b text-right font-semibold uppercase text-slate-500;
+  padding: var(--terminal-table-pad-y) var(--terminal-table-pad-x);
+  border-color: var(--terminal-table-line-strong);
+  background: var(--terminal-table-head-bg);
+  font-size: var(--terminal-table-head-size);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.commodities__head--name {
+  @apply text-left;
+}
+
+/* The groups are told apart by spacing alone: a gap, then a dim label, and no rule under a group's last row. */
+.commodities__groupLabel {
+  @apply text-left font-semibold uppercase;
+  padding: 0.8rem var(--terminal-table-pad-x) 0.2rem;
+  color: var(--terminal-copy-dim);
+  font-size: var(--terminal-table-head-size);
+  letter-spacing: 0.18em;
+}
+
+.commodities__name,
+.commodities__number,
+.commodities__change {
+  @apply border-b;
+  padding: var(--terminal-table-pad-y) var(--terminal-table-pad-x);
+  border-color: var(--terminal-table-line);
+  white-space: nowrap;
+}
+
+.commodities__group .commodities__row:last-child > * {
+  border-bottom: none;
+}
+
+.commodities__name {
+  @apply text-left text-slate-100;
+  font-size: var(--terminal-table-label-size);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.commodities__ticker {
+  margin-left: 0.2rem;
+  color: var(--terminal-copy-dim);
+  font-size: 0.62rem;
+  font-weight: 400;
+}
+
+.commodities__number {
+  @apply text-right text-slate-100;
+  font-size: var(--terminal-table-cell-size);
+  font-variant-numeric: tabular-nums;
+}
+
+.commodities__change {
+  @apply text-right font-semibold;
+  font-size: var(--terminal-table-cell-size);
+  font-variant-numeric: tabular-nums;
+}
+
+.commodities__change--positive {
+  color: var(--terminal-positive);
+}
+
+.commodities__change--negative {
+  color: var(--terminal-negative);
+}
+
+.commodities__change--neutral {
+  @apply text-slate-200;
+}
+
+.commodities__row:hover > * {
+  background: rgba(148, 163, 184, 0.05);
+}

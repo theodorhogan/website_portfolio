@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { getWatchlistSeries } from "../data/equityData";
 import { useNewsletterContext } from "../state/useNewsletterContext";
-import { getAlignedPoint } from "../utils/timeSeries";
 import { PanelShell } from "./PanelShell";
 import { QuoteTable } from "./QuoteTable";
 import { buildQuoteRow } from "./quoteRows";
@@ -13,14 +12,11 @@ export function FullWatchlist() {
   const rows = useMemo(() => {
     if (activeTime === null) return [];
 
-    // The watchlist changes over time, so list the tickers held in the snapshot aligned to the active week.
+    // The watchlist changes over time, so list the stocks that were on it in the active week.
     const watchlist = getWatchlistSeries();
-    const snapshot = getAlignedPoint(watchlist.snapshots, activeTime);
-    if (!snapshot) return [];
-
-    return (watchlist.tickersByTime.get(snapshot.time) ?? []).map((ticker) =>
-      buildQuoteRow(ticker, watchlist.seriesByTicker.get(ticker) ?? [], snapshot.time),
-    );
+    return watchlist
+      .tickersAt(activeTime)
+      .map((ticker) => buildQuoteRow(ticker, watchlist.seriesByTicker.get(ticker) ?? [], activeTime));
   }, [activeTime]);
 
   return (

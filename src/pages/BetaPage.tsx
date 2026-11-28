@@ -1,9 +1,8 @@
 import { FullWatchlist } from "../components/FullWatchlist";
+import { IndexChartPanel } from "../components/IndexChartPanel";
 import { IndustryOverview } from "../components/IndustryOverview";
 import { MajorIndexes } from "../components/MajorIndexes";
 import { SectorPerformance } from "../components/SectorPerformance";
-import { SPXIndexChart } from "../components/SPXIndexChart";
-import { STOXXIndexChart } from "../components/STOXXIndexChart";
 import "./BetaPage.css";
 
 export function BetaPage() {
@@ -11,11 +10,14 @@ export function BetaPage() {
     <section className="beta-page">
       <div className="beta-page__layout">
         <div className="beta-page__column beta-page__column--left">
-          <div className="beta-page__slot beta-page__slot--spx">
-            <SPXIndexChart />
+          <div className="beta-page__slot beta-page__slot--chart">
+            <IndexChartPanel index="SPX" badge="SPX" title="S&P 500 Index" />
           </div>
-          <div className="beta-page__slot beta-page__slot--stoxx">
-            <STOXXIndexChart />
+          <div className="beta-page__slot beta-page__slot--chart">
+            <IndexChartPanel index="NDX" badge="NDX" title="Nasdaq 100 Index" />
+          </div>
+          <div className="beta-page__slot beta-page__slot--chart">
+            <IndexChartPanel index="STOXX600" badge="STOXX" title="STOXX 600 Index" />
           </div>
         </div>
         <div className="beta-page__column beta-page__column--middle">

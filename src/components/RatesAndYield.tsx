@@ -1,18 +1,19 @@
 import { Fragment, useMemo, useState } from "react";
-import { TREASURY_INSTRUMENT_ORDER, getTreasurySeries, type PricePoint } from "../data/ratesData";
+import { TREASURY_INSTRUMENT_ORDER, getTreasurySeries } from "../data/ratesData";
 import { useNewsletterContext } from "../state/useNewsletterContext";
 import { WEEK_MS, formatDayMonthYear } from "../utils/dates";
 import { getInverseChangeTone, type ChangeTone } from "../utils/format";
 import {
-  computeNominalChange,
-  getAlignedPoint,
-  getYearAnchorPoint,
-  resolveAlignedPointIndex,
-} from "../utils/timeSeries";
+  DEFAULT_CYCLE_MONTHS,
+  MAX_CYCLE_MONTHS,
+  MIN_CYCLE_MONTHS,
+  clampCycleMonths,
+  getCyclePoint,
+  getWeekFigures,
+  type CycleMode,
+} from "./cycleWindow";
 import { PanelShell } from "./PanelShell";
 import "./RatesAndYield.css";
-
-type CycleMode = "high" | "low";
 
 type TableCell = {
   text: string;
@@ -25,47 +26,8 @@ type TableRow = {
   isDate?: boolean;
 };
 
-const MIN_CYCLE_MONTHS = 1;
-const MAX_CYCLE_MONTHS = 36;
-const DEFAULT_CYCLE_MONTHS = 6;
-
-function roundTo2(value: number) {
-  return Math.round(value * 100) / 100;
-}
-
-function clampCycleMonths(value: number) {
-  if (!Number.isFinite(value)) return DEFAULT_CYCLE_MONTHS;
-  return Math.min(MAX_CYCLE_MONTHS, Math.max(MIN_CYCLE_MONTHS, Math.floor(value)));
-}
-
-function getWindowStartTime(endpointTime: number, cycleMonths: number) {
-  const endpointDate = new Date(endpointTime);
-  endpointDate.setUTCMonth(endpointDate.getUTCMonth() - cycleMonths);
-  return Date.UTC(endpointDate.getUTCFullYear(), endpointDate.getUTCMonth(), endpointDate.getUTCDate());
-}
-
-/** Highest or lowest print in the look-back window ending at the active point; ties resolve to the latest date. */
-function getCyclePoint(
-  series: PricePoint[],
-  activeIndex: number,
-  mode: CycleMode,
-  cycleMonths: number,
-  activeTime: number,
-) {
-  const windowStart = getWindowStartTime(activeTime, cycleMonths);
-  let bestPoint: PricePoint | null = null;
-
-  for (let i = activeIndex; i >= 0; i -= 1) {
-    const point = series[i];
-    if (point.time < windowStart) break;
-
-    if (!bestPoint || (mode === "high" ? point.value > bestPoint.value : point.value < bestPoint.value)) {
-      bestPoint = point;
-    }
-  }
-
-  return bestPoint;
-}
+/** Yields are shown to two decimals. */
+const RATE_DECIMALS = 2;
 
 function formatRate(value: number | null) {
   return value === null ? "" : value.toFixed(2);
@@ -107,25 +69,15 @@ export function RatesAndYield() {
 
     for (const ticker of TREASURY_INSTRUMENT_ORDER) {
       const series = seriesByTicker.get(ticker) ?? [];
-      const activeIndex = activeTime !== null ? resolveAlignedPointIndex(series, activeTime) : -1;
+      const figures = activeTime !== null ? getWeekFigures(series, activeTime, RATE_DECIMALS) : null;
 
-      if (activeTime === null || activeYear === null || activeIndex < 0) {
+      if (activeTime === null || figures === null) {
         for (const cells of columns) cells.push({ text: "" });
         continue;
       }
 
-      const lastWeekPoint = getAlignedPoint(series, activeTime - WEEK_MS);
-      const yearStartPoint = getYearAnchorPoint(series, activeYear);
-      const cyclePoint = getCyclePoint(series, activeIndex, cycleMode, cycleMonths, activeTime);
-
-      // Changes are computed from the rounded values so they always match the figures shown above them.
-      const current = roundTo2(series[activeIndex].value);
-      const lastWeek = lastWeekPoint ? roundTo2(lastWeekPoint.value) : null;
-      const yearStart = yearStartPoint ? roundTo2(yearStartPoint.value) : null;
-      const weekChangeRaw = computeNominalChange(current, lastWeek);
-      const ytdChangeRaw = computeNominalChange(current, yearStart);
-      const weekChange = weekChangeRaw !== null ? roundTo2(weekChangeRaw) : null;
-      const ytdChange = ytdChangeRaw !== null ? roundTo2(ytdChangeRaw) : null;
+      const { current, lastWeek, yearStart, weekChange, ytdChange } = figures;
+      const cyclePoint = getCyclePoint(series, figures.activeIndex, cycleMode, cycleMonths, activeTime);
 
       cycleDateCells.push({ text: cyclePoint ? formatDayMonthYear(cyclePoint.time) : "" });
       cycleRateCells.push({ text: formatRate(cyclePoint?.value ?? null) });

@@ -1,0 +1,31 @@
+.economy-page {
+  @apply flex w-full items-start justify-center py-2;
+}
+
+/* Nowcast, monthly and quarterly data | GDP breakdown and debt. The page scrolls: the monthly panel is taller than a screen. */
+.economy-page__layout {
+  @apply grid w-full items-start gap-3;
+  grid-template-columns: minmax(0, 1.9fr) minmax(21rem, 1fr);
+}
+
+.economy-page__column {
+  @apply grid min-w-0 content-start gap-3;
+}
+
+/* Too narrow for the monthly table beside a second column: the side panels move below, side by side. */
+@media (max-width: 1320px) {
+  .economy-page__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .economy-page__column--side {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+@media (max-width: 1024px) {
+  .economy-page__column--side {
+    grid-template-columns: 1fr;
+  }
+}

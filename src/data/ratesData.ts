@@ -1,22 +1,18 @@
-import treasuryRates2024Csv from "../content/pricedatabase/daily-treasury-rates-2024.csv?raw";
-import treasuryRates2025Csv from "../content/pricedatabase/daily-treasury-rates-2025.csv?raw";
-import treasuryRates2026Csv from "../content/pricedatabase/daily-treasury-rates-2026.csv?raw";
-import durationDataCsv from "../content/pricedatabase/durationdata.csv?raw";
+import seriesCsv from "../content/data/series.csv?raw";
+import treasuryNominalCsv from "../content/data/treasury-nominal.csv?raw";
+import treasuryRealCsv from "../content/data/treasury-real.csv?raw";
+import zqCsv from "../content/data/zq.csv?raw";
 import { parseCsvRows, parseNumberCell } from "../utils/csv";
-import { parseUsDateToUtcTime } from "../utils/dates";
+import { parseIsoDateToUtcTime } from "../utils/dates";
 import type { TimedValuePoint } from "../utils/timeSeries";
-import { lazy, parseLongRows, toSortedSeries } from "./longCsv";
+import { combineSeries, dropNa, lazy, parseLongSeries, parseWideSeries, type NullablePoint } from "./csvStore";
 
 /**
- * Rates datasets for the Duration page: Treasury curve, Fed funds futures,
- * credit spreads and EFFR.
+ * Rates datasets: the Treasury nominal and real curves, fed funds futures, and
+ * the one-number-per-date series (credit spreads, EFFR, Fed liquidity, mortgage
+ * rates, Bund, Gilt, uranium).
  *
- * Each source file is parsed once, on first use, and the result is shared by
- * every panel. Kept separate from `equityData.ts` so each page only downloads
- * the CSVs it renders.
- *
- * Adding a new year of Treasury data: drop the file next to the others and add
- * it to `TREASURY_FILES`.
+ * Each file is parsed once, on first use, and the result is shared by every panel.
  */
 export type PricePoint = TimedValuePoint;
 
@@ -38,12 +34,46 @@ export const TREASURY_INSTRUMENT_ORDER = [
 
 export type TreasuryInstrumentKey = (typeof TREASURY_INSTRUMENT_ORDER)[number];
 
+/** Tenors of the real (TIPS) curve, in display order. */
+export const REAL_TENOR_ORDER = ["5Y", "7Y", "10Y", "20Y", "30Y"] as const;
+
+export type RealTenorKey = (typeof REAL_TENOR_ORDER)[number];
+
 export const CREDIT_SPREAD_ORDER = ["IG", "AA", "BBB", "HY", "BB", "CCC"] as const;
 
 export type CreditSpreadKey = (typeof CREDIT_SPREAD_ORDER)[number];
 
+/** Keys of `series.csv`. Spreads are in basis points, rates in percent, Fed liquidity in $bn. */
+export type SeriesKey =
+  | "OAS_IG"
+  | "OAS_AA"
+  | "OAS_BBB"
+  | "OAS_HY"
+  | "OAS_BB"
+  | "OAS_CCC"
+  | "EFFR"
+  | "SOFR"
+  | "IORB"
+  | "MORTGAGE_30Y"
+  | "MORTGAGE_15Y"
+  | "DE10Y"
+  | "UK10Y"
+  | "RRP"
+  | "REPO"
+  | "RESERVES"
+  | "TGA"
+  | "SOMA"
+  | "SOMA_UST"
+  | "SOMA_MBS"
+  | "FED_ASSETS"
+  | "UX";
+
 export type FedFutureContract = {
+  /** Position from the front month, starting at 1. */
   sequence: number;
+  /** Contract month, `YYYY-MM`. */
+  contract: string;
+  /** `Nov ZQ26`, the label the futures panels read the month and year from. */
   ticker: string;
   price: number;
 };
@@ -53,111 +83,102 @@ export type FedFutureSnapshot = {
   contracts: FedFutureContract[];
 };
 
-const TREASURY_FILES = [treasuryRates2024Csv, treasuryRates2025Csv, treasuryRates2026Csv];
+const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-/** treasury.gov column header (upper-cased) -> instrument. */
-const TREASURY_COLUMN_TO_TICKER: Record<string, TreasuryInstrumentKey> = {
-  "1 MO": "US1M",
-  "2 MO": "US2M",
-  "3 MO": "US3M",
-  "4 MO": "US4M",
-  "6 MO": "US6M",
-  "1 YR": "US1Y",
-  "2 YR": "US2Y",
-  "3 YR": "US3Y",
-  "5 YR": "US5Y",
-  "7 YR": "US7Y",
-  "10 YR": "US10Y",
-  "20 YR": "US20Y",
-  "30 YR": "US30Y",
-};
-
-function emptySeriesMaps<K extends string>(keys: readonly K[]) {
-  return new Map<K, Map<number, number>>(keys.map((key) => [key, new Map<number, number>()]));
+function parseTreasuryNominal(rawCsv: string) {
+  const byColumn = parseWideSeries(rawCsv);
+  // Columns are `1M` ... `30Y`; the panels know the tenors as `US1M` ... `US30Y`.
+  return new Map<TreasuryInstrumentKey, PricePoint[]>(
+    TREASURY_INSTRUMENT_ORDER.map((ticker) => [ticker, byColumn.get(ticker.slice(2)) ?? []]),
+  );
 }
 
-function finalizeSeries<K extends string>(keys: readonly K[], maps: Map<K, Map<number, number>>) {
-  return new Map<K, PricePoint[]>(keys.map((key) => [key, toSortedSeries(maps.get(key) ?? new Map())]));
+function parseTreasuryReal(rawCsv: string) {
+  const byColumn = parseWideSeries(rawCsv);
+  return new Map<RealTenorKey, PricePoint[]>(REAL_TENOR_ORDER.map((tenor) => [tenor, byColumn.get(tenor) ?? []]));
 }
 
-function parseTreasurySeries(rawCsvFiles: string[]) {
-  const maps = emptySeriesMaps(TREASURY_INSTRUMENT_ORDER);
+/** `2026-11` -> `Nov ZQ26`. */
+function toZqTicker(contract: string) {
+  const [year, month] = contract.split("-");
+  return `${MONTH_NAMES[Number(month) - 1] ?? month} ZQ${year.slice(-2)}`;
+}
 
-  for (const rawCsv of rawCsvFiles) {
-    const [header, ...rows] = parseCsvRows(rawCsv);
-    if (!header) continue;
+/** `zq.csv` rows are `date,contract,price,source`; a snapshot lists its contracts from the front month out. */
+function parseFedFutures(rawCsv: string): FedFutureSnapshot[] {
+  const [, ...rows] = parseCsvRows(rawCsv);
+  const pricesByTime = new Map<number, Map<string, number>>();
 
-    const columns = header.flatMap((name, index) => {
-      const ticker = TREASURY_COLUMN_TO_TICKER[name.toUpperCase()];
-      return ticker ? [{ index, ticker }] : [];
-    });
+  for (const cells of rows) {
+    const time = parseIsoDateToUtcTime(cells[0] ?? "");
+    const contract = cells[1] ?? "";
+    const price = parseNumberCell(cells[2]);
+    if (time === null || price === null || !/^\d{4}-\d{2}$/.test(contract)) continue;
 
-    for (const cells of rows) {
-      const time = parseUsDateToUtcTime(cells[0] ?? "");
-      if (time === null) continue;
-
-      for (const { index, ticker } of columns) {
-        const value = parseNumberCell(cells[index]);
-        if (value !== null) maps.get(ticker)?.set(time, value);
-      }
+    let prices = pricesByTime.get(time);
+    if (!prices) {
+      prices = new Map();
+      pricesByTime.set(time, prices);
     }
+    prices.set(contract, price);
   }
 
-  return finalizeSeries(TREASURY_INSTRUMENT_ORDER, maps);
-}
-
-function parseDurationData(rawCsv: string) {
-  const futuresByTime = new Map<number, Map<number, FedFutureContract>>();
-  const spreadMaps = emptySeriesMaps(CREDIT_SPREAD_ORDER);
-  const effrMap = new Map<number, number>();
-
-  for (const row of parseLongRows(rawCsv)) {
-    if (row.category === "future") {
-      const sequence = row.tag;
-      if (sequence === null || sequence < 1) continue;
-
-      const contracts = futuresByTime.get(row.time) ?? new Map<number, FedFutureContract>();
-      contracts.set(sequence, { sequence, ticker: row.ticker, price: row.value });
-      futuresByTime.set(row.time, contracts);
-      continue;
-    }
-
-    if (row.category === "spread") {
-      spreadMaps.get(row.tickerKey as CreditSpreadKey)?.set(row.time, row.value);
-      continue;
-    }
-
-    if (row.tickerKey === "EFFR") {
-      effrMap.set(row.time, row.value);
-    }
-  }
-
-  const fedFutures: FedFutureSnapshot[] = [...futuresByTime.entries()]
+  return [...pricesByTime.entries()]
     .sort((a, b) => a[0] - b[0])
-    .map(([time, contracts]) => ({
+    .map(([time, prices]) => ({
       time,
-      contracts: [...contracts.values()].sort((a, b) => a.sequence - b.sequence),
+      contracts: [...prices.entries()]
+        .sort((a, b) => a[0].localeCompare(b[0]))
+        .map(([contract, price], index) => ({ sequence: index + 1, contract, ticker: toZqTicker(contract), price })),
     }));
-
-  return {
-    fedFutures,
-    creditSpreads: finalizeSeries(CREDIT_SPREAD_ORDER, spreadMaps),
-    effr: toSortedSeries(effrMap),
-  };
 }
 
-const getDurationData = lazy(() => parseDurationData(durationDataCsv));
+export const getTreasurySeries = lazy(() => parseTreasuryNominal(treasuryNominalCsv));
 
-export const getTreasurySeries = lazy(() => parseTreasurySeries(TREASURY_FILES));
+export const getRealYieldSeries = lazy(() => parseTreasuryReal(treasuryRealCsv));
 
-export function getFedFuturesSnapshots() {
-  return getDurationData().fedFutures;
+/** Breakeven inflation per tenor: nominal minus real yield, on the days both curves printed. */
+export const getBreakevenSeries = lazy(() => {
+  const nominal = getTreasurySeries();
+  const real = getRealYieldSeries();
+  return new Map<RealTenorKey, PricePoint[]>(
+    REAL_TENOR_ORDER.map((tenor) => [
+      tenor,
+      combineSeries(
+        nominal.get(`US${tenor}` as TreasuryInstrumentKey) ?? [],
+        real.get(tenor) ?? [],
+        (nominalYield, realYield) => nominalYield - realYield,
+      ),
+    ]),
+  );
+});
+
+/** The 5-year rate five years forward implied by a curve: 2 x 10Y - 5Y. */
+export function getFiveYearForward(curve: ReadonlyMap<RealTenorKey, PricePoint[]>): PricePoint[] {
+  return combineSeries(curve.get("10Y") ?? [], curve.get("5Y") ?? [], (tenYear, fiveYear) => 2 * tenYear - fiveYear);
 }
 
-export function getCreditSpreadSeries() {
-  return getDurationData().creditSpreads;
+export const getFedFuturesSnapshots = lazy(() => parseFedFutures(zqCsv));
+
+const getSeriesByKey = lazy(() => parseLongSeries(seriesCsv));
+
+/** One series from `series.csv`, without its NA rows. */
+export function getSeries(key: SeriesKey): PricePoint[] {
+  return dropNa(getSeriesByKey().get(key));
 }
+
+/** One series from `series.csv` with its NA rows, for panels that show "NA" in a week without a value. */
+export function getNullableSeries(key: SeriesKey): NullablePoint[] {
+  return getSeriesByKey().get(key) ?? [];
+}
+
+export const getCreditSpreadSeries = lazy(
+  () =>
+    new Map<CreditSpreadKey, PricePoint[]>(
+      CREDIT_SPREAD_ORDER.map((ticker) => [ticker, getSeries(`OAS_${ticker}` as SeriesKey)]),
+    ),
+);
 
 export function getEffrSeries() {
-  return getDurationData().effr;
+  return getSeries("EFFR");
 }

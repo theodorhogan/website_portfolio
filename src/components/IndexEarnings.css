@@ -1,0 +1,17 @@
+.index-earnings__comment {
+  @apply m-3 rounded-sm border px-3 py-2.5 text-slate-300;
+  border-color: var(--terminal-table-line);
+  background: rgba(12, 18, 27, 0.52);
+  font-size: var(--terminal-table-cell-size);
+  line-height: 1.65;
+}
+
+/* Under the comment the table no longer meets the panel header, so it needs its own top line. */
+.index-earnings__comment + .index-earnings__table {
+  border-top: 1px solid var(--terminal-table-line);
+}
+
+/* A slimmer label column leaves the three value headers room to stay on one line in a narrow panel. */
+.index-earnings__table thead th:first-child {
+  width: 20%;
+}

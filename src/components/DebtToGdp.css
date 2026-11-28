@@ -1,0 +1,29 @@
+.debt-to-gdp__body {
+  @apply flex flex-col gap-2.5 px-3.5 py-3;
+}
+
+.debt-to-gdp__summary {
+  @apply flex items-baseline gap-2.5;
+}
+
+.debt-to-gdp__value {
+  @apply font-bold leading-none text-slate-100;
+  font-size: 1.15rem;
+  letter-spacing: 0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.debt-to-gdp__quarter {
+  @apply uppercase;
+  color: var(--terminal-copy-dim);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+}
+
+.debt-to-gdp__chart {
+  height: 10.5rem;
+}
+
+.debt-to-gdp__empty {
+  @apply m-0 py-6 text-center text-[0.68rem] text-slate-500;
+}

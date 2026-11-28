@@ -1,0 +1,145 @@
+.monthly-data__controls {
+  @apply flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5;
+}
+
+.monthly-data__legend {
+  @apply flex items-center gap-3;
+}
+
+.monthly-data__legendItem {
+  @apply inline-flex items-center gap-1.5 whitespace-nowrap text-[0.54rem] uppercase tracking-[0.14em] text-slate-400;
+}
+
+/* The swatches repeat the two bar states of the tiles. */
+.monthly-data__swatch {
+  @apply inline-block h-2 w-2;
+}
+
+.monthly-data__swatch--new {
+  background: #22d3ee;
+}
+
+.monthly-data__swatch--revised {
+  background: #5b7696;
+  outline: 1.5px solid #facc15;
+  outline-offset: -1.5px;
+}
+
+.monthly-data__switch {
+  @apply flex items-center gap-1 rounded-md border p-0.5;
+  border-color: var(--terminal-line);
+  background: rgba(15, 21, 31, 0.88);
+}
+
+.monthly-data__switchButton {
+  @apply inline-flex items-center whitespace-nowrap rounded px-2 py-0.5 text-[0.58rem] font-semibold uppercase tracking-[0.16em] text-slate-400 transition-colors hover:text-slate-100;
+}
+
+.monthly-data__switchButton.is-active {
+  color: var(--terminal-accent-soft);
+  background: rgba(69, 217, 117, 0.12);
+}
+
+.monthly-data__scroller {
+  @apply overflow-x-auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(51, 65, 85, 0.7) transparent;
+}
+
+.monthly-data__table {
+  @apply w-full border-collapse;
+  table-layout: fixed;
+  min-width: 38rem;
+}
+
+.monthly-data__head,
+.monthly-data__groupLabel,
+.monthly-data__indicator,
+.monthly-data__unit,
+.monthly-data__cell {
+  @apply truncate border-b;
+  padding: var(--terminal-table-pad-y) var(--terminal-table-pad-x);
+  border-color: var(--terminal-table-line);
+}
+
+.monthly-data__head {
+  @apply text-right font-semibold uppercase text-slate-500;
+  border-color: var(--terminal-table-line-strong);
+  background: var(--terminal-table-head-bg);
+  font-size: var(--terminal-table-head-size);
+  letter-spacing: 0.16em;
+}
+
+.monthly-data__head--indicator {
+  @apply text-left;
+  width: 30%;
+}
+
+.monthly-data__head--unit {
+  @apply text-left;
+  width: 19%;
+}
+
+.monthly-data__groupLabel {
+  @apply text-left font-semibold text-slate-400;
+  border-top: 1px solid var(--terminal-table-line-strong);
+  background: rgba(10, 16, 24, 0.96);
+  font-size: 0.52rem;
+  letter-spacing: 0.16em;
+}
+
+.monthly-data__indicator {
+  @apply text-left text-slate-100;
+  background: rgba(12, 18, 27, 0.52);
+  font-size: var(--terminal-table-label-size);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.monthly-data__unit {
+  @apply text-left;
+  color: var(--terminal-copy-dim);
+  font-size: 0.6rem;
+}
+
+.monthly-data__cell {
+  @apply text-right text-slate-100;
+  font-size: var(--terminal-table-cell-size);
+  font-variant-numeric: tabular-nums;
+}
+
+.monthly-data__cell--missing {
+  color: var(--terminal-copy-muted);
+}
+
+.monthly-data__cell--negative {
+  color: var(--terminal-negative);
+}
+
+.monthly-data__cell--new {
+  background: rgba(34, 211, 238, 0.16);
+}
+
+.monthly-data__cell--revised {
+  box-shadow: inset 0 0 0 1.5px #facc15;
+}
+
+.monthly-data__table tbody tr:last-child > * {
+  border-bottom: none;
+}
+
+.monthly-data__empty {
+  @apply m-0 py-6 text-center text-[0.68rem] text-slate-500;
+}
+
+@media (max-width: 1024px) {
+  .monthly-data__controls {
+    @apply w-full;
+  }
+}
+
+@media (max-width: 640px) {
+  .monthly-data__legend {
+    @apply flex-wrap gap-x-3 gap-y-1;
+  }
+}

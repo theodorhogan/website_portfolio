@@ -1,5 +1,5 @@
-import { CreditSpreads } from "../components/CreditSpreads";
 import { FedFutures } from "../components/FedFutures";
+import { FedLiquidity } from "../components/FedLiquidity";
 import { QuartlyCuts } from "../components/QuartlyCuts";
 import { RatesAndYield } from "../components/RatesAndYield";
 import { YieldCurveGraph } from "../components/YieldCurveGraph";
@@ -29,8 +29,8 @@ export function DurationPage() {
           <div className="duration-page__slopesSlot">
             <YieldSlopes />
           </div>
-          <div className="duration-page__creditSlot">
-            <CreditSpreads />
+          <div className="duration-page__liquiditySlot">
+            <FedLiquidity />
           </div>
         </aside>
       </div>

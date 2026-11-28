@@ -1,0 +1,33 @@
+.real-page {
+  @apply flex w-full items-start justify-center py-2;
+}
+
+/*
+ * Rate tables | commodities | Fed and housing. The two side columns have floors
+ * sized to their tables, so the rate tables absorb any squeeze before a side table has to scroll.
+ */
+.real-page__layout {
+  @apply grid w-full items-start gap-3;
+  grid-template-columns: minmax(0, 1.5fr) minmax(22rem, 1fr) minmax(21rem, 1fr);
+}
+
+.real-page__column {
+  @apply flex min-w-0 flex-col gap-3;
+}
+
+/* Too narrow for three columns: the rate tables take the full row, the other two sit below, side by side. */
+@media (max-width: 1320px) {
+  .real-page__layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .real-page__column--tables {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .real-page__layout {
+    grid-template-columns: 1fr;
+  }
+}

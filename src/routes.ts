@@ -2,6 +2,8 @@
 export const ROUTE_ITEMS = [
   { label: "Main", path: "/" },
   { label: "Duration", path: "/duration" },
+  { label: "Real", path: "/real" },
   { label: "Beta", path: "/beta" },
-  { label: "Models", path: "/models" },
+  { label: "Earnings", path: "/earnings" },
+  { label: "Economy", path: "/economy" },
 ] as const;

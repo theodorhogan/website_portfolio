@@ -1,0 +1,13 @@
+/* Five numeric columns in the narrow side stack: tighter cells than the other compact tables. */
+.fed-liquidity__table .compact-metrics-table__head,
+.fed-liquidity__table .compact-metrics-table__name,
+.fed-liquidity__table .compact-metrics-table__value {
+  padding-left: calc(var(--terminal-table-pad-x) * 0.6);
+  padding-right: calc(var(--terminal-table-pad-x) * 0.6);
+  white-space: nowrap;
+}
+
+.fed-liquidity__table .compact-metrics-table__head--rowHeader,
+.fed-liquidity__table .compact-metrics-table__name {
+  width: 24%;
+}

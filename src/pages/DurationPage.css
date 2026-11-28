@@ -36,7 +36,7 @@
 
 .duration-page__cutsSlot,
 .duration-page__slopesSlot,
-.duration-page__creditSlot {
+.duration-page__liquiditySlot {
   min-width: 0;
 }
 
@@ -45,7 +45,7 @@
 .duration-page__futuresSlot > *,
 .duration-page__cutsSlot > *,
 .duration-page__slopesSlot > *,
-.duration-page__creditSlot > * {
+.duration-page__liquiditySlot > * {
   @apply h-full w-full;
 }
 

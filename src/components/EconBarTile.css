@@ -1,0 +1,86 @@
+/* A grid of tiles; the wide form is for a few tiles that share the full row. */
+.econ-bar-grid {
+  @apply grid gap-2 p-2.5;
+  grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
+}
+
+.econ-bar-grid--wide {
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.econ-bar-tile {
+  @apply min-w-0 rounded-sm border px-2.5 pb-1.5 pt-2;
+  border-color: var(--terminal-table-line);
+  background: rgba(12, 18, 27, 0.52);
+}
+
+.econ-bar-tile__head {
+  @apply flex items-baseline justify-between gap-1.5;
+}
+
+.econ-bar-tile__label {
+  @apply min-w-0 truncate font-semibold uppercase text-slate-200;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+}
+
+.econ-bar-tile__value {
+  @apply whitespace-nowrap font-bold text-slate-100;
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.econ-bar-tile__value--negative {
+  color: var(--terminal-negative);
+}
+
+.econ-bar-tile__unit {
+  @apply truncate uppercase;
+  color: var(--terminal-copy-dim);
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+}
+
+.econ-bar-tile__bars {
+  @apply relative mt-1.5 flex;
+  gap: 2px;
+  height: 3.25rem;
+}
+
+.econ-bar-tile__slot {
+  @apply relative min-w-0 flex-1;
+}
+
+.econ-bar-tile__bar {
+  @apply absolute inset-x-0;
+  background: #5b7696;
+}
+
+.econ-bar-tile__bar--new {
+  background: #22d3ee;
+}
+
+.econ-bar-tile__bar--revised {
+  outline: 1.5px solid #facc15;
+  outline-offset: -1.5px;
+}
+
+.econ-bar-tile__zeroLine {
+  @apply absolute inset-x-0;
+  height: 1px;
+  background: rgba(125, 140, 164, 0.45);
+}
+
+.econ-bar-tile__ticks {
+  @apply flex;
+  gap: 2px;
+  margin-top: 3px;
+  min-height: 0.6rem;
+  color: var(--terminal-copy-dim);
+  font-size: 0.5rem;
+  line-height: 1.2;
+}
+
+.econ-bar-tile__tick {
+  @apply min-w-0 flex-1 text-center;
+}

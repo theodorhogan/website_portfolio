@@ -1,0 +1,20 @@
+.earnings-page {
+  @apply flex w-full items-start justify-center py-2;
+}
+
+/* Calendar | index P/E. The narrow column's floor keeps its four-column table header on one line. */
+.earnings-page__layout {
+  @apply grid w-full items-start gap-3;
+  grid-template-columns: minmax(0, 2.3fr) minmax(24rem, 1fr);
+}
+
+.earnings-page__calendarSlot,
+.earnings-page__indexSlot {
+  min-width: 0;
+}
+
+@media (max-width: 1024px) {
+  .earnings-page__layout {
+    grid-template-columns: 1fr;
+  }
+}

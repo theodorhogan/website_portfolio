@@ -21,9 +21,9 @@
   grid-template-rows: minmax(0, 1fr);
 }
 
-.beta-page__slot--spx,
-.beta-page__slot--stoxx {
-  height: clamp(18rem, 34vh, 24rem);
+/* Three index charts share the left column. */
+.beta-page__slot--chart {
+  height: clamp(15rem, 27vh, 20rem);
 }
 
 .beta-page__slot--sector {
@@ -53,8 +53,7 @@
     grid-template-columns: 1fr;
   }
 
-  .beta-page__slot--spx,
-  .beta-page__slot--stoxx {
+  .beta-page__slot--chart {
     height: 20rem;
   }
 

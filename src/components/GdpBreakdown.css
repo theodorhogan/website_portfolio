@@ -1,0 +1,109 @@
+.gdp-breakdown__summary {
+  @apply flex flex-col gap-1.5 px-3 pb-2.5 pt-3;
+}
+
+.gdp-breakdown__headline {
+  @apply flex flex-wrap items-baseline gap-x-2.5 gap-y-1;
+}
+
+.gdp-breakdown__quarter {
+  @apply font-bold leading-none text-slate-100;
+  font-size: 1.15rem;
+  letter-spacing: 0.03em;
+}
+
+.gdp-breakdown__estimate {
+  @apply ml-auto whitespace-nowrap font-semibold text-slate-300;
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+}
+
+.gdp-breakdown__published {
+  @apply uppercase;
+  color: var(--terminal-copy-dim);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+}
+
+/* Column heads for the rows below: the unit, then which quarter each figure is. */
+.gdp-breakdown__key {
+  @apply flex items-center justify-between border-y font-semibold uppercase text-slate-500;
+  padding: calc(var(--terminal-table-pad-y) * 0.95) 0.75rem;
+  border-color: var(--terminal-table-line-strong);
+  background: var(--terminal-table-head-bg);
+  font-size: var(--terminal-table-head-size);
+  letter-spacing: 0.16em;
+}
+
+.gdp-breakdown__rows {
+  @apply m-0 flex list-none flex-col gap-2.5 px-3 pb-3 pt-2.5;
+}
+
+.gdp-breakdown__rowHead {
+  @apply flex items-baseline gap-2;
+  font-variant-numeric: tabular-nums;
+}
+
+.gdp-breakdown__label {
+  @apply min-w-0 flex-1 truncate font-semibold uppercase text-slate-200;
+  font-size: var(--terminal-table-label-size);
+  letter-spacing: 0.08em;
+}
+
+.gdp-breakdown__value {
+  @apply text-right font-semibold;
+  font-size: var(--terminal-table-cell-size);
+}
+
+.gdp-breakdown__value--headline {
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.gdp-breakdown__value--positive {
+  color: var(--terminal-positive);
+}
+
+.gdp-breakdown__value--negative {
+  color: var(--terminal-negative);
+}
+
+.gdp-breakdown__value--neutral {
+  @apply text-slate-200;
+}
+
+.gdp-breakdown__previous {
+  @apply text-right;
+  min-width: 4.1rem;
+  color: var(--terminal-copy-dim);
+  font-size: var(--terminal-table-cell-size);
+}
+
+.gdp-breakdown__track {
+  @apply relative mt-1 h-2.5;
+  background: rgba(12, 18, 27, 0.72);
+}
+
+.gdp-breakdown__bar {
+  @apply absolute inset-y-0;
+}
+
+.gdp-breakdown__bar--positive {
+  background: var(--terminal-positive);
+}
+
+.gdp-breakdown__bar--negative {
+  background: var(--terminal-negative);
+}
+
+/* The shared zero, a touch taller than the bars. */
+.gdp-breakdown__zeroLine {
+  @apply absolute left-1/2 w-px;
+  top: -2px;
+  bottom: -2px;
+  background: var(--terminal-copy-dim);
+}
+
+.gdp-breakdown__empty {
+  @apply m-0 py-6 text-center text-[0.68rem] text-slate-500;
+}

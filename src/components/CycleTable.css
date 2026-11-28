@@ -1,0 +1,28 @@
+/* The header controls reuse the Money to Capital Markets classes (RatesAndYield.css). */
+
+/* Eight columns side by side: tighter gutters than the shared table default, and a floor below which the body scrolls. */
+.cycle-table__table {
+  --terminal-table-pad-x: 0.45rem;
+  min-width: 35rem;
+}
+
+/* The two cycle headers run over two lines; the rest sit on the lower one. */
+.cycle-table__table .compact-metrics-table__head {
+  vertical-align: bottom;
+  letter-spacing: 0.1em;
+}
+
+.cycle-table__table .compact-metrics-table__head--rowHeader {
+  width: 15%;
+}
+
+.cycle-table__table .compact-metrics-table__name,
+.cycle-table__table .compact-metrics-table__value {
+  white-space: nowrap;
+}
+
+/* Dates are the widest values in the table; set them a step smaller, as Money to Capital Markets does. */
+.cycle-table__table .cycle-table__date {
+  font-size: 0.62rem;
+  letter-spacing: -0.01em;
+}

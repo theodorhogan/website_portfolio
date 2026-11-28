@@ -1,0 +1,203 @@
+/* The tiles, heading, table edges and progress bar share one left and right gutter. */
+.earnings-calendar {
+  --earnings-calendar-gutter: 0.75rem;
+}
+
+.earnings-calendar__tiles {
+  @apply flex flex-wrap gap-2;
+  padding: var(--earnings-calendar-gutter);
+  container-type: inline-size;
+}
+
+.earnings-calendar__tile {
+  @apply flex min-w-0 flex-col gap-1 rounded-sm border px-3 py-2.5;
+  flex: 1 1 9.5rem;
+  border-color: var(--terminal-table-line);
+  background: rgba(12, 18, 27, 0.52);
+}
+
+/* When five no longer fit abreast, wrap three over two (then in pairs) instead of leaving one tile on its own row. */
+@container (max-width: 51rem) {
+  .earnings-calendar__tile {
+    flex-basis: 30%;
+  }
+}
+
+@container (max-width: 30rem) {
+  .earnings-calendar__tile {
+    flex-basis: 40%;
+  }
+}
+
+.earnings-calendar__tileLabel {
+  @apply font-semibold uppercase text-slate-500;
+  font-size: var(--terminal-table-head-size);
+  letter-spacing: 0.14em;
+}
+
+.earnings-calendar__tileValue {
+  @apply font-bold text-slate-100;
+  font-size: 1.05rem;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.earnings-calendar__tileValue--missing {
+  color: var(--terminal-copy-muted);
+}
+
+.earnings-calendar__tileNote {
+  color: var(--terminal-copy-dim);
+  font-size: 0.62rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.earnings-calendar__heading {
+  @apply flex flex-wrap items-center justify-between gap-2 border-y;
+  padding: var(--terminal-table-pad-y) var(--earnings-calendar-gutter);
+  border-color: var(--terminal-table-line);
+  background: rgba(12, 18, 27, 0.52);
+}
+
+.earnings-calendar__headingTitle {
+  @apply font-semibold text-slate-200;
+  font-size: var(--terminal-table-label-size);
+  letter-spacing: 0.1em;
+}
+
+.earnings-calendar__headingRange {
+  @apply text-slate-400;
+  font-size: var(--terminal-shell-title-size);
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+}
+
+.earnings-calendar__tableWrap {
+  @apply overflow-x-auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(51, 65, 85, 0.7) transparent;
+}
+
+.earnings-calendar__table {
+  @apply w-full border-collapse text-slate-200;
+  min-width: 36rem;
+  table-layout: auto;
+}
+
+.earnings-calendar__table th,
+.earnings-calendar__table td {
+  @apply border-b text-left;
+  padding: var(--terminal-table-pad-y) var(--terminal-table-pad-x);
+  border-color: var(--terminal-table-line);
+  white-space: nowrap;
+  font-size: var(--terminal-table-cell-size);
+  font-variant-numeric: tabular-nums;
+}
+
+.earnings-calendar__table th:first-child,
+.earnings-calendar__table td:first-child {
+  padding-left: var(--earnings-calendar-gutter);
+}
+
+.earnings-calendar__table th:last-child,
+.earnings-calendar__table td:last-child {
+  padding-right: var(--earnings-calendar-gutter);
+}
+
+.earnings-calendar__table .earnings-calendar__head {
+  @apply font-semibold uppercase text-slate-500;
+  border-color: var(--terminal-table-line-strong);
+  background: var(--terminal-table-head-bg);
+  font-size: var(--terminal-table-head-size);
+  letter-spacing: 0.1em;
+}
+
+.earnings-calendar__table .earnings-calendar__head--number,
+.earnings-calendar__table .earnings-calendar__number {
+  @apply text-right;
+}
+
+.earnings-calendar__table tbody tr:last-child > * {
+  border-bottom: none;
+}
+
+.earnings-calendar__table tbody tr:hover > * {
+  background: rgba(148, 163, 184, 0.05);
+}
+
+.earnings-calendar__table .earnings-calendar__day {
+  @apply font-semibold text-slate-100;
+  font-size: var(--terminal-table-label-size);
+  letter-spacing: 0.06em;
+}
+
+.earnings-calendar__table .earnings-calendar__ticker {
+  @apply font-semibold;
+  color: var(--terminal-accent-soft);
+  font-size: var(--terminal-table-label-size);
+  letter-spacing: 0.06em;
+}
+
+/* The one column allowed to give way: long names are cut short before the table has to scroll. */
+.earnings-calendar__company {
+  @apply truncate;
+  width: 38%;
+  max-width: 0;
+}
+
+.earnings-calendar__when {
+  color: var(--terminal-copy-dim);
+}
+
+.earnings-calendar__number {
+  @apply text-slate-100;
+}
+
+.earnings-calendar__number--dim {
+  color: var(--terminal-copy-dim);
+}
+
+.earnings-calendar__empty {
+  @apply border-t px-3 py-6 text-center text-[0.68rem] text-slate-500;
+  border-color: var(--terminal-table-line);
+}
+
+.earnings-calendar__progress {
+  @apply border-t;
+  padding: var(--earnings-calendar-gutter);
+  border-color: var(--terminal-table-line);
+}
+
+.earnings-calendar__progressHead {
+  @apply flex flex-wrap items-baseline justify-between gap-2;
+}
+
+.earnings-calendar__progressLabel {
+  @apply font-semibold uppercase text-slate-500;
+  font-size: var(--terminal-table-head-size);
+  letter-spacing: 0.14em;
+}
+
+.earnings-calendar__progressCount {
+  @apply font-semibold text-slate-100;
+  font-size: var(--terminal-table-cell-size);
+  font-variant-numeric: tabular-nums;
+}
+
+.earnings-calendar__progressTrack {
+  @apply mt-2 h-2.5 overflow-hidden rounded-sm;
+  background: rgba(45, 60, 81, 0.55);
+}
+
+.earnings-calendar__progressFill {
+  @apply h-full;
+  background: var(--terminal-positive);
+}
+
+/* Stacked layout: the table scrolls sideways before the company names are cut to a few letters. */
+@media (max-width: 1024px) {
+  .earnings-calendar__table {
+    min-width: 44rem;
+  }
+}

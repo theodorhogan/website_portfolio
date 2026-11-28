@@ -1,0 +1,66 @@
+/* Value labels | plot, with the date labels under the plot. The right padding holds half of the last date label. */
+.econ-line-chart {
+  @apply grid min-w-0 pr-4 pt-1.5;
+  grid-template-columns: 2.4rem minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) 1.15rem;
+}
+
+.econ-line-chart__yAxis,
+.econ-line-chart__plot,
+.econ-line-chart__xAxis {
+  @apply relative min-h-0 min-w-0;
+}
+
+.econ-line-chart__xAxis {
+  grid-column: 2;
+}
+
+.econ-line-chart__svg {
+  @apply absolute inset-0 block h-full w-full;
+  overflow: visible;
+}
+
+.econ-line-chart__gridLine,
+.econ-line-chart__axisLine,
+.econ-line-chart__path {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.econ-line-chart__gridLine {
+  stroke: rgba(76, 200, 243, 0.1);
+  stroke-width: 1;
+}
+
+.econ-line-chart__axisLine {
+  stroke: rgba(76, 200, 243, 0.22);
+  stroke-width: 1;
+}
+
+.econ-line-chart__path {
+  stroke: #22d3ee;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.econ-line-chart__yTick,
+.econ-line-chart__xTick {
+  @apply absolute whitespace-nowrap;
+  color: #98a6ba;
+  font-size: 0.5rem;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.econ-line-chart__yTick {
+  right: 0.5rem;
+  transform: translateY(-50%);
+}
+
+.econ-line-chart__xTick {
+  top: 0.4rem;
+  font-weight: 600;
+  transform: translateX(-50%);
+}

@@ -1,0 +1,124 @@
+/* Label on its own line, then the date with the countdown opposite, then the projections note. */
+.fed-watch__meeting {
+  @apply grid items-baseline gap-x-2 gap-y-1 border-b px-3 py-2.5;
+  grid-template-columns: minmax(0, 1fr) auto;
+  border-color: var(--terminal-table-line-strong);
+}
+
+.fed-watch__label,
+.fed-watch__note {
+  @apply col-span-2 uppercase;
+  color: var(--terminal-copy-dim);
+  font-size: var(--terminal-table-head-size);
+  letter-spacing: 0.16em;
+}
+
+.fed-watch__label {
+  @apply font-semibold;
+}
+
+.fed-watch__date {
+  @apply font-semibold text-slate-100;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.fed-watch__countdown {
+  @apply text-right;
+  color: var(--terminal-copy-dim);
+  font-size: var(--terminal-table-cell-size);
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+.fed-watch__table {
+  @apply w-full border-collapse;
+  table-layout: auto;
+}
+
+.fed-watch__head {
+  @apply border-b text-right font-semibold uppercase text-slate-500;
+  padding: var(--terminal-table-pad-y) var(--terminal-table-pad-x);
+  border-color: var(--terminal-table-line-strong);
+  background: var(--terminal-table-head-bg);
+  font-size: var(--terminal-table-head-size);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.fed-watch__head--outcome {
+  @apply text-left;
+}
+
+/* The bar column takes whatever width the three text columns leave. */
+.fed-watch__head--bar {
+  width: 100%;
+}
+
+.fed-watch__outcome,
+.fed-watch__barCell,
+.fed-watch__percent,
+.fed-watch__lastWeek {
+  @apply border-b;
+  padding: var(--terminal-table-pad-y) var(--terminal-table-pad-x);
+  border-color: var(--terminal-table-line);
+  white-space: nowrap;
+}
+
+.fed-watch__table tbody tr:last-child > * {
+  border-bottom: none;
+}
+
+.fed-watch__outcome {
+  @apply text-left text-slate-100;
+  background: rgba(12, 18, 27, 0.52);
+  font-size: var(--terminal-table-label-size);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.fed-watch__barCell {
+  @apply px-0;
+}
+
+.fed-watch__track {
+  @apply block overflow-hidden rounded-sm;
+  height: 0.7rem;
+  background: var(--terminal-table-line);
+}
+
+.fed-watch__fill {
+  @apply block h-full;
+}
+
+.fed-watch__fill--negative {
+  background: var(--terminal-negative);
+}
+
+.fed-watch__fill--positive {
+  background: var(--terminal-positive);
+}
+
+.fed-watch__fill--neutral {
+  background: var(--terminal-copy-dim);
+}
+
+.fed-watch__percent,
+.fed-watch__lastWeek {
+  @apply text-right;
+  font-size: var(--terminal-table-cell-size);
+  font-variant-numeric: tabular-nums;
+}
+
+.fed-watch__percent {
+  @apply font-semibold text-slate-100;
+}
+
+.fed-watch__lastWeek {
+  @apply text-slate-200;
+}
+
+.fed-watch__empty {
+  @apply m-0 px-3 py-6 text-center text-[0.68rem] text-slate-500;
+}
